@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>SSH Start</title>
-
+	<meta charset="utf-8">
+	<title>SSH Start</title>
+	
+	<!-- 套件引入 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	 
+	<!-- CSS -->
 	<style>
 		.autoW{
    			margin: 0 auto;
     		width:30%;
 		}
 	</style>
+	
+	<!-- JS -->
+	<script type="text/javascript" src="./js/login/login.js"></script>
+		  	
 </head>
-<body>
+<body ng-app="loginApp" ng-controller="loginCtrl">
 	<div class="container">
 		<div class="form-horizontal">
 			<div class="form-group">
@@ -37,7 +44,7 @@
 	   		</div>      
 	    	<div class="form-group" align="center">
 	    		<div class="autoW">
-	    			<button class="btn btn-default btn-block btn-success">Login</button>
+	    			<button class="btn btn-default btn-block btn-success" ng-click="login()">Login</button>
 	    		</div>   
 	    	</div>    	
 		</div>

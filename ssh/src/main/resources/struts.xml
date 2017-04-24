@@ -5,11 +5,18 @@
  
 <struts>
 
-<!-- 	<constant name="struts.devMode" value="true" /> -->
+	<constant name="struts.devMode" value="true" />
 	
   	<package name="login" namespace="/" extends="json-default">
-		<action name="loginAction" class="ssh.LoginAction" method="loginAction">
-			<result type="json" />
+		<action name="loginAction" class="ssh.action.login.LoginAction" method="loginAction">
+			<result type="json">
+			    <param name="callbackParameter">callback</param>
+                <param name="enableGZIP">true</param>
+                <param name="noCache">true</param>
+                <param name="ignoreHierarchy">false</param>
+				<!-- Struts json 會預設從 root 開始將 Bean 中的參數全部回傳，可以使用下列限制回傳的參數  -->
+				<param name="includeProperties" >result,result.*</param>
+			</result>
 		</action>
     </package>
   
