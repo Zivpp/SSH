@@ -10,10 +10,14 @@
   	<package name="login" namespace="/" extends="json-default">
 		<action name="loginAction" class="ssh.action.login.LoginAction" method="loginAction">
 			<result type="json">
-			    <param name="callbackParameter">callback</param>
+				<!-- 壓縮輸出 -->		
                 <param name="enableGZIP">true</param>
+                <!-- 不要暫存  -->
                 <param name="noCache">true</param>
+                <!-- 取消默認忽略父類別，用於統一回傳方式 BascAction，如果為 True，則不回傳所繼承的父類別相關參數 -->
                 <param name="ignoreHierarchy">false</param>
+				<!-- JSONP, 解決跨域問題 -->
+                <param name="callbackParameter">callback</param>
 				<!-- Struts json 會預設從 root 開始將 Bean 中的參數全部回傳，可以使用下列限制回傳的參數  -->
 				<param name="includeProperties" >result,result.*</param>
 			</result>
