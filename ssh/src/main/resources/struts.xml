@@ -5,23 +5,59 @@
  
 <struts>
 
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.custom.i18n.resources" value="global-messages" />
+<!-- 	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" /> -->
+
+	<package name="crm-default" extends="json-default" abstract="true">
+		<interceptors>
+<!-- 			<interceptor name="authentication" class="securityInterceptor" /> -->
+			<!-- 欄截 json-default 下所有請求，反序列話成 Json 資料轉換到action的Bean中 -->
+			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+			<interceptor-stack name="defaultCRMStack">
+				<interceptor-ref name="exception">
+					<param name="logEnabled">true</param>
+					<param name="logCategory">CRM.GLOBALEXCEPTION</param>
+					<param name="logLevel">DEBUG</param>
+				</interceptor-ref>
+				<!-- interceptor-ref 引用 struts 所提供的欄截器 -->
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="validation.excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="json">
+	                <param name="contentType">application/JSON</param>
+	                <param name="excludeNullProperties">true</param>
+	            </interceptor-ref>
+<!-- 	            <interceptor-ref name="authentication" /> -->
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="defaultCRMStack" />
+		
+	</package>
+
+	<package name="default" namespace="/" extends="crm-default">
+	</package>
 	
-  	<package name="login" namespace="/" extends="json-default">
-		<action name="loginAction" class="ssh.action.login.LoginAction" method="loginAction">
-			<result type="json">
-				<!-- 壓縮輸出 -->		
-                <param name="enableGZIP">true</param>
-                <!-- 不要暫存  -->
-                <param name="noCache">true</param>
-                <!-- 取消默認忽略父類別，用於統一回傳方式 BascAction，如果為 True，則不回傳所繼承的父類別相關參數 -->
-                <param name="ignoreHierarchy">false</param>
-				<!-- JSONP, 解決跨域問題 -->
-                <param name="callbackParameter">callback</param>
-				<!-- Struts json 會預設從 root 開始將 Bean 中的參數全部回傳，可以使用下列限制回傳的參數  -->
-				<param name="includeProperties" >result,result.*</param>
-			</result>
-		</action>
-    </package>
-  
+	<!-- 加入其它 Struts 設定 -->
+	<include file="struts/struts-login.xml"></include>
+	
 </struts>
