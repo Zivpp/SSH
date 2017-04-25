@@ -13,7 +13,7 @@
 	<package name="crm-default" extends="json-default" abstract="true">
 		<interceptors>
 <!-- 			<interceptor name="authentication" class="securityInterceptor" /> -->
-			<!-- 欄截 json-default 下所有請求，反序列話成 Json 資料轉換到action的Bean中 -->
+			<!-- 欄截 json-default 下所有請求，反序列話成 Json 資料轉換到action的Bean中 *加入此欄結器後，使用AngularJs 的 $htpp 效果很好-->
 			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
 			<interceptor-stack name="defaultCRMStack">
 				<interceptor-ref name="exception">

@@ -13,36 +13,58 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 			name : 'Ziv',
 			sex : 'Man'
 	}
-	
-	console.log(JSON.stringify(testStringData));
-	console.log(testStringData.constructor.name);
-	
+		
 	/**
 	 * function
 	 */
 	$scope.login = function(){
 		
-		
-		$.ajax({
-		    method: "POST",
-		    url: "loginAction.action",
-		    data: { 
-				d_String : $scope.act,
-				d_Int : 1,
-				d_Long : 2,
-				d_Array : [1,2],
-				d_List : [3,4],
-				'testStringData.name':'sex',
-				'testStringData.sex':'sex'
-		    },
-		    traditional: true,
-		    success: function(data){
-		    	var a = data;
-		    },
-		    error: function(data){
-		    	var b = data;
-		    }
+		var data = { 
+			d_String : $scope.act,
+			d_Int : 1,
+			d_Long : 2,
+			d_Array : [1,2],
+			d_List : [3,4],
+			testStringData : testStringData
+	    }
+
+		$http({
+			method : 'POST',
+			url : "loginAction.action",
+			data : {
+				data : data,
+				dataPackage : data
+			}
+		})
+		.success(function (data, status, headers, config) {
+			console.log('Post OK!!!', data);
+		})
+		.error(function (data, status, headers, config) {
+			console.log('POST error', data);
 		});
+		
+		
+		//Jqurey ajax sample : 無法直接使用  object 轉換
+//		$.ajax({
+//		    method: "POST",
+//		    url: "loginAction.action",
+//		    data: { 
+//				d_String : $scope.act,
+//				d_Int : 1,
+//				d_Long : 2,
+//				d_Array : [1,2],
+//				d_List : [3,4],
+//				'testStringData.name':'sex',
+//				'testStringData.sex':'sex'
+//		    },
+//		    traditional: true,
+//		    success: function(data){
+//		    	var a = data;
+//		    },
+//		    error: function(data){
+//		    	var b = data;
+//		    }
+//		});
 			
 	}
 	

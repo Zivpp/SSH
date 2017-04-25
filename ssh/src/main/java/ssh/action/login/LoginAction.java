@@ -31,8 +31,8 @@ public class LoginAction extends BaseAction{
 			Long d_Long = this.d_Long;
 			String[] d_Array = this.d_Array;
 			ArrayList<String> d_List = this.d_List;
-			//TestDataPackageBean dataPackage = this.dataPackage;
 			TestStringData testStringData = this.testStringData;
+			TestDataPackageBean dataPackage = this.dataPackage;
 			
 			List<Object> re = new ArrayList<Object>();
 			re.add(d_String);
@@ -41,6 +41,7 @@ public class LoginAction extends BaseAction{
 			re.add(d_Array);
 			re.add(d_List);
 			re.add(testStringData);
+			re.add(dataPackage);
 			
 			super.dataHandler(re);
 			
