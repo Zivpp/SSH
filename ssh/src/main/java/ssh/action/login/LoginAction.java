@@ -6,6 +6,7 @@ import java.util.List;
 import ssh.action.BaseAction;
 import ssh.login.TestDataPackageBean;
 import ssh.login.TestStringData;
+import ssh.util.StringUtil;
 
 public class LoginAction extends BaseAction{
 	
@@ -19,31 +20,40 @@ public class LoginAction extends BaseAction{
 	private ArrayList<String> d_List;
 	private TestStringData testStringData;
 	
+	private String account;
+	private String password;
+	
+	private final String PASS = "PASS";
+	
 	/**
 	 * µn¤J¬ÛÃö action
 	 * @return
 	 */
 	public String loginAction() {
 		try{
+						
+			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){
+				super.dataHandler(PASS);
+			}
 			
-			String d_String = this.d_String;
-			Integer d_Int = this.d_Int;
-			Long d_Long = this.d_Long;
-			String[] d_Array = this.d_Array;
-			ArrayList<String> d_List = this.d_List;
-			TestStringData testStringData = this.testStringData;
-			TestDataPackageBean dataPackage = this.dataPackage;
+//			String d_String = this.d_String;
+//			Integer d_Int = this.d_Int;
+//			Long d_Long = this.d_Long;
+//			String[] d_Array = this.d_Array;
+//			ArrayList<String> d_List = this.d_List;
+//			TestStringData testStringData = this.testStringData;
+//			TestDataPackageBean dataPackage = this.dataPackage;
+//			
+//			List<Object> reuslt = new ArrayList<Object>();	
+//			reuslt.add(d_String);
+//			reuslt.add(d_Int);
+//			reuslt.add(d_Long);
+//			reuslt.add(d_Array);
+//			reuslt.add(d_List);
+//			reuslt.add(testStringData);
+//			reuslt.add(dataPackage);
 			
-			List<Object> re = new ArrayList<Object>();
-			re.add(d_String);
-			re.add(d_Int);
-			re.add(d_Long);
-			re.add(d_Array);
-			re.add(d_List);
-			re.add(testStringData);
-			re.add(dataPackage);
-			
-			super.dataHandler(re);
+//			super.dataHandler();
 			
 		}catch(Exception e){	
 			super.dataHandler(e);
@@ -106,6 +116,22 @@ public class LoginAction extends BaseAction{
 
 	public void setTestStringData(TestStringData testStringData) {
 		this.testStringData = testStringData;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

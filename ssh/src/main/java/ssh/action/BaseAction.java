@@ -19,6 +19,16 @@ public abstract class BaseAction extends ActionSupport {
 	
 	public Map<String, Object> result = new HashMap<String, Object>();
 	
+	
+	/**
+	 * Struts 統一回傳資料方法 (沒有值也OK)
+	 * @param data
+	 */
+	protected void dataHandler() {
+		this.dataHandler(null);
+	}
+	
+	
 	/**
 	 * Struts 統一回傳資料方法
 	 * @param data

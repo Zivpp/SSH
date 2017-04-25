@@ -25,19 +25,21 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 			d_Long : 2,
 			d_Array : [1,2],
 			d_List : [3,4],
-			testStringData : testStringData
+			testStringData : testStringData,
+			account : $scope.act,
+			password : $scope.paw
 	    }
 
 		$http({
 			method : 'POST',
 			url : "loginAction.action",
-			data : {
-				data : data,
-				dataPackage : data
-			}
+			data : data
 		})
 		.success(function (data, status, headers, config) {
 			console.log('Post OK!!!', data);
+			if(data.result.datas == 'PASS'){
+				document.location.href="pages/hall.html"
+			}
 		})
 		.error(function (data, status, headers, config) {
 			console.log('POST error', data);
