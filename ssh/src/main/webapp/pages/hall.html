@@ -22,6 +22,10 @@
 		.contentBC {
 			background-color: lavenderblush;
 		}
+		.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+   			background-color: rgb(0, 102, 204);
+   			color: rgb(255, 255, 255);
+		}
 	</style>
 	
 </head>
@@ -29,18 +33,40 @@
 	<div class="container">
 		<h2>SSH Demo Hall</h2>
 		<div class="row">
+			<nav class="navbar navbar-default">
+				<div class="navbar-header">
+			      <a class="navbar-brand" href="#">WebSiteName</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li><a href="#">Home</a></li>
+			      <li><a href="#">Page 1</a></li>
+			      <li><a href="#">Page 2</a></li>
+			      <li><a href="#">Page 3</a></li>
+			    </ul>
+			</nav>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">
+				<span class="label label-primary">Menu</span>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-2 sidebarBC">
 				<div class="list-group">
-				  <a href="#" class="list-group-item active">First item</a>
+				  <a href="/ssh/pages/testPage.html" class="list-group-item">Go Test Page</a>
 				  <a href="#" class="list-group-item">Second item</a>
 				  <a href="#" class="list-group-item">Third item</a>
 				</div>
 			</div>
 			<div class="col-sm-10 contentBC"></div>
 		</div>
+		<br/>
+		<div class="row">
+			<div class="well no-padding col-md-2">
+
+	    	</div>
+		</div>
 	</div>
-	
-</div>
-	
+
 </body>
 </html>
