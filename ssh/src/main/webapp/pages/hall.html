@@ -14,10 +14,33 @@
 	<!-- Customize JS -->
 	<script type="text/javascript" src="/ssh/js/hall/hall.js"></script>
 	
+	<!-- Customize CSS -->
+	<style>
+		.sidebarBC {
+		    background-color: lavender;
+		}
+		.contentBC {
+			background-color: lavenderblush;
+		}
+	</style>
+	
 </head>
 <body>
-	<div>
+	<div class="container">
 		<h2>SSH Demo Hall</h2>
+		<div class="row">
+			<div class="col-sm-2 sidebarBC">
+				<div class="list-group">
+				  <a href="#" class="list-group-item active">First item</a>
+				  <a href="#" class="list-group-item">Second item</a>
+				  <a href="#" class="list-group-item">Third item</a>
+				</div>
+			</div>
+			<div class="col-sm-10 contentBC"></div>
+		</div>
 	</div>
+	
+</div>
+	
 </body>
 </html>
