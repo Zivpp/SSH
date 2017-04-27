@@ -6,27 +6,20 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   
   <style>
+  
+	/*   padding 0px 代表不要留白 */
 	.no-padding{
 	  padding:0px;
 	}
-	.glyphicon-icon-rpad .glyphicon,.glyphicon-icon-rpad .glyphicon.m8,.fa-icon-rpad .fa,.fa-icon-rpad .fa.m8{ padding-right:8px; }
-	.glyphicon-icon-lpad .glyphicon,.glyphicon-icon-lpad .glyphicon.m8,.fa-icon-lpad .fa,.fa-icon-lpad .fa.m8{ padding-left:8px; }
-	.glyphicon-icon-rpad .glyphicon.m5,.fa-icon-rpad .fa.m5{ padding-right:5px; }
-	.glyphicon-icon-lpad .glyphicon.m5,.fa-icon-lpad .fa.m5{ padding-left:5px; }
-	.glyphicon-icon-rpad .glyphicon.m12,.fa-icon-rpad .fa.m12{ padding-right:12px; }
-	.glyphicon-icon-lpad .glyphicon.m12,.fa-icon-lpad .fa.m12{ padding-left:12px; }
-	.glyphicon-icon-rpad .glyphicon.m15,.fa-icon-rpad .fa.m15{ padding-right:15px; }
-	.glyphicon-icon-lpad .glyphicon.m15,.fa-icon-lpad .fa.m15{ padding-left:15px; }
-	
-	
-	
-	ul.nav-menu-list-style .nav-header .menu-collapsible-icon{position:absolute; right:3px; top:16px; font-size:9px; }
-	
-	
-	
+
+	/* 	margin 0  代表沒有間隙 */
 	ul.nav-menu-list-style{
 	  margin:0;
 	}
+	
+	/* 讓箭頭圖案靠右 */
+	ul.nav-menu-list-style .nav-header .menu-collapsible-icon{position:absolute; right:3px; top:16px; font-size:9px; }
+	
 	ul.nav-menu-list-style .nav-header{
 	  border-top:1px solid #FFFFFF;
 	  border-bottom:1px solid #e8e8e8;
@@ -36,17 +29,15 @@
 	  padding:0 8px;
 	  font-weight:600;
 	}
-	ul.nav-menu-list-style> li{
-	  position:relative; }
+	
+	ul.nav-menu-list-style> li{position:relative; }
+	
 	ul.nav-menu-list-style> li a{
 	  border-top:1px solid #FFFFFF;
 	  border-bottom:1px solid #e8e8e8;
 	  padding:0 10px;
 	  line-height:32px;
 	}
-	ul.nav-menu-list-style> li:first-child a{
-	}
-	
 	
 	ul.nav-menu-list-style{list-style:none; padding:0px; margin:0px;}
 	ul.nav-menu-list-style li .badge,ul.nav-menu-list-style li .pull-right,ul.nav-menu-list-style li span.badge,ul.nav-menu-list-style li label.badge{float:right; margin-top:7px;}
@@ -70,7 +61,7 @@
 	    <div class="well no-padding">
 	        <div>
 	            <ul class="nav nav-list nav-menu-list-style">
-	                <li><label class="tree-toggle nav-header glyphicon-icon-rpad"><span class="glyphicon glyphicon-folder-close m5"></span>Bootstrap
+	                <li><label class="tree-toggle nav-header"><span class="glyphicon glyphicon-folder-close m5"></span>Bootstrap
 	                            <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
 	                    <ul class="nav nav-list tree bullets">
 	                        <li><a href="#">JavaScript</a></li>
