@@ -7,45 +7,43 @@
   
   <style>
   
-	/*   padding 0px 代表不要留白 */
-	.no-padding{
+	/*  padding 0px 代表上下左右不要留白 */
+	.noPadding{
 	  padding:0px;
 	}
 
-	/* 	margin 0  代表沒有間隙 */
-	ul.nav-menu-list-style{
-	  margin:0;
-	}
+	/* 	list-style-type:none 代表沒有任何開頭圖案，margin 0  代表沒有間隙 */
+	ul.navMenuListStyle{ list-style-type:none; padding:0px; margin:0px; }
 	
-	/* 讓箭頭圖案靠右 */
-	ul.nav-menu-list-style .nav-header .menu-collapsible-icon{position:absolute; right:3px; top:16px; font-size:9px; }
-	
-	ul.nav-menu-list-style .nav-header{
+	/* 	menu header 欄位美化*/
+	ul.navMenuListStyle .navHeader{
 	  border-top:1px solid #FFFFFF;
 	  border-bottom:1px solid #e8e8e8;
 	  display:block;
 	  margin:0;
 	  line-height:42px;
-	  padding:0 8px;
+	  padding:0 8px; /* 先清空 0 -> 在增加為 8px*/
 	  font-weight:600;
 	}
+	/*	menu 上的圖案靠右邊界 */
+	ul.navMenuListStyle .navHeader .menuIconKeepRight{
+		position:absolute; right:10px; top:16px; font-size:9px; 
+	}	
 	
-	ul.nav-menu-list-style> li{position:relative; }
-	
-	ul.nav-menu-list-style> li a{
+	ul.navMenuListStyle> li a{
 	  border-top:1px solid #FFFFFF;
 	  border-bottom:1px solid #e8e8e8;
 	  padding:0 10px;
 	  line-height:32px;
 	}
 	
-	ul.nav-menu-list-style{list-style:none; padding:0px; margin:0px;}
-	ul.nav-menu-list-style li .badge,ul.nav-menu-list-style li .pull-right,ul.nav-menu-list-style li span.badge,ul.nav-menu-list-style li label.badge{float:right; margin-top:7px;}
-	ul.bullets{list-style:inside disc}
-	ul.numerics{list-style:inside decimal}
-	.ul.kas-icon-aero{}
-	ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px; content: "\e258"; padding-right:8px; }
-
+	/* 	小數字靠右 */
+	ul.navMenuListStyle li .badge,
+	ul.navMenuListStyle li span.badge,
+	ul.navMenuListStyle li label.badge{
+        float:right; margin-top:7px;
+    }
+    
   </style>
   
 </head>
@@ -58,19 +56,23 @@
 	<div class="container">
 	<div class="row">
 	  <div class="col-md-3">
-	    <div class="well no-padding">
+	    <div class="well noPadding">
 	        <div>
-	            <ul class="nav nav-list nav-menu-list-style">
-	                <li><label class="tree-toggle nav-header"><span class="glyphicon glyphicon-folder-close m5"></span>Bootstrap
-	                            <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
+	            <ul class="nav navMenuListStyle">
+	                <li>
+	                	<label class="tree-toggle navHeader">
+	                		<span class="glyphicon glyphicon-folder-close m5"></span>
+	                		Bootstrap
+	                        <span class="menuIconKeepRight glyphicon glyphicon-chevron-down"></span>
+	                    </label>
 	                    <ul class="nav nav-list tree bullets">
 	                        <li><a href="#">JavaScript</a></li>
 	                        <li><a href="#">CSS <span class="badge">42</span></a></li>
-	                        <li><label class="tree-toggle nav-header">Buttons</label>
+	                        <li><label class="tree-toggle navHeader">Buttons</label>
 	                            <ul class="nav nav-list tree">
 	                                <li><a href="#">Colors</a></li>
 	                                <li><a href="#">Sizes</a></li>
-	                                <li><label class="tree-toggle nav-header">Forms</label>
+	                                <li><label class="tree-toggle navHeader">Forms</label>
 	                                    <ul class="nav nav-list tree">
 	                                        <li><a href="#">Horizontal</a></li>
 	                                        <li><a href="#">Vertical</a></li>
@@ -81,15 +83,15 @@
 	                    </ul>
 	                </li>
 	                <li class="divider"></li>
-	                <li><label class="tree-toggle nav-header">Responsive</label>
+	                <li><label class="tree-toggle navHeader">Responsive</label>
 	                    <ul class="nav nav-list tree">
 	                        <li><a href="#">Overview</a></li>
 	                        <li><a href="#">CSS</a></li>
-	                        <li><label class="tree-toggle nav-header">Media Queries</label>
+	                        <li><label class="tree-toggle navHeader">Media Queries</label>
 	                            <ul class="nav nav-list tree">
 	                                <li><a href="#">Text</a></li>
 	                                <li><a href="#">Images</a></li>
-	                                <li><label class="tree-toggle nav-header">Mobile Devices</label>
+	                                <li><label class="tree-toggle navHeader">Mobile Devices</label>
 	                                    <ul class="nav nav-list tree">
 	                                        <li><a href="#">iPhone</a></li>
 	                                        <li><a href="#">Samsung</a></li>
@@ -97,11 +99,11 @@
 	                                </li>
 	                            </ul>
 	                        </li>
-	                        <li><label class="tree-toggle nav-header">Coding</label>
+	                        <li><label class="tree-toggle navHeader">Coding</label>
 	                            <ul class="nav nav-list tree">
 	                                <li><a href="#">JavaScript</a></li>
 	                                <li><a href="#">jQuery</a></li>
-	                                <li><label class="tree-toggle nav-header">HTML DOM</label>
+	                                <li><label class="tree-toggle navHeader">HTML DOM</label>
 	                                    <ul class="nav nav-list tree">
 	                                        <li><a href="#">DOM Elements</a></li>
 	                                        <li><a href="#">Recursive</a></li>
@@ -119,11 +121,16 @@
 	</div>
 	
 	 <script>
-  		$('.tree-toggle').click(function () {	
-  			$(this).parent().children('ul.tree').toggle(200);
-			});
+  		//預設執行
 		$(function(){
-		$('.tree-toggle').parent().children('ul.tree').toggle(200);
+			
+			//預設先全部收起來, toggle(200) 200為縮放快慢
+			$('.tree-toggle').parent().children('ul.tree').toggle(200);
+						
+		 	//觸發執行
+	  		$('.tree-toggle').click(function () {	
+	  			$(this).parent().children('ul.tree').toggle(200);
+			});
 		})
   	</script>
 </body>

@@ -26,6 +26,38 @@
    			background-color: rgb(0, 102, 204);
    			color: rgb(255, 255, 255);
 		}
+		
+		/* 上下左右不留空間 */
+		.noPadding{
+	  		padding:0px;
+		}
+		
+		/*	treeRoot 設定 不要空隙, 不要編號 */
+		.treeRoot ul.treeBranches li a{
+			list-style-type:none; 
+			padding:0px; 
+			margin:0px; 
+		}
+		
+		/* treeHeader 美化 */
+		.treeHeader{
+		  border-top:1px solid #FFFFFF;
+		  border-bottom:1px solid #e8e8e8;
+		  display:block;
+		  margin:0;
+		  line-height:42px;
+		  padding:0 8px; /* 先清空 0 -> 在增加為 8px*/
+		  font-weight:600;
+		}
+		
+		/* treeBranches 美化 */
+		.treeBranches li a{
+		  border-top:1px solid #FFFFFF;
+		  border-bottom:1px solid #e8e8e8;
+		  padding:0 10px;
+		  line-height:32px;
+		}
+		
 	</style>
 	
 </head>
@@ -51,22 +83,31 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2 sidebarBC">
-				<div class="list-group">
-				  <a href="/ssh/pages/testPage.html" class="list-group-item">Go Test Page</a>
-				  <a href="#" class="list-group-item">Second item</a>
-				  <a href="#" class="list-group-item">Third item</a>
+			<div class="well noPadding col-md-2">
+				<div class="nav treeRoot">
+					<label class="treeHeader">Header_1</label>
+					<ul class="nav treeBranches">
+						<li><a href="/ssh/pages/testPage.html">branches_1</a></li>
+						<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
+					</ul>
 				</div>
-			</div>
-			<div class="col-sm-10 contentBC"></div>
-		</div>
-		<br/>
-		<div class="row">
-			<div class="well no-padding col-md-2">
-
 	    	</div>
 		</div>
 	</div>
-
+	
+	<script>
+	$(function(){
+		
+		//預設先縮起來
+		$(".treeHeader").parent().children('ul.treeBranches').toggle(200);
+		
+		//觸發時縮放
+		$(".treeHeader").click(function(){
+			$(this).parent().children('ul.treeBranches').toggle(200);
+		});
+	});
+	
+	</script>
+	
 </body>
 </html>
