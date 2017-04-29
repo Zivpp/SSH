@@ -51,7 +51,7 @@
 		}
 		
 		/* treeBranches 美化 */
-		.treeBranches li a{
+		.treeBranches li{
 		  border-top:1px solid #FFFFFF;
 		  border-bottom:1px solid #e8e8e8;
 		  padding:0 10px;
@@ -87,7 +87,8 @@
 				<div class="nav treeRoot">
 					<label class="treeHeader">Header_1</label>
 					<ul class="nav treeBranches">
-						<li><a href="/ssh/pages/testPage.html">branches_1</a></li>
+<!-- 						<li><a href="/ssh/pages/testPage.html">branches_1</a></li> -->
+						<li><a href="#">branches_1</a></li>
 						<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
 					</ul>
 				</div>
@@ -97,7 +98,7 @@
 	
 	<script>
 	$(function(){
-		
+		//.parent()用法是因為如果選 treeRoot，會點不到(因為為div)無法觸發 click，
 		//預設先縮起來
 		$(".treeHeader").parent().children('ul.treeBranches').toggle(200);
 		
