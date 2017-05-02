@@ -58,6 +58,10 @@
 		  line-height:32px;
 		}
 		
+		.5-col-grid {
+    width: 20%;
+}
+		
 	</style>
 	
 </head>
@@ -88,7 +92,6 @@
 				<div class="nav treeRoot">
 					<label class="treeHeader">Header_1</label>
 					<ul class="nav treeBranches">
-<!-- 						<li><a href="/ssh/pages/testPage.html">branches_1</a></li> -->
 						<li><a href="#">branches_1</a></li>
 						<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
 					</ul>
@@ -96,8 +99,34 @@
 	    	</div>
 	    	<!-- content -->
 	    	<div class="contentBC col-md-10">
-        		<iframe src="https://www.w3schools.com" width="100%" height="700px"></iframe>
+        		<iframe src="#" width="100%" height="100%"></iframe>
 	    	</div>
+		</div>
+		<div class="row">
+			<div class="noPadding col-md-2">
+				<ul class="nav nav-tabs">
+		    		<li><a  data-toggle="tab" href="#AngularJs">AngularJs</a></li>
+		    		<li><a data-toggle="tab" href="#Skill-Exp">Skill-Exp</a></li>
+		  		</ul>
+		  		<div class="tab-content">
+					<div id="AngularJs" class="tab-pane fade">
+					    <div class="nav treeRoot">
+							<label class="treeHeader">Header_1</label>
+							<ul class="nav treeBranches">
+								<li><a href="#">branches_1</a></li>
+								<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
+							</ul>
+						</div>
+				  	</div>
+				  	<div id="Skill-Exp" class="tab-pane fade">
+				    	<h3>Menu2</h3>
+				    	<p>Some content.aaaa</p>
+				  	</div>
+				</div>
+			</div>
+			<div class="contentBC col-md-10">
+				<iframe src="#" width="100%" height="100%"></iframe>
+			</div>
 		</div>
 	</div>
 	
