@@ -83,6 +83,7 @@
 			</div>
 		</div>
 		<div class="row">
+			<!-- sideBar -->
 			<div class="well noPadding col-md-2">
 				<div class="nav treeRoot">
 					<label class="treeHeader">Header_1</label>
@@ -93,19 +94,25 @@
 					</ul>
 				</div>
 	    	</div>
+	    	<!-- content -->
+	    	<div class="contentBC col-md-10">
+        		<iframe src="https://www.w3schools.com" width="100%" height="700px"></iframe>
+	    	</div>
 		</div>
 	</div>
 	
 	<script>
 	$(function(){
-		//.parent()用法是因為如果選 treeRoot，會點不到(因為為div)無法觸發 click，
-		//預設先縮起來
+		
+		//.parent()用法是因為如果選 treeRoot，會點不到(div)無法觸發 click，
+		//預設縮起
 		$(".treeHeader").parent().children('ul.treeBranches').toggle(200);
 		
-		//觸發時縮放
+		//觸發縮放
 		$(".treeHeader").click(function(){
 			$(this).parent().children('ul.treeBranches').toggle(200);
 		});
+		
 	});
 	
 	</script>
