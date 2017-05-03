@@ -16,22 +16,13 @@
 	
 	<!-- Customize CSS -->
 	<style>
-		.sidebarBC {
-		    background-color: lavender;
-		}
-		.contentBC {
-			background-color: lavenderblush;
-		}
+
+		/* 滑鼠選到變深藍 */
 		.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
    			background-color: rgb(0, 102, 204);
    			color: rgb(255, 255, 255);
 		}
-		
-		/* 上下左右不留空間 */
-		.noPadding{
-	  		padding:0px;
-		}
-		
+				
 		/*	treeRoot 設定 不要空隙, 不要編號 */
 		.treeRoot ul.treeBranches li a{
 			list-style-type:none; 
@@ -57,13 +48,14 @@
 		  padding:0 10px;
 		  line-height:32px;
 		}
-		
-		/* margin 0px */
-		.no-margin-y {
-		    margin-top: 0px !important;
-		    margin-bottom: 0px !important;
-		}
-		
+				
+		.pp {
+			border-left:1px solid;
+			border-right:1px solid;
+			border-bottom:1px solid;
+			border-color: #ebebe0;
+		}	
+				
 	</style>
 	
 </head>
@@ -86,12 +78,12 @@
 		</div>
 		<div class="row">
 			<!-- sideBar -->
-			<div class="noPadding col-md-2">
+			<div class="col-md-2">
 				<ul class="nav nav-tabs ">
-		    		<li><a  data-toggle="tab" href="#AngularJs">AngularJs</a></li>
-		    		<li><a data-toggle="tab" href="#Skill-Exp">Code-Exp</a></li>
+		    		<li><a  data-toggle="tab" href="#AngularJs">實作經驗</a></li>
+		    		<li><a data-toggle="tab" href="#Skill-Exp">設定</a></li>
 		  		</ul>
-		  		<div class="tab-content">
+		  		<div class="tab-content pp">
 					<div id="AngularJs" class="tab-pane fade">
 					    <div class="nav treeRoot">
 							<label class="treeHeader">Directive</label>
