@@ -58,9 +58,11 @@
 		  line-height:32px;
 		}
 		
-		.5-col-grid {
-    width: 20%;
-}
+		/* margin 0px */
+		.no-margin-y {
+		    margin-top: 0px !important;
+		    margin-bottom: 0px !important;
+		}
 		
 	</style>
 	
@@ -78,42 +80,23 @@
 			      <li><a href="#">Page 1</a></li>
 			      <li><a href="#">Page 2</a></li>
 			      <li><a href="#">Page 3</a></li>
+<!-- 			      計畫 : 進行一些設定，設計要從能設定角度 -->
 			    </ul>
 			</nav>
 		</div>
 		<div class="row">
-			<div class="col-sm-2">
-				<span class="label label-primary">Menu</span>
-			</div>
-		</div>
-		<div class="row">
 			<!-- sideBar -->
-			<div class="well noPadding col-md-2">
-				<div class="nav treeRoot">
-					<label class="treeHeader">Header_1</label>
-					<ul class="nav treeBranches">
-						<li><a href="#">branches_1</a></li>
-						<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
-					</ul>
-				</div>
-	    	</div>
-	    	<!-- content -->
-	    	<div class="contentBC col-md-10">
-        		<iframe src="#" width="100%" height="100%"></iframe>
-	    	</div>
-		</div>
-		<div class="row">
 			<div class="noPadding col-md-2">
-				<ul class="nav nav-tabs">
+				<ul class="nav nav-tabs ">
 		    		<li><a  data-toggle="tab" href="#AngularJs">AngularJs</a></li>
-		    		<li><a data-toggle="tab" href="#Skill-Exp">Skill-Exp</a></li>
+		    		<li><a data-toggle="tab" href="#Skill-Exp">Code-Exp</a></li>
 		  		</ul>
 		  		<div class="tab-content">
 					<div id="AngularJs" class="tab-pane fade">
 					    <div class="nav treeRoot">
-							<label class="treeHeader">Header_1</label>
+							<label class="treeHeader">Directive</label>
 							<ul class="nav treeBranches">
-								<li><a href="#">branches_1</a></li>
+								<li><a href="#">Table</a></li>
 								<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
 							</ul>
 						</div>
@@ -124,6 +107,7 @@
 				  	</div>
 				</div>
 			</div>
+			<!-- content -->
 			<div class="contentBC col-md-10">
 				<iframe src="#" width="100%" height="100%"></iframe>
 			</div>
