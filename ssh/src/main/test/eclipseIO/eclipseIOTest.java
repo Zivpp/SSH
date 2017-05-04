@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -41,17 +42,17 @@ public class eclipseIOTest {
  
             JSONObject jsonObject = (JSONObject) obj;
  
-            String name = (String) jsonObject.get("Name");
-            String author = (String) jsonObject.get("Author");
+            String name = (String) jsonObject.get("name");
+            String author = (String) jsonObject.get("sex");
             JSONArray companyList = (JSONArray) jsonObject.get("companyList");
  
-            System.out.println("Name: " + name);
-            System.out.println("Author: " + author);
-            System.out.println("\nCompany List:");
-            Iterator<String> iterator = companyList.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }
+//            System.out.println("Name: " + name);
+//            System.out.println("Author: " + author);
+//            System.out.println("\nCompany List:");
+//            Iterator<String> iterator = companyList.iterator();
+//            while (iterator.hasNext()) {
+//                System.out.println(iterator.next());
+//            }
             
             //Json 轉成物件
             Gson gson= new Gson();
@@ -64,6 +65,8 @@ public class eclipseIOTest {
             out.write("Write the string to text file");
             out.flush();
             out.close();
+            
+            System.out.println(jsonObject.toString());
             
         } catch (Exception e) {
             e.printStackTrace();

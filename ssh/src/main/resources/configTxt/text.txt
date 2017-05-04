@@ -1,9 +1,11 @@
 {
-    "name": "crunchify.com",
-    "sex": "App Shah",
-    "companyList": [
-        "Compnay: eBay",
-        "Compnay: Paypal",
-        "Compnay: Google"
-    ]
-}
+    "ID" : "201"
+    "CATE" : "TREE_BRANCHES"
+    "CATENAME" : "SIDERBAR_TREE分支選項"
+    "CODE" : "TABLE"
+    "CODENAME" : "TREE分支選項_TABLE"
+    "VALUE" : "#"
+    "DESC" : "AngularJs Table 展示選項"
+    "PARENTID" : "101"
+ }
+

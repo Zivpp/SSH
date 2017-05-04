@@ -1,0 +1,9 @@
+{
+    "name": "crunchify.com",
+    "sex": "App Shah",
+    "companyList": [
+        "Compnay: eBay",
+        "Compnay: Paypal",
+        "Compnay: Google"
+    ]
+}
