@@ -1,11 +1,10 @@
 package ssh.action.login;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import login.TestDataPackageBean;
+import login.TestStringData;
 import ssh.action.BaseAction;
-import ssh.login.TestDataPackageBean;
-import ssh.login.TestStringData;
 import ssh.util.StringUtil;
 
 public class LoginAction extends BaseAction{

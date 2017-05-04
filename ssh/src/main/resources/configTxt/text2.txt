@@ -1,0 +1,1 @@
+Write the string to text file
