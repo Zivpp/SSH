@@ -14,7 +14,9 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.eclipse.jdt.internal.compiler.batch.Main;
@@ -23,6 +25,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import login.TestStringData;
 
@@ -53,12 +56,17 @@ public class eclipseIOTest {
 //            while (iterator.hasNext()) {
 //                System.out.println(iterator.next());
 //            }
+                      
             
             //Json 轉成物件
             Gson gson= new Gson();
             TestStringData d = gson.fromJson(jsonObject.toString(), TestStringData.class);
             
             System.out.println(jsonObject.toString());
+            
+            Map<String, Object> retMap = gson.fromJson(
+            		obj.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
+            	);
             
             //寫入 eclipse  內部文字檔案
             BufferedWriter out = new BufferedWriter(new FileWriter("src/main/resources/configTxt/text2.txt"));
