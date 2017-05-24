@@ -6,66 +6,19 @@
 	
 	<!-- 外部資源引入 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/ssh/resources/css//bootstrap.min.css">
+	<link rel="stylesheet" href="/ssh/resources/css/bootstrap.min.css">
 	<script type="text/javascript" src="/ssh/resources/jquery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/ssh/resources/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/ssh/resources/angularjs/angular-1.5.6.min.js"></script>
 	
 	<!-- Customize JS -->
-	<script type="text/javascript" src="/ssh/js/hall/hall.js"></script>
+	<script type="text/javascript" src="/ssh/js/hall.js"></script>
 	
 	<!-- Customize CSS -->
-	<style>
-
-		/* 滑鼠選到變深藍 */
-		.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-   			background-color: rgb(0, 102, 204);
-   			color: rgb(255, 255, 255);
-		}
-				
-		/*	treeRoot 設定 不要空隙, 不要編號 */
-		.treeRoot ul.treeBranches li a{
-			list-style-type:none; 
-			padding:0px; 
-			margin:0px; 
-		}
-		
-		/* treeHeader 美化 */
-		.treeHeader{
-		  border-top:1px solid #FFFFFF;
-		  border-bottom:1px solid #e8e8e8;
-		  display:block;
-		  margin:0;
-		  line-height:42px;
-		  padding:0 8px; /* 先清空 0 -> 在增加為 8px*/
-		  font-weight:600;
-		}
-		
-		/* treeBranches 美化 */
-		.treeBranches li{
-		  border-top:1px solid #FFFFFF;
-		  border-bottom:1px solid #e8e8e8;
-		  padding:0 10px;
-		  line-height:32px;
-		}
-				
-		.siderBarBorder {
-			border-left:1px solid;
-			border-right:1px solid;
-			border-bottom:1px solid;
-			border-color: #ebebe0;
-		}
-		
-		/* 標楷體 字型[暫無使用]*/
-		.DFKai_sb {
-			font-family : DFKai-sb;
-			font-size : 110%;
-		}	
-				
-	</style>
+	<link rel="stylesheet" href="/ssh/resources/css/hall.css">
 	
 </head>
-<body>
+<body ng-app="hallApp" ng-controller="hallCtrl">
 	<div class="container">
 		<h2>SSH Demo Hall</h2>
 		<div class="row">
@@ -95,8 +48,9 @@
 					    	<li> <!-- 縮放 root -->
 								<label class="treeHeader">AngularJs</label>
 								<ul class="nav treeBranches">
-									<li><a href="#">Table</a></li>
-									<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
+									<li ng-repeat="ajObj in angularJsList track by $index">
+										<a href="#" ng-click="going(ajObj)">{{ajObj}}</a>
+									</li>
 								</ul>
 							</li>
 							<li>
@@ -122,7 +76,7 @@
 			</div>
 			<!-- content -->
 			<div class="col-md-10" style="padding:0 50px;">
-				<iframe src="/ssh/pages/config_sidebar.html" width="100%" height="700px" frameborder="0"></iframe>
+				<iframe ng-src="{{iframUrl}}" width="100%" height="700px" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>
