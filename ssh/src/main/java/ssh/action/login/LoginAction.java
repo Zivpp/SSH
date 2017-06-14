@@ -1,10 +1,16 @@
 package ssh.action.login;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import bean.User;
 import login.TestDataPackageBean;
 import login.TestStringData;
 import ssh.action.BaseAction;
+import ssh.util.HibernateUtil;
 import ssh.util.StringUtil;
 
 public class LoginAction extends BaseAction{
@@ -32,7 +38,7 @@ public class LoginAction extends BaseAction{
 		try{
 						
 			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){
-				super.dataHandler(PASS);
+				//super.dataHandler(PASS);
 			}
 			
 //			String d_String = this.d_String;
@@ -53,6 +59,27 @@ public class LoginAction extends BaseAction{
 //			reuslt.add(dataPackage);
 			
 //			super.dataHandler();
+			
+			try{
+				Session session = HibernateUtil.getSessionFactory().openSession();
+			    Transaction tx = session.beginTransaction();
+			
+			    User user = new User();
+			    user.setUserId(1);
+			    user.setUserName("Ziv");
+			    user.setCreateBy("Ziv");
+			    user.setCreateDate(new Date());
+			
+			    session.save(user);
+			    tx.commit();
+			
+			    session.close();
+			    HibernateUtil.shutdown();
+			}catch(Exception e){
+				throw new Exception(e);
+			}
+			
+		    super.dataHandler(PASS);
 			
 		}catch(Exception e){	
 			super.dataHandler(e);

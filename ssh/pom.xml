@@ -33,6 +33,11 @@
     	<artifactId>struts2-json-plugin</artifactId>
     	<version>${struts2.version}</version>
 	</dependency>
+	<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.5.2</version>
+    </dependency>
 	<!-- Struts2 End -->
 	
 	<!-- Jason about Start -->
@@ -49,6 +54,44 @@
 	</dependency>
 	<!-- Jason about End -->
     
+    <!-- Hibernate Start -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.25</version>
+    </dependency>		
+	
+	<dependency>
+    	<groupId>org.mariadb.jdbc</groupId>
+    	<artifactId>mariadb-java-client</artifactId>
+    	<version>1.1.9</version>
+	</dependency>
+	
+	<!-- 4.2.5 after version, can't working -->
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>4.2.5.Final</version>
+	</dependency>	
+    
+	<dependency>
+	    <groupId>org.hibernate.common</groupId>
+	    <artifactId>hibernate-commons-annotations</artifactId>
+	    <version>5.0.1.Final</version>
+	</dependency>
+    
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+   	 	<artifactId>ejb3-persistence</artifactId>
+    	<version>1.0.2.GA</version>
+	</dependency>
+	
+	<dependency>
+    	<groupId>org.mariadb.jdbc</groupId>
+    	<artifactId>mariadb-java-client</artifactId>
+   	 	<version>2.0.2</version>
+	</dependency>
+    <!-- Hibernate End -->
     
   </dependencies>
   
