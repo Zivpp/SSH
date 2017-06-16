@@ -36,7 +36,7 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 		})
 		.success(function (data, status, headers, config) {
 			console.log('Post OK!!!', data);
-			if(data.result.datas == 'PASS'){
+			if(data.result.datas == 'SUCCESS'){
 				document.location.href="pages/hall.html"
 			}
 		})

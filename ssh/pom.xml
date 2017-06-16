@@ -10,6 +10,8 @@
   
   <properties>
   	<struts2.version>2.3.32</struts2.version>
+  	<spring.version>3.2.2.RELEASE</spring.version>
+	<spring.ws.version>2.1.4.RELEASE</spring.ws.version>
   </properties>
   
   <dependencies>
@@ -20,6 +22,40 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
+    <!-- Spring Start -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-beans</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+	</dependency>    
+    <!-- Spring End -->
     
     <!-- Struts2 Start -->
    	<dependency>
@@ -33,6 +69,13 @@
     	<artifactId>struts2-json-plugin</artifactId>
     	<version>${struts2.version}</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>org.apache.struts</groupId>
+	    <artifactId>struts2-spring-plugin</artifactId>
+	    <version>${struts2.version}</version>
+	</dependency>	
+	
 	<dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>

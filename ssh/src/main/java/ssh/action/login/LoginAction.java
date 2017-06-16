@@ -1,17 +1,18 @@
 package ssh.action.login;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import bean.User;
 import login.TestDataPackageBean;
 import login.TestStringData;
 import ssh.action.BaseAction;
-import ssh.util.HibernateUtil;
+import ssh.facade.ILoginFacade;
 import ssh.util.StringUtil;
+import systemConfig.SysCfgCode;
 
 public class LoginAction extends BaseAction{
 	
@@ -26,9 +27,13 @@ public class LoginAction extends BaseAction{
 	private TestStringData testStringData;
 	
 	private String account;
-	private String password;
+	private String password;	
 	
-	private final String PASS = "PASS";
+	@Autowired
+	@Qualifier("loginFacadeImpl")
+	private ILoginFacade loginFacade;
+	
+	private ILoginFacade lf;
 	
 	/**
 	 * µn¤J¬ÛÃö action
@@ -37,10 +42,16 @@ public class LoginAction extends BaseAction{
 	public String loginAction() {
 		try{
 						
-			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){
-				//super.dataHandler(PASS);
+			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){	
+				
+				String b = loginFacade.login(account,password);
+				super.dataHandler(b);
 			}
 			
+			
+			
+			
+			//Struts josn auto Transform example : 
 //			String d_String = this.d_String;
 //			Integer d_Int = this.d_Int;
 //			Long d_Long = this.d_Long;
@@ -59,30 +70,33 @@ public class LoginAction extends BaseAction{
 //			reuslt.add(dataPackage);
 			
 //			super.dataHandler();
+
 			
-			try{
-				Session session = HibernateUtil.getSessionFactory().openSession();
-			    Transaction tx = session.beginTransaction();
-			
-			    User user = new User();
-			    user.setUserId(1);
-			    user.setUserName("Ziv");
-			    user.setCreateBy("Ziv");
-			    user.setCreateDate(new Date());
-			
-			    session.save(user);
-			    tx.commit();
-			
-			    session.close();
-			    HibernateUtil.shutdown();
-			}catch(Exception e){
-				throw new Exception(e);
-			}
-			
-		    super.dataHandler(PASS);
+			//Hibernate example :
+//			try{
+//				Session session = HibernateUtil.getSessionFactory().openSession();
+//			    Transaction tx = session.beginTransaction();
+//			
+//			    User user = new User();
+//			    user.setUserId(1);
+//			    user.setUserName("Ziv");
+//			    user.setCreateBy("Ziv");
+//			    user.setCreateDate(new Date());
+//			
+//			    session.save(user);
+//			    tx.commit();
+//			
+//			    session.close();
+//			    HibernateUtil.shutdown();
+//			}catch(Exception e){
+//				throw new Exception(e);
+//			}
+//			
+//		    super.dataHandler(PASS);
+//			
 			
 		}catch(Exception e){	
-			super.dataHandler(e);
+			System.out.println(e.getMessage());
 		}
 
 		return SUCCESS;

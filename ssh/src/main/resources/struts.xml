@@ -8,7 +8,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.custom.i18n.resources" value="global-messages" />
-<!-- 	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" /> -->
+	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
 
 	<package name="crm-default" extends="json-default" abstract="true">
 		<interceptors>
