@@ -4,15 +4,12 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import login.TestDataPackageBean;
 import login.TestStringData;
 import ssh.action.BaseAction;
 import ssh.facade.ILoginFacade;
 import ssh.util.StringUtil;
-import systemConfig.SysCfgCode;
 
 public class LoginAction extends BaseAction{
 	
@@ -32,9 +29,7 @@ public class LoginAction extends BaseAction{
 	@Autowired
 	@Qualifier("loginFacadeImpl")
 	private ILoginFacade loginFacade;
-	
-	private ILoginFacade lf;
-	
+
 	/**
 	 * µn¤J¬ÛÃö action
 	 * @return
@@ -43,9 +38,9 @@ public class LoginAction extends BaseAction{
 		try{
 						
 			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){	
+
+				super.dataHandler(loginFacade.login(account,password));
 				
-				String b = loginFacade.login(account,password);
-				super.dataHandler(b);
 			}
 			
 			
