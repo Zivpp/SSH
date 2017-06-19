@@ -1,0 +1,23 @@
+A. 功能
+
+1. excel 報表 : 欄位要能選擇
+2. 發 Email : google
+3. call web service : axis2, spring ws
+4. 提供 web service : xsd->jaxb
+5. Thread 併發(整合 4.)
+6. log (first)
+7. URL API 功能
+
+
+B. Spring
+1. .porperties
+
+C. Struts2 
+1. 各種資料型態映射
+
+D. SQL
+1. System Table
+
+E. Angularjs
+1. 表單 Table : 欄位要能擴充(jsaon 轉換), 欄位要能排序, 一筆資料可以點擊(跑出 model, 背景 black)
+2. 版面控制吃 system config

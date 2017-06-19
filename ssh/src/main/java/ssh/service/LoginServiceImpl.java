@@ -16,9 +16,8 @@ public class LoginServiceImpl implements ILoginService{
 	
 	public String login(String account, String password) throws Exception {
 		
-		String empId = loginDao.login(account,password);
+		return loginDao.login(account,password);
 		
-		return SysCfgCode.SUCCESS;
 	}
 
 }

@@ -39,7 +39,9 @@ public class LoginAction extends BaseAction{
 						
 			if(!StringUtil.isEmpty(account) && !StringUtil.isEmpty(password)){	
 
-				super.dataHandler(loginFacade.login(account,password));
+				String passStr = loginFacade.login(account,password);
+				
+				super.dataHandler(passStr);
 				
 			}
 			

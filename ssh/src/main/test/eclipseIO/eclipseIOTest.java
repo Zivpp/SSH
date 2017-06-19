@@ -31,54 +31,54 @@ import login.TestStringData;
 
 public class eclipseIOTest {
 
-	public static void main(String[] args) throws IOException {
-
-		JSONParser parser = new JSONParser();
-		 
-        try {
-        	
-        	//讀取 eclipse 內部文字檔
-    		InputStream res = Main.class.getResourceAsStream("/configTxt/text.txt");
-    		BufferedReader reader = new BufferedReader(new InputStreamReader(res));
-    		
-            Object obj = parser.parse(reader);
- 
-            JSONObject jsonObject = (JSONObject) obj;
- 
-            String name = (String) jsonObject.get("name");
-            String author = (String) jsonObject.get("sex");
-            JSONArray companyList = (JSONArray) jsonObject.get("companyList");
- 
-//            System.out.println("Name: " + name);
-//            System.out.println("Author: " + author);
-//            System.out.println("\nCompany List:");
-//            Iterator<String> iterator = companyList.iterator();
-//            while (iterator.hasNext()) {
-//                System.out.println(iterator.next());
-//            }
-                      
-            
-            //Json 轉成物件
-            Gson gson= new Gson();
-            TestStringData d = gson.fromJson(jsonObject.toString(), TestStringData.class);
-            
-            System.out.println(jsonObject.toString());
-            
-            Map<String, Object> retMap = gson.fromJson(
-            		obj.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
-            	);
-            
-            //寫入 eclipse  內部文字檔案
-            BufferedWriter out = new BufferedWriter(new FileWriter("src/main/resources/configTxt/text2.txt"));
-            out.write("Write the string to text file");
-            out.flush();
-            out.close();
-            
-            System.out.println(jsonObject.toString());
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-	}
+//	public static void main(String[] args) throws IOException {
+//
+//		JSONParser parser = new JSONParser();
+//		 
+//        try {
+//        	
+//        	//讀取 eclipse 內部文字檔
+//    		InputStream res = Main.class.getResourceAsStream("/configTxt/text.txt");
+//    		BufferedReader reader = new BufferedReader(new InputStreamReader(res));
+//    		
+//            Object obj = parser.parse(reader);
+// 
+//            JSONObject jsonObject = (JSONObject) obj;
+// 
+//            String name = (String) jsonObject.get("name");
+//            String author = (String) jsonObject.get("sex");
+//            JSONArray companyList = (JSONArray) jsonObject.get("companyList");
+// 
+////            System.out.println("Name: " + name);
+////            System.out.println("Author: " + author);
+////            System.out.println("\nCompany List:");
+////            Iterator<String> iterator = companyList.iterator();
+////            while (iterator.hasNext()) {
+////                System.out.println(iterator.next());
+////            }
+//                      
+//            
+//            //Json 轉成物件
+//            Gson gson= new Gson();
+//            TestStringData d = gson.fromJson(jsonObject.toString(), TestStringData.class);
+//            
+//            System.out.println(jsonObject.toString());
+//            
+//            Map<String, Object> retMap = gson.fromJson(
+//            		obj.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
+//            	);
+//            
+//            //寫入 eclipse  內部文字檔案
+//            BufferedWriter out = new BufferedWriter(new FileWriter("src/main/resources/configTxt/text2.txt"));
+//            out.write("Write the string to text file");
+//            out.flush();
+//            out.close();
+//            
+//            System.out.println(jsonObject.toString());
+//            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//	}
 
 }
