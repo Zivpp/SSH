@@ -17,6 +17,7 @@ public class CfgSystemConfig {
 	private String codeCate;
 	private String cateName;
 	private Long parentId;
+	private Long seq;
 	private String code;
 	private String codeName;
 	private String codeValue;
@@ -135,6 +136,15 @@ public class CfgSystemConfig {
 
 	public void setUpdateUser(String updateUser) {
 		this.updateUser = updateUser;
+	}
+
+	@Column(name = "SEQ", nullable = false)
+	public Long getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Long seq) {
+		this.seq = seq;
 	}
 	
 }
