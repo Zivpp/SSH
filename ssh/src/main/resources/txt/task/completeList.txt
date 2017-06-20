@@ -1,0 +1,6 @@
+cerate cfg_system_config bean.
+insert cfg_system_config.
+update cfg_system_config.
+get cfg_system_config.
+delete cfg_system_config.
+cache.

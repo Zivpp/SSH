@@ -16,7 +16,7 @@ C. Struts2
 1. 各種資料型態映射
 
 D. SQL
-1. System Table
+1. GRUD
 
 E. Angularjs
 1. 表單 Table : 欄位要能擴充(jsaon 轉換), 欄位要能排序, 一筆資料可以點擊(跑出 model, 背景 black)
