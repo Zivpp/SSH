@@ -24,10 +24,10 @@ public class Insert {
 			ICfgSystemConfigDao userDAO = (ICfgSystemConfigDao) context.getBean("cfgSystemConfigDaoImpl");
 			
 		    CfgSystemConfig csc = new CfgSystemConfig();
-		    csc.setId(2);
+		    csc.setId(3);
 		    csc.setCodeCate("Test");
 		    csc.setCateName("ด๚ธี");
-		    csc.setCode("Test02");
+		    csc.setCode("Test03");
 		    csc.setCodeName("ด๚ธี2");
 		    csc.setCodeValue("2");
 		    csc.setCodeDesc("Test 02 go");

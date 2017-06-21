@@ -28,7 +28,7 @@
                 <prop key="hibernate.use_sql_comments">true</prop>
             </props>
         </property>
-        <!-- Hibernate annotations scan entity list : 同 hibernate.cfg.xml 的 <mapping> -->
+        <!-- Hibernate annotations scan entity : 同 hibernate.cfg.xml 的 <mapping> -->
         <property name="packagesToScan">
             <list>
                 <value>bean</value>
@@ -36,10 +36,5 @@
         </property>
     </bean>
      
-    <bean id="cfgSystemConfigDaoImpl" class="ssh.dao.CfgSystemConfigDaoImpl"> 
-        <property name="sessionFactory"> 
-            <ref bean="sessionFactory"/> 
-        </property> 
-    </bean>
 
 </beans>
