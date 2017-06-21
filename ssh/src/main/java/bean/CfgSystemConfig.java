@@ -13,11 +13,11 @@ import javax.persistence.TemporalType;
 @Table(name = "cfg_system_config")
 public class CfgSystemConfig {
 
-    private Long id;
+    private int id;
 	private String codeCate;
 	private String cateName;
-	private Long parentId;
-	private Long seq;
+	private int parentId;
+	private int seq;
 	private String code;
 	private String codeName;
 	private String codeValue;
@@ -29,11 +29,11 @@ public class CfgSystemConfig {
 	
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -56,11 +56,11 @@ public class CfgSystemConfig {
 	}
 
 	@Column(name = "PARENT_ID", nullable = false)
-	public Long getParentId() {
+	public int getParentId() {
 		return this.parentId;
 	}
 
-	public void setParentId(Long parentId) {
+	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
 
@@ -139,11 +139,11 @@ public class CfgSystemConfig {
 	}
 
 	@Column(name = "SEQ", nullable = false)
-	public Long getSeq() {
+	public int getSeq() {
 		return seq;
 	}
 
-	public void setSeq(Long seq) {
+	public void setSeq(int seq) {
 		this.seq = seq;
 	}
 	
