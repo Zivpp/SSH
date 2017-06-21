@@ -8,28 +8,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import bean.CfgSystemConfig;
+import ssh.dao.baseDao.DaoBaseMariadb;
 
 @Component("cfgSystemConfigDaoImpl")
-public class CfgSystemConfigDaoImpl implements ICfgSystemConfigDao{
-	
-	@Autowired
-	@Qualifier("sessionFactory")
-	private SessionFactory sessionFactory; 
-    
-    public CfgSystemConfigDaoImpl() {
-    }
-    
-    public CfgSystemConfigDaoImpl(SessionFactory sessionFactory) { 
-        this.setSessionFactory(sessionFactory);
-    }
-    
-    public void setSessionFactory(SessionFactory sessionFactory) { 
-        this.sessionFactory = sessionFactory; 
-    } 
+public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{
     
     public void insert(CfgSystemConfig csc) {
         // 取得Session
-        Session session = sessionFactory.openSession();
+    	Session session = getSessionFactory();
         // 開啟交易
         Transaction tx= session.beginTransaction();
         // 直接儲存物件
@@ -41,13 +27,13 @@ public class CfgSystemConfigDaoImpl implements ICfgSystemConfigDao{
 
     public CfgSystemConfig find(Integer id) {
     	
-        Session session = sessionFactory.openSession(); 
+//        Session session = sessionFactory.openSession(); 
+//        
+//        CfgSystemConfig user = (CfgSystemConfig) session.get(CfgSystemConfig.class, id);
+//        
+//        session.close();
         
-        CfgSystemConfig user = (CfgSystemConfig) session.get(CfgSystemConfig.class, id);
-        
-        session.close();
-        
-        return user;
+        return null;
     }
 
 }
