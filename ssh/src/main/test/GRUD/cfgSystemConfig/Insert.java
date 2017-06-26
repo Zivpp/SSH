@@ -16,7 +16,6 @@ public class Insert {
 			
 //			Session session = HibernateUtil.getSessionFactory().openSession();
 //		    Transaction tx = session.beginTransaction();
-		
 			
 			ApplicationContext context = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
 		        
@@ -24,10 +23,10 @@ public class Insert {
 			ICfgSystemConfigDao userDAO = (ICfgSystemConfigDao) context.getBean("cfgSystemConfigDaoImpl");
 			
 		    CfgSystemConfig csc = new CfgSystemConfig();
-		    csc.setId(4);
+		    csc.setId(5);
 		    csc.setCodeCate("Test");
 		    csc.setCateName("ด๚ธี");
-		    csc.setCode("Test034");
+		    csc.setCode("Test05");
 		    csc.setCodeName("ด๚ธี2");
 		    csc.setCodeValue("2");
 		    csc.setCodeDesc("Test 02 go");
