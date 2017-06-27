@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "cfg_system_config")
+@Table(name = "CFG_SYSTEM_CONFIG")
 public class CfgSystemConfig {
 
     private int id;

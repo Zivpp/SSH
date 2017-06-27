@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -77,19 +78,20 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Session session = getSessionFactory();
 		
-		String sql = "Select * from cfg_system_config where id = :id";
+		String sql = "Select id from cfg_system_config where id = :id";
 		
 		Query query = session.createSQLQuery(sql)
-			.setParameter("id", id);
+			.setParameter("id", id)
+			.setResultTransformer(Transformers.aliasToBean(CfgSystemConfig.class));
 		
 		List tempList = query.list();
 		List<CfgSystemConfig> result = new ArrayList<CfgSystemConfig>();
 		
 		for(Object obj : tempList){
-			CfgSystemConfig tempCsc = (CfgSystemConfig)obj;
-			result.add(tempCsc);
+			//CfgSystemConfig tempCsc = (CfgSystemConfig)obj;
+			//result.add(tempCsc);
 		}
 		
-		return result;
+		return query.list();
 	}
 }
