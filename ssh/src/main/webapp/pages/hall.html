@@ -48,8 +48,8 @@
 					    	<li> <!-- 縮放 root -->
 								<label class="treeHeader">AngularJs</label>
 								<ul class="nav treeBranches">
-									<li ng-repeat="ajObj in angularJsList track by $index">
-										<a href="#" ng-click="going(ajObj)">{{ajObj}}</a>
+									<li ng-repeat="url in angularJsList track by $index">
+										<a href="#" ng-click="going(url)">{{url}}</a>
 									</li>
 								</ul>
 							</li>
@@ -65,9 +65,9 @@
 				  	<div id="config" class="tab-pane fade">
 				    	<div class="nav treeRoot">
 				    		<li>
-				    			<label class="treeHeader">Interface</label>
+				    			<label class="treeHeader">SystemConfig</label>
 								<ul class="nav treeBranches">
-									<li><a href="config_sidebar.html">sidebar</a></li>
+									<li><a href="#" ng-click="getIframUrl('sysCfgParam')">SysCfgParam</a></li>
 								</ul>
 				    		</li>
 				    	</div>

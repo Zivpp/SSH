@@ -1,4 +1,4 @@
-package GRUD.cfgSystemConfig;
+package CRUD.cfgSystemConfig;
 
 import java.util.Date;
 

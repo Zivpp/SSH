@@ -33,14 +33,12 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 			method : 'POST',
 			url : "loginAction.action",
 			data : data
-		})
-		.success(function (data, status, headers, config) {
+		}).success(function (data, status, headers, config) {
 			console.log('Post OK!!!', data);
 			if(data.result.datas == 'SUCCESS'){
 				document.location.href="pages/hall.html"
 			}
-		})
-		.error(function (data, status, headers, config) {
+		}).error(function (data, status, headers, config) {
 			console.log('POST error', data);
 		});
 		
