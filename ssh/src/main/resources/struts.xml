@@ -59,5 +59,6 @@
 	
 	<!-- 加入其它 Struts 設定 -->
 	<include file="struts/struts-login.xml"></include>
+	<include file="struts/struts-systemConfig.xml"></include>
 	
 </struts>

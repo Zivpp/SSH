@@ -94,4 +94,16 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		return query.list();
 	}
+
+	@Override
+	public List<CfgSystemConfig> getAllDatas() {
+		
+		Session session = getSessionFactory();
+		
+		Query query = session.createQuery("Select from cfg_system_config"); 
+		
+		session.close();
+		
+		return query.list();
+	}
 }

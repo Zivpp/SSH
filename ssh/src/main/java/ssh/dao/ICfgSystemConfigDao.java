@@ -38,5 +38,11 @@ public interface ICfgSystemConfigDao {
 	 * @return
 	 */
 	public List<CfgSystemConfig> searchById(int id);
+
+	/**
+	 * select all datas
+	 * @return
+	 */
+	public List<CfgSystemConfig> getAllDatas();
     
 }

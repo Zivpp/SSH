@@ -1,6 +1,6 @@
 var app = angular.module("sysCfgParamApp", []); 
 
-app.controller("sysCfgParamCtrl",['$scope','$http','$location','eventBusService',function($scope,$http,$location,eventBusService) {
+app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	
 	//*Param
 	$scope.datas;
@@ -8,19 +8,22 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','eventBusService'
 	//*Function
 	var initial = function(){
 		
+		console.log('A');
+		
 		$http({
 			method : 'POST',
-			url : "getsysCfgParam.action"
+			url : "getAllSysCfgParam.action"
 		}).success(function (data, status) {
 			
 			console.log('Post OK!!!', data);
 			
-			if(data && data.length !=0){
+			if(data && data.length > 0){
 				$scope.datas = data;
+			}else {
+				console.log('No any data');
 			}
 			
 		}).error(function (data, status) {
-			eventBusService.publish("ERROR", "getsysCfgParam", {body : block});
 			console.log('getsysCfgParam error', data);
 			
 		});
@@ -30,4 +33,4 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','eventBusService'
 	
 	//*Initialize the load.
 	initial();
-}]);
+});

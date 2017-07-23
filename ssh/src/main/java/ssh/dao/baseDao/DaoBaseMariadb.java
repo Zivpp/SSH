@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class DaoBaseMariadb {
 
 	@Autowired
-	@Qualifier("sessionFactory")
+	@Qualifier("sessionFactory_MariaDB")
 	protected SessionFactory sessionFactory;
 
 	public Session getSessionFactory() {

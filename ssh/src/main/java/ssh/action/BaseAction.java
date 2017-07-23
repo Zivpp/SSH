@@ -6,8 +6,8 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Struts2 参肚北
- * @author User
+ * Struts2 参肚北
+ * @author Ziv.Wu
  *
  */
 public abstract class BaseAction extends ActionSupport {
