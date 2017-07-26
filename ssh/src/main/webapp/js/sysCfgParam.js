@@ -3,34 +3,44 @@ var app = angular.module("sysCfgParamApp", []);
 app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	
 	//*Param
-	$scope.datas;
+	$scope.data; //intial data
+	
+	$scope.tableHead;
 
 	//*Function
 	var initial = function(){
 		
-		console.log('A');
-		
+		//datas
 		$http({
 			method : 'POST',
-			url : "getAllSysCfgParam.action"
+			url : "getSCPInitialData.action"
 		}).success(function (data, status) {
 			
 			console.log('Post OK!!!', data);
 			
-			if(data && data.length > 0){
-				$scope.datas = data;
+			if(data && 
+					data.result && 
+					data.result.data &&
+					data.result.data.length > 0){
+				
+				$scope.data = data.result.data;
+				
 			}else {
 				console.log('No any data');
 			}
 			
 		}).error(function (data, status) {
-			console.log('getsysCfgParam error', data);
-			
+			console.log('getSCPInitialData Error', data);
 		});
+		
+		//tableHead
+		$scope.tableHead = ["ID", "CODECATE", "CATENAME", "CODE", "CODENAME", "CODEVALUE", "CODEDESC","UPDATEDATE", "UPDATEUSER"];
 		
 	}
 	
 	
 	//*Initialize the load.
 	initial();
+	
+	
 });

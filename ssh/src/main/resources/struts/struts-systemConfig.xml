@@ -5,7 +5,7 @@
 <struts>
 	<package name="systemConfig" namespace="/" extends="crm-default">
 	
-		<action name="getAllSysCfgParam" class="ssh.action.systemConfig.systemConfigAction" method="getAllSysCfgParam">
+		<action name="getSCPInitialData" class="ssh.action.systemConfig.SystemConfigAction" method="getSCPInitialData">
 			<result type="json">	
                 <param name="enableGZIP">true</param>
                 <param name="noCache">true</param>

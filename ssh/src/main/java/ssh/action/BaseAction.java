@@ -14,7 +14,7 @@ public abstract class BaseAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	
-	public final static String DATA_KEY = "datas";
+	public final static String DATA_KEY = "data";
 	public final static String EXCEPTION_KEY = "exception";
 	
 	public Map<String, Object> result = new HashMap<String, Object>();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import login.TestDataPackageBean;
 import login.TestStringData;
@@ -11,6 +12,7 @@ import ssh.action.BaseAction;
 import ssh.facade.ILoginFacade;
 import ssh.util.StringUtil;
 
+@Component("loginAction")
 public class LoginAction extends BaseAction{
 	
 	private static final long serialVersionUID = 1L;

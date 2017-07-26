@@ -23,15 +23,15 @@ public class Insert {
 			ICfgSystemConfigDao userDAO = (ICfgSystemConfigDao) context.getBean("cfgSystemConfigDaoImpl");
 			
 		    CfgSystemConfig csc = new CfgSystemConfig();
-		    csc.setId(5);
-		    csc.setCodeCate("Test");
-		    csc.setCateName("測試");
-		    csc.setCode("Test05");
-		    csc.setCodeName("測試2");
-		    csc.setCodeValue("2");
-		    csc.setCodeDesc("Test 02 go");
-		    csc.setSeq(2);
-		    csc.setParentId(1);
+		    csc.setId(101);
+		    csc.setCodeCate("TableHeader");
+		    csc.setCateName("表格標題");
+		    csc.setCode("TH_CFG_SYS");
+		    csc.setCodeName("TH_CFG_SYS");
+		    csc.setCodeValue("ID");
+		    csc.setCodeDesc("CFG_SYTEM_CONFIG 中的 ID");
+		    csc.setSeq(1);
+		    csc.setParentId(0);
 		    csc.setCreateDate(new Date());
 		    csc.setCreateUser("Ziv");
 		    csc.setUpdateDate(new Date());

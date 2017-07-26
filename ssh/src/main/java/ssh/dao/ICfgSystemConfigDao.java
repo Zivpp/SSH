@@ -40,9 +40,9 @@ public interface ICfgSystemConfigDao {
 	public List<CfgSystemConfig> searchById(int id);
 
 	/**
-	 * select all datas
+	 * 取得 CFG_SYSTEM_CONFIG 所有資料, 根據 Code_Cate and Seq asc
 	 * @return
 	 */
-	public List<CfgSystemConfig> getAllDatas();
+	public List<CfgSystemConfig> getAllData();
     
 }

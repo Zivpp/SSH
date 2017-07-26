@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -95,15 +96,18 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<CfgSystemConfig> getAllDatas() {
+	public List<CfgSystemConfig> getAllData() {
 		
-		Session session = getSessionFactory();
+		try{
+			List<CfgSystemConfig> result = 
+					getSessionFactory().createCriteria(CfgSystemConfig.class).addOrder(Order.asc("codeCate")).addOrder(Order.asc("seq")).list();
+			return result;
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 		
-		Query query = session.createQuery("Select from cfg_system_config"); 
-		
-		session.close();
-		
-		return query.list();
+		return null;
 	}
 }
