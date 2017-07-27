@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import bean.CfgSystemConfig;
 import ssh.action.BaseAction;
 import ssh.dao.ICfgSystemConfigDao;
+import ssh.service.ICfgSystemConfigService;
 import ssh.util.CacheUtil;
 
 @Component("systemConfigAction")
@@ -18,21 +19,16 @@ public class SystemConfigAction extends BaseAction{
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	@Qualifier("cfgSystemConfigDaoImpl")
-	private ICfgSystemConfigDao cfgSystemConfigDao;
+	@Qualifier("cfgSystemConfigServiceImpl")
+	private ICfgSystemConfigService cfgSystemConfigService;
 	
 	public String getSCPInitialData() {
 		
 		try{
 			
-			//Ignore service level, just test.
-			//List<CfgSystemConfig> sysCfgDatas = cfgSystemConfigDao.getAllDatas();
-			List<CfgSystemConfig> sysCfgDatas = CacheUtil.getSysCfgDatas();
-			CfgSystemConfig test = CacheUtil.getSysCfgById("1");
-			List<CfgSystemConfig> tmpList = CacheUtil.getSysCfgByCodeCate("TableHeader");
+			HashMap<String,Object> result = cfgSystemConfigService.getSCPInitialData();
 			
-			//return datas
-			super.dataHandler(sysCfgDatas);
+			super.dataHandler(result);
 			
 		}catch(Exception e){
 			System.out.println(e.getMessage());

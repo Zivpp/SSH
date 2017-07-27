@@ -12,6 +12,33 @@
 	<!-- Customize JS -->
 	<script type="text/javascript" src="/ssh/js/sysCfgParam.js"></script>
 
+	<!-- Customize CSS -->
+	<style>
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+		
+		th, td {
+		    text-align: left;
+		    padding: 8px;
+		    text-align:center;
+		}
+		
+		tr:nth-child(even){background-color: #f2f2f2}
+		
+		th {
+		    background-color: #06425C;
+		    color: #F2F2F2;
+		}
+		th:hover {
+			background-color: #B7695C;
+		}
+		tr:hover {
+			background-color: #51A39D;
+			color : #F2F2F2;
+		}
+	</style>
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
@@ -20,14 +47,19 @@
 	<table>
 		<thead t-block="blockPagination">
 			<tr>
-				<th ng-repeat="thItem in tableHead track by $index"
+				<th ng-repeat="thItem in tableHeader track by $index"
 					ng-click="">
 					{{thItem}}
 				</th>
 			</tr>
 		</thead>
 		<tbody>
-		
+			<tr ng-repeat="tbItems in tableBody track by $index"
+				ng-click="test(tbItems[0])">
+				<td ng-repeat="tdItem in tbItems track by $index">
+					{{tdItem}}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 

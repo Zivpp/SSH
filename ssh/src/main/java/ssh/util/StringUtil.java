@@ -16,4 +16,16 @@ public class StringUtil {
         
         return result;
     }
+
+	/**把第一個字母轉成大寫
+	 * @param digits
+	 * @return
+	 */
+	public static String upperCaseAtFirst(String digits) {
+		StringBuilder sb = new StringBuilder(digits);
+		sb = sb.replace(0, 1, String.valueOf(sb.charAt(0)).toUpperCase());
+		return sb.toString();
+	}
+    
+    
 }

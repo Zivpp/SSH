@@ -2,10 +2,9 @@ var app = angular.module("sysCfgParamApp", []);
 
 app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	
-	//*Param
-	$scope.data; //intial data
-	
-	$scope.tableHead;
+	//*Parameter
+	$scope.tableHeader;
+	$scope.tableBody;
 
 	//*Function
 	var initial = function(){
@@ -18,23 +17,18 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			
 			console.log('Post OK!!!', data);
 			
-			if(data && 
-					data.result && 
-					data.result.data &&
-					data.result.data.length > 0){
+			if(data && data.result && data.result.data){
 				
-				$scope.data = data.result.data;
+				$scope.tableHeader = data.result.data.TableHeader;
+				$scope.tableBody = data.result.data.TableBody
 				
 			}else {
-				console.log('No any data');
+				console.log('No any Cfg_System_Config data');
 			}
 			
 		}).error(function (data, status) {
-			console.log('getSCPInitialData Error', data);
+			console.log('get Cfg_System_Config initial data rrror', data);
 		});
-		
-		//tableHead
-		$scope.tableHead = ["ID", "CODECATE", "CATENAME", "CODE", "CODENAME", "CODEVALUE", "CODEDESC","UPDATEDATE", "UPDATEUSER"];
 		
 	}
 	
@@ -42,5 +36,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	//*Initialize the load.
 	initial();
 	
+	
+	$scope.test = function(item){
+		console.log(item);
+	}
 	
 });

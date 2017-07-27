@@ -102,7 +102,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		try{
 			List<CfgSystemConfig> result = 
-					getSessionFactory().createCriteria(CfgSystemConfig.class).addOrder(Order.asc("codeCate")).addOrder(Order.asc("seq")).list();
+					getSessionFactory().createCriteria(CfgSystemConfig.class).addOrder(Order.asc("id")).addOrder(Order.asc("codeCate")).addOrder(Order.asc("seq")).list();
 			return result;
 		}catch(Exception e){
 			System.out.println(e.getMessage());
