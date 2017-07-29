@@ -39,6 +39,17 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 					result.put("TableBody", tbData);
 				}
 			}
+			
+			//Add_TableHeader
+			List<CfgSystemConfig> tmpAddTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.Add_TableHeader);
+			if(tmpAddTHData != null && tmpAddTHData.size() > 0){
+				List<String> addThData = new ArrayList<String>();
+				for(CfgSystemConfig csc : tmpAddTHData){
+					addThData.add(csc.getCodeValue());
+				}
+				result.put("AddTableHeader", addThData);
+			}
+			
 		}catch(Exception e){
 			throw new Exception(e);
 		}
@@ -93,7 +104,13 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			
 			//B.
 			for(String tmpTh : beRegexThData){
-				tmpList.add(tmpHashMap.get(tmpTh));
+				
+				if(tmpHashMap.containsKey(tmpTh)){
+					tmpList.add(tmpHashMap.get(tmpTh));
+				}else{
+					tmpList.add("Null");
+				}
+			
 			}
 			
 			//C.

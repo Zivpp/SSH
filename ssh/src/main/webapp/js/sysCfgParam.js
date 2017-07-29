@@ -5,6 +5,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	//*Parameter
 	$scope.tableHeader;
 	$scope.tableBody;
+	$scope.addTableHeader;
 
 	//*Function
 	var initial = function(){
@@ -20,7 +21,8 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			if(data && data.result && data.result.data){
 				
 				$scope.tableHeader = data.result.data.TableHeader;
-				$scope.tableBody = data.result.data.TableBody
+				$scope.tableBody = data.result.data.TableBody;
+				$scope.addTableHeader = data.result.data.AddTableHeader;
 				
 			}else {
 				console.log('No any Cfg_System_Config data');

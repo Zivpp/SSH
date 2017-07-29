@@ -18,13 +18,11 @@
 		    border-collapse: collapse;
 		    width: 100%;
 		}
-		
 		th, td {
 		    text-align: left;
 		    padding: 8px;
 		    text-align:center;
 		}
-		
 		tr:nth-child(even){background-color: #f2f2f2}
 		
 		th {
@@ -38,12 +36,21 @@
 			background-color: #51A39D;
 			color : #F2F2F2;
 		}
+		.button {
+		    font-size: 30px;
+		}
+		.button:hover {
+
+		}
+		.glyphicon {
+    		font-size: 20px;
+		}
 	</style>
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
-	<h1>System_Config_Param Pages</h1>
-	
+	<h2>System_Config_Param Pages</h2>
+  	<button class="btn btn-success" data-toggle="modal" data-target="#addCfgSysModal">Add</button>
 	<table>
 		<thead t-block="blockPagination">
 			<tr>
@@ -64,4 +71,41 @@
 	</table>
 
 </body>
+
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="addCfgSysModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Item</h4>
+        </div>
+        
+
+        <div class="modal-body" ng-repeat="addThItems in addTableHeader track by $index">
+		       	<div>
+					<label class="col-md-4">
+						{{addThItems}} :
+					</label>
+					<div class="col-md-8">
+						<input type="text">
+					</div>
+		       	</div>
+	  	</div>
+       	<br/>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
 </html>
