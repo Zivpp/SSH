@@ -45,6 +45,9 @@
 		.glyphicon {
     		font-size: 20px;
 		}
+		.errorInput {
+			border:1px solid red;
+		}
 	</style>
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
@@ -83,23 +86,24 @@
       
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Item</h4>
+          <h4 class="modal-title">Add Item : Cfg_system_config</h4>
         </div>
         
 
-        <div class="modal-body" ng-repeat="addThItems in addTableHeader track by $index">
-		       	<div>
+        <div class="modal-body" ng-repeat="addThItems in addCfgSysConBean track by $index">
+		       	<div ng-shiw="addThItems.show">
 					<label class="col-md-4">
-						{{addThItems}} :
+						{{addThItems.key}} :
 					</label>
 					<div class="col-md-8">
-						<input type="text">
+						<input type="text" style="width:100%;" ng-model="addThItems.value" id={{addThItems.key}}>
 					</div>
 		       	</div>
 	  	</div>
        	<br/>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	<button type="button" class="btn btn-info" ng-click="save()">Save</button>
+          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
       

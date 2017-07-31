@@ -3,7 +3,9 @@ package ssh.service;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -30,28 +32,82 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				for(CfgSystemConfig csc : tmpTHData){
 					thData.add(csc.getCodeValue());
 				}
-				result.put("TableHeader", thData);
+				result.put("tableHeader", thData);
 				
 				//TableBody : match thData which success
 				List<CfgSystemConfig> tmpCSC = CacheUtil.getSysCfgDatas();
 				if(tmpCSC != null && tmpCSC.size() > 0){		
 					ArrayList<ArrayList<String>> tbData = buildTableBodyData(thData,tmpCSC);
-					result.put("TableBody", tbData);
+					result.put("tableBody", tbData);
 				}
 			}
 			
-			//Add_TableHeader
+			//Add_TableHeader && empty cfg_sysytem_config bean
 			List<CfgSystemConfig> tmpAddTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.Add_TableHeader);
 			if(tmpAddTHData != null && tmpAddTHData.size() > 0){
-				List<String> addThData = new ArrayList<String>();
-				for(CfgSystemConfig csc : tmpAddTHData){
-					addThData.add(csc.getCodeValue());
-				}
-				result.put("AddTableHeader", addThData);
+				HashMap<String,String> addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
+				result.put("addCfgSysConBean", addThData);
 			}
 			
 		}catch(Exception e){
 			throw new Exception(e);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 將 CfgSystemConfig 轉為 HashMap,key : attr, value : true = show
+	 * @param tmpAddTHData
+	 * @return
+	 */
+	private HashMap<String, String> buildAddCfgSystemConfigBean(List<CfgSystemConfig> tmpAddTHData) {
+		
+		LinkedHashMap<String, String> result = new LinkedHashMap<String, String>();
+		List<String> camelCaseNameList = new ArrayList<String>(); //result of before mapping work
+		
+		//1.naming mapping : DB name -> java bean attr name
+		for(CfgSystemConfig csc : tmpAddTHData){
+			String tmpName = csc.getCodeValue();
+			//a. 取得_的位置+1(轉大寫用)
+			int upStrIndex = 0; //存放_的位置
+			char[] tmpCharAry = tmpName.toCharArray();
+			int tmpCount = 0;
+			for(char c : tmpCharAry){
+				tmpCount++;
+				if("_".equals(String.valueOf(c))){
+					upStrIndex = tmpCount; //因為從0開始, 可以直接取得+1位置
+					break;
+				}
+			}
+			//b. 全部轉為小寫
+			tmpName = tmpName.toLowerCase();
+			//c. 將_後的字轉為大寫, 拿掉_
+			if(upStrIndex != 0){
+				String upStr = String.valueOf(tmpName.charAt(upStrIndex)).toUpperCase();
+				String newName = tmpName.substring(0, upStrIndex-1) + upStr + tmpName.substring(upStrIndex+1);
+				camelCaseNameList.add(newName);
+			}else{
+				camelCaseNameList.add(tmpName);
+			}
+		}
+		
+		//2. 取得 csc attr id,存在 camelCaseNameMap 則放 true(show)
+		CfgSystemConfig csc = new CfgSystemConfig();
+		List<String> cscNameList = new ArrayList<String>();
+		Field[] fs = csc.getClass().getDeclaredFields();
+		for(Field f : fs){
+			cscNameList.add(f.getName());
+		}
+		
+		//3. 因排序問題,header 為主
+		for(String ccn : camelCaseNameList){
+			for(String cscN : cscNameList){
+				if(ccn.equals(cscN)){
+					result.put(cscN, "true");
+					break;
+				}
+			}
 		}
 		
 		return result;
