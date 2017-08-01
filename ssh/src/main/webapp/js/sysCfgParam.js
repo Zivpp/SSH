@@ -25,9 +25,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				if(data.result.data.addCfgSysConBean){
 					for(var attr in data.result.data.addCfgSysConBean){
 	            		$scope.addCfgSysConBean.push({
-	            			key : attr,
+	            			key : data.result.data.addCfgSysConBean[attr].name,
 	            			value : null,
-	            			show : data.result.data.addCfgSysConBean[attr]
+	            			type : data.result.data.addCfgSysConBean[attr].dataType
 	            		});
 	        		};
 				}
@@ -44,30 +44,49 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	//*function
 	$scope.save = function(){
 		
-		var passCount = 0;
+		var passCount = 0; //($scope.addCfgSysConBean must be all pass
 		
-		//note.1 空白提醒
 		if($scope.addCfgSysConBean){
 			for(var index in $scope.addCfgSysConBean){
+				
+				var error = false;
+				var name = $scope.addCfgSysConBean[index].key;
+				var type = $scope.addCfgSysConBean[index].type; //type = number or string
+				var value = $scope.addCfgSysConBean[index].value;
+				
+				//1. 空白檢查
 				if($scope.addCfgSysConBean[index] &&
 						$scope.addCfgSysConBean[index].value &&
 						$scope.addCfgSysConBean[index].value != null &&
-						$scope.addCfgSysConBean[index].value.length != 0){
-					
-					var tmpId = $scope.addCfgSysConBean[index].key;
-					$("#"+tmpId).removeClass("errorInput");
-
-					passCount = passCount + 1;
+						$scope.addCfgSysConBean[index].value.length != 0){					
+					error = false;	
 				}else{
+					error = true;					
+				}
+				
+				//2. 型態提醒
+				if(type == 'number' && isNaN(value)){
+					error = true;
+					if(value == null){
+						$scope.addCfgSysConBean[index].value = " *請填數字";
+					}else{
+						$scope.addCfgSysConBean[index].value = $scope.addCfgSysConBean[index].value + " *請填數字";
+					}
+						
+				}
+				
+				if(error){
 					var tmpId = $scope.addCfgSysConBean[index].key;
-					$("#"+tmpId).addClass("errorInput");
+					$("#"+name).addClass("errorInput");
+				}else{
+					$("#"+name).removeClass("errorInput");
+					passCount = passCount + 1;
 				}
 			}
 		}
 		
-		//note.2 型態提醒
 		
-		//Do it
+		//Pass
 		if($scope.addCfgSysConBean.length == passCount){
 			
 			var addData = {};

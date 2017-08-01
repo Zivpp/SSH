@@ -7,9 +7,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.stereotype.Component;
 
+import bean.AddCSCData;
 import bean.CfgSystemConfig;
 import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
@@ -45,7 +48,7 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			//Add_TableHeader && empty cfg_sysytem_config bean
 			List<CfgSystemConfig> tmpAddTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.Add_TableHeader);
 			if(tmpAddTHData != null && tmpAddTHData.size() > 0){
-				HashMap<String,String> addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
+				List<AddCSCData> addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
 				result.put("addCfgSysConBean", addThData);
 			}
 			
@@ -61,12 +64,12 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 	 * @param tmpAddTHData
 	 * @return
 	 */
-	private HashMap<String, String> buildAddCfgSystemConfigBean(List<CfgSystemConfig> tmpAddTHData) {
+	private List<AddCSCData> buildAddCfgSystemConfigBean(List<CfgSystemConfig> tmpAddTHData) {
 		
-		LinkedHashMap<String, String> result = new LinkedHashMap<String, String>();
-		List<String> camelCaseNameList = new ArrayList<String>(); //result of before mapping work
+		List<AddCSCData> result = new ArrayList<AddCSCData>();
 		
 		//1.naming mapping : DB name -> java bean attr name
+		List<String> camelCaseNameList = new ArrayList<String>(); //result of before mapping work
 		for(CfgSystemConfig csc : tmpAddTHData){
 			String tmpName = csc.getCodeValue();
 			//a. 取得_的位置+1(轉大寫用)
@@ -92,22 +95,47 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			}
 		}
 		
-		//2. 取得 csc attr id,存在 camelCaseNameMap 則放 true(show)
+		//2. key : attr name | value : attr type
+		HashMap<String,String> cscNameMap = new HashMap<String,String>();
 		CfgSystemConfig csc = new CfgSystemConfig();
-		List<String> cscNameList = new ArrayList<String>();
 		Field[] fs = csc.getClass().getDeclaredFields();
 		for(Field f : fs){
-			cscNameList.add(f.getName());
+			String name = f.getName();
+			String type = determineType(f);
+			cscNameMap.put(name,type);
 		}
 		
-		//3. 因排序問題,header 為主
-		for(String ccn : camelCaseNameList){
-			for(String cscN : cscNameList){
-				if(ccn.equals(cscN)){
-					result.put(cscN, "true");
-					break;
-				}
+		//3. 根據 header 判斷是否顯示
+		AddCSCData tmpData;
+		for(String ccName : camelCaseNameList){
+			
+			tmpData = new AddCSCData();
+			
+			if(cscNameMap.containsKey(ccName)){
+				tmpData.setName(ccName);
+				tmpData.setDataType(cscNameMap.get(ccName));
+				result.add(tmpData);
 			}
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 決定 string or number, 前端欄位判斷使用
+	 * @param f
+	 * @return
+	 */
+	private String determineType(Field f) {
+		
+		String result = null;
+		
+		Class a = f.getType();
+		
+		if(Number.class.isAssignableFrom(a)){
+			result = SysCfgCode.CfgDataType.number;
+		}else{
+			result = SysCfgCode.CfgDataType.string;
 		}
 		
 		return result;

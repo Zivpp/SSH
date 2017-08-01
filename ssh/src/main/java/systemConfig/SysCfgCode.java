@@ -11,4 +11,14 @@ public class SysCfgCode {
 		
 	}
 	
+	/**
+	 * 對應 CfgSystemConfig 資料欄位形態, struts2 josn 傳輸對應檢查使用
+	 * @author Ziv
+	 *
+	 */
+	public static final class CfgDataType {
+		public static final String string = "string";
+		public static final String number = "number";
+	}
+	
 }
