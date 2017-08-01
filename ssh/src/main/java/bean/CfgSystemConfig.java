@@ -13,11 +13,11 @@ import javax.persistence.TemporalType;
 @Table(name = "CFG_SYSTEM_CONFIG")
 public class CfgSystemConfig {
 
-    private int id;
+    private Integer id;
 	private String codeCate;
 	private String cateName;
-	private int parentId;
-	private int seq;
+	private Integer parentId;
+	private Integer seq;
 	private String code;
 	private String codeName;
 	private String codeValue;

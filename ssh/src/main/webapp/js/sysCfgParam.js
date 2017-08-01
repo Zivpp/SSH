@@ -46,26 +46,50 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		
 		var passCount = 0;
 		
+		//note.1 空白提醒
 		if($scope.addCfgSysConBean){
-			for(var attr in $scope.addCfgSysConBean){
-				if($scope.addCfgSysConBean[attr] &&
-						$scope.addCfgSysConBean[attr].value &&
-						$scope.addCfgSysConBean[attr].value != null &&
-						$scope.addCfgSysConBean[attr].value.replace(/(^s*)|(s*$)/g, "").length != 0){
+			for(var index in $scope.addCfgSysConBean){
+				if($scope.addCfgSysConBean[index] &&
+						$scope.addCfgSysConBean[index].value &&
+						$scope.addCfgSysConBean[index].value != null &&
+						$scope.addCfgSysConBean[index].value.length != 0){
 					
-					var tmpId = $scope.addCfgSysConBean[attr].key;
+					var tmpId = $scope.addCfgSysConBean[index].key;
 					$("#"+tmpId).removeClass("errorInput");
 
 					passCount = passCount + 1;
 				}else{
-					var tmpId = $scope.addCfgSysConBean[attr].key;
+					var tmpId = $scope.addCfgSysConBean[index].key;
 					$("#"+tmpId).addClass("errorInput");
 				}
 			}
 		}
 		
+		//note.2 型態提醒
+		
+		//Do it
 		if($scope.addCfgSysConBean.length == passCount){
-			alert("OK");
+			
+			var addData = {};
+			for(var index in $scope.addCfgSysConBean){
+				var tmpKey = $scope.addCfgSysConBean[index].key;
+				var tmpValue = $scope.addCfgSysConBean[index].value;
+				addData[tmpKey] = tmpValue;
+			}
+			
+			var data = {
+					addData : addData
+				}
+			
+			$http({
+				method : 'POST',
+				url : "addCfgSystemConfig.action",
+				data : data
+			}).success(function (data, status) {
+			
+			}).error(function (data, status) {
+				
+			});
 		}
 	};
 	
