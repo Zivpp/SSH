@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.transform.Transformers;
@@ -15,20 +14,34 @@ import org.springframework.stereotype.Component;
 
 import bean.CfgSystemConfig;
 import ssh.dao.baseDao.DaoBaseMariadb;
+import ssh.util.CacheUtil;
 
 @Component("cfgSystemConfigDaoImpl")
 public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{
     
-    public void insert(CfgSystemConfig csc) {
-        // 取得Session
-    	Session session = getSessionFactory();
-        // 開啟交易
-        Transaction tx= session.beginTransaction();
-        // 直接儲存物件
-        session.save(csc); 
-        // 送出交易
-        tx.commit();
-        session.close(); 
+	@Autowired
+	@Qualifier("cacheUtil")
+	private CacheUtil cacheUtil;
+	
+    public void insert(CfgSystemConfig csc) throws Exception {
+    	try{
+    		
+            // 取得Session
+        	Session session = getSessionFactory();
+            // 開啟交易
+            Transaction tx= session.beginTransaction();
+            // 直接儲存物件
+            session.save(csc); 
+            // 送出交易
+            tx.commit();
+            session.close(); 
+            
+            cacheUtil.init();
+    		
+    	}catch(Exception e){
+    		System.out.println(e.getMessage());
+    		throw new Exception(e);
+    	}
     }
 
 	@Override

@@ -10,6 +10,7 @@ import bean.CfgSystemConfig;
 import login.TestStringData;
 import ssh.action.BaseAction;
 import ssh.service.ICfgSystemConfigService;
+import ssh.util.CacheUtil;
 
 @Component("systemConfigAction")
 public class SystemConfigAction extends BaseAction{
@@ -32,17 +33,27 @@ public class SystemConfigAction extends BaseAction{
 			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
+			super.dataHandler(e);
 		}
 		
 		return SUCCESS;
 		
 	}
 	
-	public String addCfgSystemConfig() {
+	/**
+	 * ·s¼W¤@µ§ CFG_SYSTEM_CONFIG DATA
+	 * @return
+	 */
+	public String addCfgSystemConfig() throws Exception{
 		
-		System.out.println("A");
-		Object tmp = addData;
-		
+		try{
+			
+			cfgSystemConfigService.addFromConfigPage(addData);
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
 		
 		return SUCCESS;
 	}

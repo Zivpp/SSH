@@ -17,7 +17,7 @@
   		<url-pattern>*.action</url-pattern>
  	</filter-mapping>   	
   
-  	<!-- Struts2 + spring 整合設定 : 主要為第一層 action 近來後，給 Spring 控制，讓其可以注入 -->
+  	<!-- Struts2 + spring 整合設定 : 主要為第一層 action 近來後，給 Spring 控制，*讓 Spring 可以注入 -->
   	<!-- 1.Step : Spring listener 預設會抓 contextConfigLocation -->
   	<!-- classpath = /resources/ 路徑 -->
 	<context-param>

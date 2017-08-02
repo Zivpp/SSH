@@ -4,16 +4,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import bean.AddCSCData;
 import bean.CfgSystemConfig;
+import ssh.dao.ICfgSystemConfigDao;
 import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
 import systemConfig.SysCfgCode;
@@ -21,6 +25,10 @@ import systemConfig.SysCfgCode;
 @Component("cfgSystemConfigServiceImpl")
 public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 
+	@Autowired
+	@Qualifier("cfgSystemConfigDaoImpl")
+	private ICfgSystemConfigDao cfgSystemConfigDao;
+	
 	@Override
 	public HashMap<String, Object> getSCPInitialData() throws Exception {
 		
@@ -151,23 +159,20 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 		
-		//1.排除_線 與 全部轉為大寫統一
+		//1.排除_線 and 全部轉為大寫統一
 		List<String> beRegexThData = new ArrayList<String>();
 		for(String tmpTh : thData){
 			String tmpStr = tmpTh.replace("_", "").toUpperCase();
 			beRegexThData.add(tmpStr);
 		}
 		
-		//2.抓取每一筆 CfgSystemConfig 資料
-		//A. 先把每一筆的  CfgSystemConfig 參數名稱轉為大寫(用來比對)和參數值轉為String -> 存在一個會被刷新的 HashMap, key=Table Header Data
-		//B. 相對應資料放入 tmpList
-		//C. 完整一整個 List 再放進 result
+		//2.for each CfgSystemConfig data
 		for(CfgSystemConfig csc : tmpCSC){
 			
 			HashMap<String,String> tmpHashMap = new HashMap<String,String>(); //String_1 : 參數大寫名稱(對應TableHeader), String_2 : 參數值
 			ArrayList<String> tmpList = new ArrayList<String>(); //存放Table Body Data
 			
-			//A.
+			//A. 先把每一筆的  CfgSystemConfig 參數名稱轉為大寫(用來比對)和參數值轉為String -> 存在一個會被刷新的 HashMap, key=Table Header
 			Field[] fs = csc.getClass().getDeclaredFields();
 			for(Field f : fs){
 				//String_1
@@ -175,7 +180,7 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				//String_2 
 				String String_2 = "";
 				String getStr = "get" + StringUtil.upperCaseAtFirst(f.getName());
-				//static parameters, not get
+				//static parameters not get
 				if(!java.lang.reflect.Modifier.isStatic(f.getModifiers())){
 					Method getMethod = csc.getClass().getMethod(getStr);
 					Object scsResult = getMethod.invoke(csc);
@@ -186,23 +191,32 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				}
 			}
 			
-			//B.
+			//B.相對應資料放入 tmpList
 			for(String tmpTh : beRegexThData){
-				
 				if(tmpHashMap.containsKey(tmpTh)){
 					tmpList.add(tmpHashMap.get(tmpTh));
 				}else{
 					tmpList.add("Null");
 				}
-			
 			}
 			
-			//C.
 			result.add(tmpList);
-			
 		}
 		
 		return result;
+	}
+
+	@Override
+	public void addFromConfigPage(CfgSystemConfig csc) throws Exception {
+		
+		if(csc != null){
+			csc.setCreateUser(SysCfgCode.defaultUser);
+			csc.setCreateDate(new Date());
+			csc.setUpdateUser(SysCfgCode.defaultUser);
+			csc.setUpdateDate(new Date());
+			cfgSystemConfigDao.insert(csc);
+			
+		}		
 	}
 
 	

@@ -9,8 +9,9 @@ public interface ICfgSystemConfigDao {
 	/**
 	 * insert need transaction;
 	 * @param csc
+	 * @throws Exception 
 	 */
-	public void insert(CfgSystemConfig csc);
+	public void insert(CfgSystemConfig csc) throws Exception;
 
 	/**
 	 * select by cfg_system_config id

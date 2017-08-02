@@ -5,10 +5,14 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	//*Parameter
 	$scope.tableHeader;
 	$scope.tableBody;
-	$scope.addCfgSysConBean = [];
+	$scope.addCfgSysConBean;
 	
 	//*Function
 	var initial = function(){
+		
+		$scope.tableHeader = [];
+		$scope.tableBody = [];
+		$scope.addCfgSysConBean = [];
 		
 		//datas
 		$http({
@@ -105,7 +109,11 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				url : "addCfgSystemConfig.action",
 				data : data
 			}).success(function (data, status) {
-			
+				
+				initial();
+				var modal = document.getElementById('addCfgSysModal');
+				angular.element(modal).modal('hide');
+				
 			}).error(function (data, status) {
 				
 			});
@@ -118,7 +126,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	
 	
 	$scope.test = function(item){
+		var ttt = item;
 		console.log(item);
+		ttt[0] = 'yyyyyyyyyyy';
 	}
 	
 });

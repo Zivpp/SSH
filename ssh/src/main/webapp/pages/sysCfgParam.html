@@ -64,10 +64,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="tbItems in tableBody track by $index"
-				ng-click="test(tbItems[0])">
-				<td ng-repeat="tdItem in tbItems track by $index">
-					{{tdItem}}
+			<tr ng-repeat="itmes in tableBody track by $index"
+				ng-click="test(itmes)">
+				<td ng-repeat="item in itmes track by $index" ng-model="item">
+					{{item}}
 				</td>
 			</tr>
 		</tbody>
