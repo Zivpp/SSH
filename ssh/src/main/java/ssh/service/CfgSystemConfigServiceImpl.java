@@ -212,8 +212,8 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		if(csc != null){
 			csc.setCreateUser(SysCfgCode.defaultUser);
 			csc.setCreateDate(new Date());
-			csc.setUpdateUser(SysCfgCode.defaultUser);
-			csc.setUpdateDate(new Date());
+			csc.setUpdataUser(SysCfgCode.defaultUser);
+			csc.setUpdataDate(new Date());
 			cfgSystemConfigDao.insert(csc);
 			
 		}		

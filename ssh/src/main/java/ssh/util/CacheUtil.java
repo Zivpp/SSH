@@ -70,8 +70,8 @@ public class CacheUtil {
 	 * @param id
 	 * @return
 	 */
-	public CfgSystemConfig getSysCfgById(String id){
-		return this.sysCfgById.get(id);
+	public static CfgSystemConfig getSysCfgById(String id){
+		return sysCfgById.get(id);
 	}
 	
 	public static List<CfgSystemConfig> getSysCfgDatas() {

@@ -6,6 +6,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	$scope.tableHeader;
 	$scope.tableBody;
 	$scope.addCfgSysConBean;
+	$scope.editCfgSysConBean;
 	
 	//*Function
 	var initial = function(){
@@ -13,6 +14,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		$scope.tableHeader = [];
 		$scope.tableBody = [];
 		$scope.addCfgSysConBean = [];
+		$scope.editCfgSysConBean = [];
 		
 		//datas
 		$http({
@@ -28,10 +30,16 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				$scope.tableBody = data.result.data.tableBody;
 				if(data.result.data.addCfgSysConBean){
 					for(var attr in data.result.data.addCfgSysConBean){
+						
 	            		$scope.addCfgSysConBean.push({
 	            			key : data.result.data.addCfgSysConBean[attr].name,
 	            			value : null,
 	            			type : data.result.data.addCfgSysConBean[attr].dataType
+	            		});
+	            		
+	            		$scope.editCfgSysConBean.push({
+	            			key : data.result.data.addCfgSysConBean[attr].name,
+	            			value : null,
 	            		});
 	        		};
 				}
@@ -46,7 +54,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	}
 	
 	//*function
-	$scope.save = function(){
+	$scope.add = function(){
 		
 		var passCount = 0; //($scope.addCfgSysConBean must be all pass
 		
@@ -87,8 +95,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 					passCount = passCount + 1;
 				}
 			}
-		}
-		
+		}		
 		
 		//Pass
 		if($scope.addCfgSysConBean.length == passCount){
@@ -111,7 +118,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			}).success(function (data, status) {
 				
 				initial();
-				var modal = document.getElementById('addCfgSysModal');
+				var modal = document.getElementById('addModel');
 				angular.element(modal).modal('hide');
 				
 			}).error(function (data, status) {
@@ -125,10 +132,51 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	initial();
 	
 	
-	$scope.test = function(item){
-		var ttt = item;
-		console.log(item);
-		ttt[0] = 'yyyyyyyyyyy';
+	$scope.edit = function(item){
+		
+		var data = {
+				cfgSysId : item[0]
+			};
+		
+		$http({
+			method : 'POST',
+			url : "searchCfgSysConById.action",
+			data : data
+		}).success(function (data, status) {
+			
+			//editCfgSysConBean init() 已經設定好欄位, 將 Value 放入即可
+			if(data && data.result && data.result.data){
+				
+				var tmpValueData = data.result.data;				
+				
+				for(var i in $scope.editCfgSysConBean){
+					
+					var tmpKey = $scope.editCfgSysConBean[i].key;
+					
+					for(var key in tmpValueData){
+						
+						if(tmpKey == key){
+							$scope.editCfgSysConBean[i].value = tmpValueData[key];
+						}
+					}
+				}
+			}
+			
+		}).error(function (data, status) {
+			
+		});
+		
+		//Open model
+		var modal = document.getElementById('editModel');
+		angular.element(modal).modal('show');
+		
 	}
 	
+	$scope.save = function(){
+		
+	}
+	
+	$scope.remove = function(){
+		
+	}
 });

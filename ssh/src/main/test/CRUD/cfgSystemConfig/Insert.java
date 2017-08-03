@@ -34,8 +34,8 @@ public class Insert {
 		    csc.setParentId(0);
 		    csc.setCreateDate(new Date());
 		    csc.setCreateUser("Ziv");
-		    csc.setUpdateDate(new Date());
-		    csc.setUpdateUser("Ziv");
+		    csc.setUpdataDate(new Date());
+		    csc.setUpdataUser("Ziv");
 		    
 
 		    userDAO.insert(csc);

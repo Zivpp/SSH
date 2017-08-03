@@ -7,8 +7,8 @@ INSERT INTO cfg_system_config VALUES (104, 'TableHeader', '表格標題', 'TH_Cf
 INSERT INTO cfg_system_config VALUES (105, 'TableHeader', '表格標題', 'TH_CfgSysCon_5', 'TH_CfgSysCon_5', 'CODE_NAME', 'CFG_SYTEM_CONFIG 中的 CODENAME', 1, 5, NOW(), 'Ziv', NOW(), 'Ziv');
 INSERT INTO cfg_system_config VALUES (106, 'TableHeader', '表格標題', 'TH_CfgSysCon_6', 'TH_CfgSysCon_6', 'CODE_VALUE', 'CFG_SYTEM_CONFIG 中的 CODEVALUE', 1, 6, NOW(), 'Ziv', NOW(), 'Ziv');
 INSERT INTO cfg_system_config VALUES (107, 'TableHeader', '表格標題', 'TH_CfgSysCon_7', 'TH_CfgSysCon_7', 'CODE_DESC', 'CFG_SYTEM_CONFIG 中的 CODEDESC', 1, 7, NOW(), 'Ziv', NOW(), 'Ziv');
-INSERT INTO cfg_system_config VALUES (108, 'TableHeader', '表格標題', 'TH_CfgSysCon_8', 'TH_CfgSysCon_8', 'UPDATE_DATE', 'CFG_SYTEM_CONFIG 中的 UPDATEDATE', 1, 8, NOW(), 'Ziv', NOW(), 'Ziv');
-INSERT INTO cfg_system_config VALUES (109, 'TableHeader', '表格標題', 'TH_CfgSysCon_9', 'TH_CfgSysCon_9', 'UPDATE_USER', 'CFG_SYTEM_CONFIG 中的 UPDATEUSER', 1, 9, NOW(), 'Ziv', NOW(), 'Ziv');
+INSERT INTO cfg_system_config VALUES (108, 'TableHeader', '表格標題', 'TH_CfgSysCon_8', 'TH_CfgSysCon_8', 'UPDATA_DATE', 'CFG_SYTEM_CONFIG 中的 UPDATADATE', 1, 8, NOW(), 'Ziv', NOW(), 'Ziv');
+INSERT INTO cfg_system_config VALUES (109, 'TableHeader', '表格標題', 'TH_CfgSysCon_9', 'TH_CfgSysCon_9', 'UPDATA_USER', 'CFG_SYTEM_CONFIG 中的 UPDATAUSER', 1, 9, NOW(), 'Ziv', NOW(), 'Ziv');
 INSERT INTO cfg_system_config VALUES (201, 'Add_TableHeader', '表格標題', 'AddTH_CfgSysCon_1', 'AddTH_CfgSysCon_1', 'ID', 'CFG_SYTEM_CONFIG 中的 ID', 1, 1, NOW(), 'Ziv', NOW(), 'Ziv');
 INSERT INTO cfg_system_config VALUES (202, 'Add_TableHeader', '表格標題', 'AddTH_CfgSysCon_2', 'AddTH_CfgSysCon_2', 'CODE_CATE', 'CFG_SYTEM_CONFIG 中的 CODECATE', 1, 2, NOW(), 'Ziv', NOW(), 'Ziv');
 INSERT INTO cfg_system_config VALUES (203, 'Add_TableHeader', '表格標題', 'AddTH_CfgSysCon_3', 'AddTH_CfgSysCon_3', 'CATE_NAME', 'CFG_SYTEM_CONFIG 中的 CATENAME', 1, 3, NOW(), 'Ziv', NOW(), 'Ziv');

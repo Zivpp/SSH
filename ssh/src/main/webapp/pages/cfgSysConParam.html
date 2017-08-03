@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="/ssh/resources/angularjs/angular-1.5.6.min.js"></script>
 	
 	<!-- Customize JS -->
-	<script type="text/javascript" src="/ssh/js/sysCfgParam.js"></script>
+	<script type="text/javascript" src="/ssh/js/cfgSysConParam.js"></script>
 
 	<!-- Customize CSS -->
 	<style>
@@ -52,8 +52,8 @@
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
-	<h2>System_Config_Param Pages</h2>
-  	<button class="btn btn-success" data-toggle="modal" data-target="#addCfgSysModal">Add</button>
+	<h2>CFG_SYSTEM_CONFIG PARAMETERS</h2>
+  	<button class="btn btn-success" data-toggle="modal" data-target="#addModel">Add</button>
 	<table>
 		<thead t-block="blockPagination">
 			<tr>
@@ -65,7 +65,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="itmes in tableBody track by $index"
-				ng-click="test(itmes)">
+				ng-click="edit(itmes)">
 				<td ng-repeat="item in itmes track by $index" ng-model="item">
 					{{item}}
 				</td>
@@ -75,41 +75,73 @@
 
 </body>
 
+<!-- add model -->
 <div class="container">
-
   <!-- Modal -->
-  <div class="modal fade" id="addCfgSysModal" role="dialog">
+  <div class="modal fade" id="addModel" role="dialog">
     <div class="modal-dialog">
-    
       <!-- Modal content-->
       <div class="modal-content">
-      
+      	<!-- header -->
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Item : Table -> CFG_SYSTEM_CONFIG</h4>
+          <h4 class="modal-title">ADD ITEM</h4>
         </div>
-        
-
+      	<!-- body -->
         <div class="modal-body" ng-repeat="addThItems in addCfgSysConBean track by $index">
-		       	<div>
-					<label class="col-md-4">
-						{{addThItems.key}} :
-					</label>
-					<div class="col-md-8">
-						<input type="text" style="width:100%;" ng-model="addThItems.value" id={{addThItems.key}}>
-					</div>
-		       	</div>
+	       	<div>
+				<label class="col-md-4">
+					{{addThItems.key}} :
+				</label>
+				<div class="col-md-8">
+					<input type="text" style="width:100%;" ng-model="addThItems.value" id={{addThItems.key}}>
+				</div>
+	       	</div>
 	  	</div>
        	<br/>
+       	<!-- footer -->
         <div class="modal-footer">
-        	<button type="button" class="btn btn-info" ng-click="save()">Save</button>
+        	<button type="button" class="btn btn-info" ng-click="add()">Add</button>
           	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
-      
     </div>
   </div>
-  
+</div>
+
+<!-- edit model -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="editModel" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      	<!-- header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">EDIT ITEM</h4>
+        </div>
+      	<!-- body -->
+        <div class="modal-body" ng-repeat="item in editCfgSysConBean track by $index">
+	       	<div>
+				<label class="col-md-4">
+					{{item.key}} :
+				</label>
+				<div class="col-md-8">
+					<input type="text" style="width:100%;" ng-model="item.value" id={{item.key}}>
+				</div>
+	       	</div>
+	  	</div>
+       	<br/>
+       	<!-- footer -->
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-success" ng-click="save()">Save</button>
+        	<button type="button" class="btn btn-danger" ng-click="remove()">Delete</button>
+          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </html>
