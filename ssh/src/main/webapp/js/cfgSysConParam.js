@@ -7,6 +7,8 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	$scope.tableBody;
 	$scope.addCfgSysConBean;
 	$scope.editCfgSysConBean;
+	$scope.editResponseStr;
+	$scope.oldEditId;
 	
 	//*Function
 	var initial = function(){
@@ -15,6 +17,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		$scope.tableBody = [];
 		$scope.addCfgSysConBean = [];
 		$scope.editCfgSysConBean = [];
+		$scope.oldEditId = null;
 		
 		//datas
 		$http({
@@ -87,6 +90,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 						
 				}
 				
+				//note
 				if(error){
 					var tmpId = $scope.addCfgSysConBean[index].key;
 					$("#"+name).addClass("errorInput");
@@ -109,7 +113,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			
 			var data = {
 					addData : addData
-				}
+			}
 			
 			$http({
 				method : 'POST',
@@ -118,6 +122,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			}).success(function (data, status) {
 				
 				initial();
+				//Close model
 				var modal = document.getElementById('addModel');
 				angular.element(modal).modal('hide');
 				
@@ -133,6 +138,8 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	
 	
 	$scope.edit = function(item){
+		
+		$scope.oldEditId = item[0];
 		
 		var data = {
 				cfgSysId : item[0]
@@ -163,7 +170,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			}
 			
 		}).error(function (data, status) {
-			
+			console.log(data);
 		});
 		
 		//Open model
@@ -172,11 +179,88 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		
 	}
 	
-	$scope.save = function(){
+	$scope.save = function(){	
+		
+		var editData = {};
+		for(var index in $scope.editCfgSysConBean){
+			var tmpKey = $scope.editCfgSysConBean[index].key;
+			var tmpValue = $scope.editCfgSysConBean[index].value;
+			editData[tmpKey] = tmpValue;
+		}
+		
+		var data = {
+				editData : editData,
+				oldEditId : $scope.oldEditId
+		}
+		
+		$http({
+			method : 'POST',
+			url : "editCfgSysCon.action",
+			data : data
+		}).success(function (data, status) {
+			
+			if(data && data.result && data.result.data){
+				
+				//Close model : editModel
+				var modal = document.getElementById('editModel');
+				angular.element(modal).modal('hide');
+				
+				if(data && data.result && data.result.data){
+					
+					for(var attr in data.result.data){
+						var rsponse = attr;
+						var massage = data.result.data[attr];
+					}
+					
+					if(rsponse == 'true'){
+						$scope.editResponseStr ="SUCCESS" + massage;
+					}else{
+						$scope.editResponseStr ="FAIL : " + massage;
+					}
+				}
+				
+				//Open model : editResponseModel
+				var modal2 = document.getElementById('editResponseModel');
+				angular.element(modal2).modal('show');
+				
+				initial();
+			}
+			
+		}).error(function (data, status) {
+			console.log(data);
+		});
 		
 	}
 	
 	$scope.remove = function(){
+		
+		var removeData = {};
+		for(var index in $scope.editCfgSysConBean){
+			var tmpKey = $scope.editCfgSysConBean[index].key;
+			var tmpValue = $scope.editCfgSysConBean[index].value;
+			removeData[tmpKey] = tmpValue;
+		}
+		
+		var data = {
+				removeData : removeData
+		}
+		
+		$http({
+			method : 'POST',
+			url : "removeCfgSysCon.action",
+			data : data
+		}).success(function (data, status) {
+			
+			if(data){
+				//Close model : editModel
+				var modal = document.getElementById('editModel');
+				angular.element(modal).modal('hide');
+				initial();
+			}
+			
+		}).error(function (data, status) {
+			console.log(data);
+		});
 		
 	}
 });

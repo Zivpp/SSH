@@ -29,6 +29,10 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 	@Qualifier("cfgSystemConfigDaoImpl")
 	private ICfgSystemConfigDao cfgSystemConfigDao;
 	
+	@Autowired
+	@Qualifier("cacheUtil")
+	private CacheUtil cacheUtil;
+	
 	@Override
 	public HashMap<String, Object> getSCPInitialData() throws Exception {
 		
@@ -216,7 +220,58 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			csc.setUpdataDate(new Date());
 			cfgSystemConfigDao.insert(csc);
 			
+			cacheUtil.init();
+			
 		}		
+	}
+
+	@Override
+	public HashMap<Boolean, String> editFromConfigPage(CfgSystemConfig editData,String oldEditId) {
+		
+		HashMap<Boolean, String> result = new HashMap<Boolean, String>();
+		
+		try{
+			
+			CfgSystemConfig oldCsc = CacheUtil.getSysCfgById(oldEditId);
+			CfgSystemConfig tmpCsc = CacheUtil.getSysCfgById(String.valueOf(editData.getId()));
+			
+			if(tmpCsc != null){
+				if(oldCsc.getId() == tmpCsc.getId()){
+					editData.setCreateDate(tmpCsc.getCreateDate());
+					editData.setCreateUser(tmpCsc.getCreateUser());
+					editData.setUpdataDate(new Date());
+					editData.setUpdataUser(tmpCsc.getUpdataUser());
+					cfgSystemConfigDao.update(editData);
+					
+					cacheUtil.init();
+					
+					result.put(true, "");
+				}else{
+					throw new Exception("ID 已經存在");
+				}
+			}else{
+				throw new Exception("ID 不存在");
+			}
+					
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			result.put(false, e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void removeFromConfigPage(CfgSystemConfig removeData) {
+		try{
+			
+			cfgSystemConfigDao.deleteById(removeData.getId());
+			
+			cacheUtil.init();
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	

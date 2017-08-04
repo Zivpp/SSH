@@ -17,11 +17,7 @@ import ssh.dao.baseDao.DaoBaseMariadb;
 import ssh.util.CacheUtil;
 
 @Component("cfgSystemConfigDaoImpl")
-public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{
-    
-	@Autowired
-	@Qualifier("cacheUtil")
-	private CacheUtil cacheUtil;
+public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{ 
 	
     public void insert(CfgSystemConfig csc) throws Exception {
     	try{
@@ -35,8 +31,6 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
             // °e¥X¥æ©ö
             tx.commit();
             session.close(); 
-            
-            cacheUtil.init();
     		
     	}catch(Exception e){
     		System.out.println(e.getMessage());

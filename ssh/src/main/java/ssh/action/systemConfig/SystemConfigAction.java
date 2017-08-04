@@ -19,7 +19,10 @@ public class SystemConfigAction extends BaseAction{
 	private static final long serialVersionUID = 1L;
 	
 	private CfgSystemConfig addData;
+	private CfgSystemConfig editData;
+	private CfgSystemConfig removeData;
 	private String cfgSysId;
+	private String oldEditId;
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigServiceImpl")
@@ -65,13 +68,52 @@ public class SystemConfigAction extends BaseAction{
 	 * @return
 	 * @throws Exception
 	 */
-	public String searchCfgSysConById() throws Exception{
+	public String searchCfgSysConById() throws Exception {
 		
 		try{
-			
 			CfgSystemConfig csc = CacheUtil.getSysCfgById(cfgSysId);
 			HashMap<String,String> result = BeanUtil.transferBeanToHashMap(csc);
 			super.dataHandler(result);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * э╰参把计
+	 * @return
+	 * @throws Exception
+	 */
+	public String editCfgSysCon() throws Exception {
+		
+		try{
+			
+			HashMap<Boolean,String> editResponse = cfgSystemConfigService.editFromConfigPage(editData,oldEditId);
+			super.dataHandler(editResponse);
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 埃╰参把计
+	 * @return
+	 * @throws Exception
+	 */
+	public String removeCfgSysCon() throws Exception {
+		
+		try{
+			
+			cfgSystemConfigService.removeFromConfigPage(removeData);
+			super.dataHandler();
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			super.dataHandler(e);
@@ -96,6 +138,28 @@ public class SystemConfigAction extends BaseAction{
 		this.cfgSysId = cfgSysId;
 	}
 
+	public CfgSystemConfig getEditData() {
+		return editData;
+	}
 
+	public void setEditData(CfgSystemConfig editData) {
+		this.editData = editData;
+	}
+
+	public String getOldEditId() {
+		return oldEditId;
+	}
+
+	public void setOldEditId(String oldEditId) {
+		this.oldEditId = oldEditId;
+	}
+
+	public CfgSystemConfig getRemoveData() {
+		return removeData;
+	}
+
+	public void setRemoveData(CfgSystemConfig removeData) {
+		this.removeData = removeData;
+	}
 
 }

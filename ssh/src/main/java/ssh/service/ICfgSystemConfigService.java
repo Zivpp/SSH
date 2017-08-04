@@ -14,9 +14,22 @@ public interface ICfgSystemConfigService{
 	public HashMap<String, Object> getSCPInitialData() throws Exception;
 	
 	/**
-	 * add one cfg_system_config data
+	 * add cfg_system_config data
 	 * @throws Exception
 	 */
 	public void addFromConfigPage(CfgSystemConfig csc) throws Exception;
+
+	/**
+	 * edit cfg_system_config data
+	 * @param oldEditId 
+	 * @throws Exception
+	 */
+	public HashMap<Boolean, String> editFromConfigPage(CfgSystemConfig editData, String oldEditId);
+
+	/**
+	 * remove cfg_system_config data
+	 * @param removeData
+	 */
+	public void removeFromConfigPage(CfgSystemConfig removeData);
 
 }
