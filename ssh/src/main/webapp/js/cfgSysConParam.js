@@ -57,6 +57,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 	}
 	
 	//*function
+	//Start add()
 	$scope.add = function(){
 		
 		var passCount = 0; //($scope.addCfgSysConBean must be all pass
@@ -130,13 +131,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				
 			});
 		}
-	};
+	};//END add()
 	
-	
-	//*Initialize the load.
-	initial();
-	
-	
+	//Start edit()
 	$scope.edit = function(item){
 		
 		$scope.oldEditId = item[0];
@@ -177,8 +174,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		var modal = document.getElementById('editModel');
 		angular.element(modal).modal('show');
 		
-	}
+	}//END edit()
 	
+	//START save()
 	$scope.save = function(){	
 		
 		var editData = {};
@@ -230,8 +228,9 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			console.log(data);
 		});
 		
-	}
+	}//END save()
 	
+	//START remove()
 	$scope.remove = function(){
 		
 		var removeData = {};
@@ -262,5 +261,16 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 			console.log(data);
 		});
 		
+	}//END remove()
+	
+	
+	//*Initialize the load.
+	initial();
+	
+	$scope.sortByHeader = function(header){
+
 	}
+	
+	
+	
 });

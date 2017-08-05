@@ -1,0 +1,38 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    text-align:center;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #06425C;
+    color: #F2F2F2;
+}
+th:hover {
+	background-color: #B7695C;
+}
+.tdIndex{
+	background-color: #395d6d;
+    color: #F2F2F2;
+}
+tr:hover {
+	background-color: #51A39D;
+	color : #F2F2F2;
+}
+.button {
+    font-size: 30px;
+}
+.button:hover {
+
+}
+.glyphicon {
+  		font-size: 20px;
+}
+.errorInput {
+	border:1px solid red;
+}

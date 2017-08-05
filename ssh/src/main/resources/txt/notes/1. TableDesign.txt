@@ -1,0 +1,2 @@
+2017/08/06
+設計Table Header 時,應該有一欄位紀錄此欄位的資料屬性, e.g. String or Integer,方便後續排序使用。

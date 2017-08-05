@@ -13,52 +13,36 @@
 	<script type="text/javascript" src="/ssh/js/cfgSysConParam.js"></script>
 
 	<!-- Customize CSS -->
-	<style>
-		table {
-		    border-collapse: collapse;
-		    width: 100%;
-		}
-		th, td {
-		    text-align: left;
-		    padding: 8px;
-		    text-align:center;
-		}
-		tr:nth-child(even){background-color: #f2f2f2}
-		
-		th {
-		    background-color: #06425C;
-		    color: #F2F2F2;
-		}
-		th:hover {
-			background-color: #B7695C;
-		}
-		tr:hover {
-			background-color: #51A39D;
-			color : #F2F2F2;
-		}
-		.button {
-		    font-size: 30px;
-		}
-		.button:hover {
+	<link rel="stylesheet" href="/ssh/resources/css/cfgSysConParam.css">
 
-		}
-		.glyphicon {
-    		font-size: 20px;
-		}
-		.errorInput {
-			border:1px solid red;
-		}
-	</style>
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
-	<h2>CFG_SYSTEM_CONFIG PARAMETERS</h2>
-  	<button class="btn btn-success" data-toggle="modal" data-target="#addModel">Add</button>
+	<h2>PAGE : cfg_system_config parameters</h2>
+	<div style="position: relative; top:-30px;">
+	<button class="btn btn-success" data-toggle="modal" data-target="#addModel">Add</button>
+	<input type="text">
+	<button class="btn btn-default">Search</button>
+	<lable>Records Per Page : </lable>
+	<select>
+		<option>10</option>
+		<option>50</option>
+		<option>100</option>
+		<option>ALL</option>
+	</select>
+	<ul class="pagination" style="position: relative; top:30px;">
+	  <li><a href="#">1</a></li>
+	  <li class="active"><a href="#">2</a></li>
+	  <li><a href="#">3</a></li>
+	  <li><a href="#">4</a></li>
+	  <li><a href="#">5</a></li>
+	</ul>
 	<table>
 		<thead t-block="blockPagination">
 			<tr>
+				<th>No.</th>
 				<th ng-repeat="thItem in tableHeader track by $index"
-					ng-click="">
+					ng-click="sortByHeader(thItem)">
 					{{thItem}}
 				</th>
 			</tr>
@@ -66,13 +50,14 @@
 		<tbody>
 			<tr ng-repeat="itmes in tableBody track by $index"
 				ng-click="edit(itmes)">
+				<td class="tdIndex">{{$index}}</td>
 				<td ng-repeat="item in itmes track by $index" ng-model="item">
-					{{item}}
+					 <strong style="font-size: 5px;">{{item}}</strong>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-
+	</div>
 </body>
 
 <!-- add model -->

@@ -52,7 +52,7 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				//TableBody : match thData which success
 				List<CfgSystemConfig> tmpCSC = CacheUtil.getSysCfgDatas();
 				if(tmpCSC != null && tmpCSC.size() > 0){		
-					ArrayList<ArrayList<String>> tbData = buildTableBodyData(thData,tmpCSC);
+					ArrayList<ArrayList<Object>> tbData = buildTableBodyData(thData,tmpCSC);
 					result.put("tableBody", tbData);
 				}
 			}
@@ -159,9 +159,9 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 	 * @param tmpCSC : all cfgSystemConfig data
 	 * @return
 	 */
-	private ArrayList<ArrayList<String>> buildTableBodyData(List<String> thData, List<CfgSystemConfig> tmpCSC) throws Exception{
+	private ArrayList<ArrayList<Object>> buildTableBodyData(List<String> thData, List<CfgSystemConfig> tmpCSC) throws Exception{
 		
-		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
 		
 		//1.逼埃_絬 and 场锣糶参
 		List<String> beRegexThData = new ArrayList<String>();
@@ -174,7 +174,7 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		for(CfgSystemConfig csc : tmpCSC){
 			
 			HashMap<String,String> tmpHashMap = new HashMap<String,String>(); //String_1 : 把计糶嘿(癸莱TableHeader), String_2 : 把计
-			ArrayList<String> tmpList = new ArrayList<String>(); //Table Body Data
+			ArrayList<Object> tmpList = new ArrayList<Object>(); //Table Body Data
 			
 			//A. р–掸  CfgSystemConfig 把计嘿锣糶(ノㄓゑ癸)㎝把计锣String -> 穦砆穝 HashMap, key=Table Header
 			Field[] fs = csc.getClass().getDeclaredFields();
