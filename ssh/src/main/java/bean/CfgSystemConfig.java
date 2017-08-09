@@ -24,8 +24,8 @@ public class CfgSystemConfig {
 	private String codeDesc;
 	private Date createDate;
 	private String createUser;
-	private Date updataDate;
-	private String updataUser;
+	private Date updateDate;
+	private String updateUser;
 	
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
@@ -120,22 +120,22 @@ public class CfgSystemConfig {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "UPDATA_DATE", nullable = false)
-	public Date getUpdataDate() {
-		return this.updataDate;
+	@Column(name = "UPDATE_DATE", nullable = false)
+	public Date getUpdateDate() {
+		return this.updateDate;
 	}
 
-	public void setUpdataDate(Date updataDate) {
-		this.updataDate = updataDate;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	@Column(name = "UPDATA_USER", nullable = false)
-	public String getUpdataUser() {
-		return this.updataUser;
+	@Column(name = "UPDATE_USER", nullable = false)
+	public String getUpdateUser() {
+		return this.updateUser;
 	}
 
-	public void setUpdataUser(String updataUser) {
-		this.updataUser = updataUser;
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
 	}
 
 	@Column(name = "SEQ", nullable = false)

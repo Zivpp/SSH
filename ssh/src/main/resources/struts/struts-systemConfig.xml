@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<package name="systemConfig" namespace="/" extends="crm-default">
+	<package name="systemConfig" namespace="/" extends="ssh-default">
 	
 		<action name="getSCPInitialData" class="ssh.action.systemConfig.SystemConfigAction" method="getSCPInitialData">
 			<result type="json">	

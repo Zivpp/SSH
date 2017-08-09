@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import bean.CfgSystemConfig;
 import ssh.dao.baseDao.DaoBaseMariadb;
 import ssh.util.CacheUtil;
+import ssh.util.StringUtil;
 
 @Component("cfgSystemConfigDaoImpl")
 public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{ 
@@ -116,5 +117,40 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<CfgSystemConfig> searchCfgSysDataBySort(String orderKey, String type) {
+		
+		Session session = getSessionFactory();
+		
+		String sql = "Select "
+				+ "id id,"
+				+ "code_cate codeCate,"
+				+ "code_name codeName,"
+				+ "code code, "
+				+ "code_value codeValue,"
+				+ "code_desc codeDesc,"
+				+ "parent_id parentId,"
+				+ "seq seq,"
+				+ "create_date createDate,"
+				+ "create_user createUser,"
+				+ "update_date updateDate,"
+				+ "update_user updateUser"
+				+ " from cfg_system_config order by :orderKey";
+		
+		if(StringUtil.isEmpty(orderKey)){
+			orderKey = "id"; //default
+		}
+		
+		if(!StringUtil.isEmpty(type)){
+			sql = sql + " " + type;
+		}
+		
+		Query query = session.createSQLQuery(sql)
+			.setParameter("orderKey", orderKey)
+			.setResultTransformer(Transformers.aliasToBean(CfgSystemConfig.class));
+		
+		return query.list();
 	}
 }

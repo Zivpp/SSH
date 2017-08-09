@@ -18,7 +18,7 @@
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
-	<h2>PAGE : cfg_system_config parameters</h2>
+	<h2>Cfg_system_config parameters</h2>
 	<div style="position: relative; top:-30px;">
 	<button class="btn btn-success" data-toggle="modal" data-target="#addModel">Add</button>
 	<input type="text">
@@ -120,9 +120,10 @@
        	<br/>
        	<!-- footer -->
         <div class="modal-footer">
+        	<button type="button" class="btn" ng-click="copyForAdd()">Copy to add</button>
         	<button type="button" class="btn btn-success" ng-click="save()">Save</button>
         	<button type="button" class="btn btn-danger" ng-click="remove()">Delete</button>
-          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          	<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
       </div>
     </div>

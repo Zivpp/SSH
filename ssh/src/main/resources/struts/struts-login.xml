@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<package name="login" namespace="/" extends="crm-default">
+	<package name="login" namespace="/" extends="ssh-default">
 	
 		<action name="loginAction" class="ssh.action.login.LoginAction" method="loginAction">
 			<result type="json">

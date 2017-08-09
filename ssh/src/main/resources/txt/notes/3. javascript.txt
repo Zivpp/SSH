@@ -1,0 +1,15 @@
+2017/08/09
+1. 類似 java 介面設計, 先定義好模糊行為, 實際呼叫 function 的地方再進行實作
+e.g.
+	var test = function(a,b){
+		a('A','B','C');
+		b('d','e','f');
+	}
+	
+	var t = function(){
+		test(function(a,b,c){
+			console.log(a+b+c);
+		},function(a,b,c){
+			console.log(a+b+c);
+		})
+	}

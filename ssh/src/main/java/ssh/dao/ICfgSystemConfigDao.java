@@ -45,5 +45,12 @@ public interface ICfgSystemConfigDao {
 	 * @return
 	 */
 	public List<CfgSystemConfig> getAllData();
+
+	/**
+	 * 撈取 CFG_SYSTEM_CONFIG 所有資料, 根據排序 Key Word 排序
+	 * @param string
+	 * @return
+	 */
+	public List<CfgSystemConfig> searchCfgSysDataBySort(String orderKey, String type);
     
 }

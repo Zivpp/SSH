@@ -216,8 +216,8 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		if(csc != null){
 			csc.setCreateUser(SysCfgCode.defaultUser);
 			csc.setCreateDate(new Date());
-			csc.setUpdataUser(SysCfgCode.defaultUser);
-			csc.setUpdataDate(new Date());
+			csc.setUpdateUser(SysCfgCode.defaultUser);
+			csc.setUpdateDate(new Date());
 			cfgSystemConfigDao.insert(csc);
 			
 			cacheUtil.init();
@@ -239,8 +239,8 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				if(oldCsc.getId() == tmpCsc.getId()){
 					editData.setCreateDate(tmpCsc.getCreateDate());
 					editData.setCreateUser(tmpCsc.getCreateUser());
-					editData.setUpdataDate(new Date());
-					editData.setUpdataUser(tmpCsc.getUpdataUser());
+					editData.setUpdateDate(new Date());
+					editData.setUpdateUser(tmpCsc.getUpdateUser());
 					cfgSystemConfigDao.update(editData);
 					
 					cacheUtil.init();

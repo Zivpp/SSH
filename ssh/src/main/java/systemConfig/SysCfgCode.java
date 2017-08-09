@@ -4,6 +4,8 @@ public class SysCfgCode {
 
 	public static final String SUCCESS = "SUCCESS";
 	public static final String defaultUser = "Ziv";
+	public static final String desc = "desc";
+	public static final String dsc = "dsc";
 	
 	/**
 	 * table : CFG_SYSTEM_CONFIG.CODE_CATE

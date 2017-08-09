@@ -1,2 +1,5 @@
 2017/08/06
 設計Table Header 時,應該有一欄位紀錄此欄位的資料屬性, e.g. String or Integer,方便後續排序使用。
+
+2017/08/07
+用 Hibernate 提供的函數排序, 根據 Entity 的 parameter 名稱 ; 使用純 sql script 則根據 DB 欄位名稱。
