@@ -53,7 +53,11 @@ public class SystemConfigAction extends BaseAction{
 		
 		try{
 			
+		if(addData != null){
 			cfgSystemConfigService.addFromConfigPage(addData);
+		}else{
+			throw new Exception("addData is null");
+		}
 			
 		}catch(Exception e){
 			System.out.println(e.getMessage());

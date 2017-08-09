@@ -84,7 +84,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 						
 				}
 				
-				//note
+				//no input note
 				if(error){
 					var tmpId = $scope.addCfgSysConBean[index].key;
 					$("#"+name).addClass("errorInput");
@@ -105,23 +105,19 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 				addData[tmpKey] = tmpValue;
 			}
 			
-			var data = {
-					addData : addData
-			}
-			
-			$http({
-				method : 'POST',
-				url : "addCfgSystemConfig.action",
-				data : data
-			}).success(function (data, status) {
-				
-				$scope.closeModel('addModel');
-				
-				initial();
-				
-			}).error(function (data, status) {
-				
-			});
+			httpFactory.post(
+					"addCfgSystemConfig.action", {//url
+						data : {
+							addData : addData
+						} 
+					},function(data){ //success	
+						$scope.closeModel('addModel');
+						initial();
+					},function(data){ //error
+						confirm('add cfg_System_Config data error : ' + data);
+					}
+			);					
+
 		}
 	};//END add()
 	
@@ -132,35 +128,29 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		
 		var data = {
 				cfgSysId : item[0]
-			};
+			};	
 		
-		$http({
-			method : 'POST',
-			url : "searchCfgSysConById.action",
-			data : data
-		}).success(function (data, status) {
-			
-			//editCfgSysConBean init() 已經設定好欄位, 將 Value 放入即可
-			if(data && data.result && data.result.data){
-				
-				var tmpValueData = data.result.data;				
-				
-				for(var i in $scope.editCfgSysConBean){
+		httpFactory.post(
+				"searchCfgSysConById.action", {//url
+					data : {
+						cfgSysId : item[0]
+					} 
+				},function(data){ //success	
 					
-					var tmpKey = $scope.editCfgSysConBean[i].key;
-					
-					for(var key in tmpValueData){
-						
-						if(tmpKey == key){
-							$scope.editCfgSysConBean[i].value = tmpValueData[key];
+					var tmpValueData = data;
+					for(var i in $scope.editCfgSysConBean){
+						var tmpKey = $scope.editCfgSysConBean[i].key;
+						for(var key in tmpValueData){
+							if(tmpKey == key){
+								$scope.editCfgSysConBean[i].value = tmpValueData[key];
+							}
 						}
 					}
+					
+				},function(data){ //error
+					confirm('search cfg_System_Config data error : ' + data);
 				}
-			}
-			
-		}).error(function (data, status) {
-			console.log(data);
-		});
+		);	
 		
 		//Open model
 		$scope.openModel('editModel');
@@ -180,40 +170,40 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		var data = {
 				editData : editData,
 				oldEditId : $scope.oldEditId
-		}
+		}	
 		
-		$http({
-			method : 'POST',
-			url : "editCfgSysCon.action",
-			data : data
-		}).success(function (data, status) {
-			
-			if(data && data.result && data.result.data){
-				
-				$scope.closeModel('editModel');
-				
-				if(data && data.result && data.result.data){
+		httpFactory.post(
+				"editCfgSysCon.action", {//url
+					data : {
+						editData : editData,
+						oldEditId : $scope.oldEditId
+					} 
+				},function(data){ //success	
 					
-					for(var attr in data.result.data){
-						var rsponse = attr;
-						var massage = data.result.data[attr];
-					}
+					if(data){
+						
+						$scope.closeModel('editModel');
+
+						for(var attr in data){
+							var rsponse = attr;
+							var massage = data[attr];
+						}
+						
+						if(rsponse == 'true'){
+							$scope.editResponseStr ="SUCCESS" + massage;
+						}else{
+							$scope.editResponseStr ="FAIL : " + massage;
+						}
+						
+						$scope.openModel('editResponseModel');
+						
+						initial();
+					}				
 					
-					if(rsponse == 'true'){
-						$scope.editResponseStr ="SUCCESS" + massage;
-					}else{
-						$scope.editResponseStr ="FAIL : " + massage;
-					}
-					
-					$scope.openModel('editResponseModel');
+				},function(data){ //error
+					confirm('save cfg_System_Config data error : ' + data);
 				}
-				
-				initial();
-			}
-			
-		}).error(function (data, status) {
-			console.log(data);
-		});
+		);			
 		
 	}//END save()
 	
@@ -230,24 +220,23 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 				removeData[tmpKey] = tmpValue;
 			}
 			
-			$http({
-				method : 'POST',
-				url : "removeCfgSysCon.action",
-				data : {
-					removeData : removeData
-				}
-			}).success(function (data, status) {
-				
-				if(data){
-					$scope.closeModel('editModel');
-					initial();
-				}
-				
-			}).error(function (data, status) {
-				console.log(data);
-			});
+			httpFactory.post(
+					"removeCfgSysCon.action", {//url
+						data : {
+							removeData : removeData
+						} 
+					},function(data){ //success					
+						if(data){
+							$scope.closeModel('editModel');
+							initial();
+						}
+					},function(data){ //error
+						confirm('delete cfg_System_Config data error : ' + data);
+					}
+			);
+			
 		}else{
-			//not do anything
+			//not do something
 		}
 
 	}//END remove()

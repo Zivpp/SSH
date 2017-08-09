@@ -7,10 +7,12 @@ var sshConnectionFactory = angular.module('sshConnectionFactory', []);
 sshConnectionFactory.factory('httpFactory',['$http',function($http){
 	
 	return {
-		post : function(url,data,success,error){			
+		post : function(url,reqData,success,error){			
 			
-			if(!data){
-				data = {};
+			var data = null;
+			
+			if(reqData){
+				data = reqData.data;
 			}
 			
 			$http({
@@ -20,12 +22,15 @@ sshConnectionFactory.factory('httpFactory',['$http',function($http){
 			}).success(function (data, status) {			
 				
 				//data
-				if(data && data.result && data.result.data && !data.result.exception){
-					success(data.result.data);
+				if(data && data.result && !data.result.exception){
+					if(data.result.data){ //sometime no data is return
+						success(data.result.data);
+					}else{
+						success(data.result);
+					}	
 				}else{
 					error(data.result.exception);
-				}		
-				
+				}						
 			}).error(function (data, status) {
 				console.log("unknow error " + status +" : " + data);
 			});
