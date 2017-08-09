@@ -35,7 +35,7 @@ public class SystemConfigAction extends BaseAction{
 			HashMap<String,Object> result = cfgSystemConfigService.getSCPInitialData();
 			
 			super.dataHandler(result);
-			
+
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			super.dataHandler(e);

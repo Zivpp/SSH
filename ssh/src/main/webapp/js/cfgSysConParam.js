@@ -1,6 +1,6 @@
-var app = angular.module("sysCfgParamApp", []); 
+var app = angular.module("sysCfgParamApp", ['sshConnectionFactory']); 
 
-app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
+app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',function($scope,$http,$location,httpFactory) {
 	
 	//*Parameter
 	$scope.tableHeader;
@@ -20,40 +20,33 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		$scope.oldEditId = null;
 		
 		//datas
-		$http({
-			method : 'POST',
-			url : "getSCPInitialData.action"
-		}).success(function (data, status) {
-			
-			console.log('Post OK!!!', data);
-			
-			if(data && data.result && data.result.data){
+		httpFactory.post(
+			"getSCPInitialData.action", //url
+			{data : {}}, //data
+			function(data){ //success
 				
-				$scope.tableHeader = data.result.data.tableHeader;
-				$scope.tableBody = data.result.data.tableBody;
-				if(data.result.data.addCfgSysConBean){
-					for(var attr in data.result.data.addCfgSysConBean){
+				$scope.tableHeader = data.tableHeader;
+				$scope.tableBody = data.tableBody;
+				if(data.addCfgSysConBean){
+					for(var attr in data.addCfgSysConBean){
 						
 	            		$scope.addCfgSysConBean.push({
-	            			key : data.result.data.addCfgSysConBean[attr].name,
+	            			key : data.addCfgSysConBean[attr].name,
 	            			value : null,
-	            			type : data.result.data.addCfgSysConBean[attr].dataType
+	            			type : data.addCfgSysConBean[attr].dataType
 	            		});
 	            		
 	            		$scope.editCfgSysConBean.push({
-	            			key : data.result.data.addCfgSysConBean[attr].name,
+	            			key : data.addCfgSysConBean[attr].name,
 	            			value : null,
 	            		});
 	        		};
 				}
-				
-			}else {
-				console.log('No any cfg_System_Config data');
+			},function(data){ //error
+				confirm('get cfg_System_Config data error : ' + data);
+				console.log('get cfg_System_Config data error : ' + data);
 			}
-			
-		}).error(function (data, status) {
-			console.log('get Cfg_System_Config initial data rrror', data);
-		});
+		);
 	}
 	
 	//*function
@@ -237,14 +230,12 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				removeData[tmpKey] = tmpValue;
 			}
 			
-			var data = {
-					removeData : removeData
-			}
-			
 			$http({
 				method : 'POST',
 				url : "removeCfgSysCon.action",
-				data : data
+				data : {
+					removeData : removeData
+				}
 			}).success(function (data, status) {
 				
 				if(data){
@@ -256,7 +247,7 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 				console.log(data);
 			});
 		}else{
-			
+			//not do anything
 		}
 
 	}//END remove()
@@ -312,4 +303,10 @@ app.controller("sysCfgParamCtrl",function($scope,$http,$location) {
 		
 	}
 	
-});
+	var t = function() {
+
+	}
+	
+	t();
+	
+}]);
