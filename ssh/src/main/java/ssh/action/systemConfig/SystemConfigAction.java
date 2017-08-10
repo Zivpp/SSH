@@ -1,13 +1,13 @@
 package ssh.action.systemConfig;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import bean.CfgSystemConfig;
-import login.TestStringData;
 import ssh.action.BaseAction;
 import ssh.service.ICfgSystemConfigService;
 import ssh.util.BeanUtil;
@@ -23,6 +23,7 @@ public class SystemConfigAction extends BaseAction{
 	private CfgSystemConfig removeData;
 	private String cfgSysId;
 	private String oldEditId;
+	private List<String> deleteCfgSysIdList;
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigServiceImpl")
@@ -125,6 +126,26 @@ public class SystemConfigAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	/**
+	 * 刪除多個系統參數 
+	 * @return
+	 * @throws Exception
+	 */
+	public String removeCfgSysByBatch() throws Exception {
+
+		try{
+			
+			cfgSystemConfigService.removeCfgSysByBatch(deleteCfgSysIdList);
+			super.dataHandler();
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
 
 	public CfgSystemConfig getAddData() {
 		return addData;
@@ -164,6 +185,14 @@ public class SystemConfigAction extends BaseAction{
 
 	public void setRemoveData(CfgSystemConfig removeData) {
 		this.removeData = removeData;
+	}
+
+	public List<String> getDeleteCfgSysIdList() {
+		return deleteCfgSysIdList;
+	}
+
+	public void setDeleteCfgSysIdList(List<String> deleteCfgSysIdList) {
+		this.deleteCfgSysIdList = deleteCfgSysIdList;
 	}
 
 }

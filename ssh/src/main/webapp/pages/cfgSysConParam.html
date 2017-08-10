@@ -21,11 +21,14 @@
 
 	<h2>Cfg_system_config parameters</h2>
 	<div style="position: relative; top:-30px;">
-	<button class="btn btn-success" data-toggle="modal" data-target="#addModel">Add</button>
-	<input type="text">
-	<button class="btn btn-default">Search</button>
+	<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel">Add</button>
+	<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">Batch Delete</button>
+	<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">Delete</button>
+	<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">Cancel</button>
+	<input type="text" ng-disabled="isBatchDeleteModel">
+	<button class="btn btn-default" ng-disabled="isBatchDeleteModel">Search</button>
 	<lable>Records Per Page : </lable>
-	<select>
+	<select ng-disabled="isBatchDeleteModel">
 		<option>10</option>
 		<option>50</option>
 		<option>100</option>
@@ -35,13 +38,14 @@
 	  <li><a href="#">1</a></li>
 	  <li class="active"><a href="#">2</a></li>
 	  <li><a href="#">3</a></li>
-	  <li><a href="#">4</a></li>
-	  <li><a href="#">5</a></li>
 	</ul>
 	<table>
 		<thead t-block="blockPagination">
 			<tr>
-				<th>No.</th>
+				<th>
+					<span ng-show="!isBatchDeleteModel">No.</span>
+					<span ng-show="isBatchDeleteModel"><input type="checkbox" ng-model="isAllChecked">
+				</th>
 				<th ng-repeat="thItem in tableHeader track by $index"
 					ng-click="sortByHeader(thItem)">
 					{{thItem}}
@@ -50,10 +54,13 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="itmes in tableBody track by $index"
-				ng-click="edit(itmes)">
-				<td class="tdIndex">{{$index}}</td>
-				<td ng-repeat="item in itmes track by $index" ng-model="item">
-					 <strong style="font-size: 5px;">{{item}}</strong>
+				ng-click="edit(itmes.data)">
+				<td class="tdIndex">
+					{{$index}}
+					<span ng-show="isBatchDeleteModel"> | <input type="checkbox" ng-model="itmes.isChecked"></span>
+				</td>
+				<td ng-repeat="item in itmes.data track by $index" ng-model="item">
+					<strong style="font-size: 5px;">{{item}}</strong>
 				</td>
 			</tr>
 		</tbody>

@@ -9,6 +9,8 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 	$scope.editCfgSysConBean;
 	$scope.editResponseStr;
 	$scope.oldEditId;
+	$scope.isBatchDeleteModel;
+	$scope.isAllChecked;
 	
 	//*Function
 	var initial = function(){
@@ -18,6 +20,8 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		$scope.addCfgSysConBean = [];
 		$scope.editCfgSysConBean = [];
 		$scope.oldEditId = null;
+		$scope.isBatchDeleteModel = false;
+		$scope.isAllChecked = false;
 		
 		//datas
 		httpFactory.post(
@@ -25,8 +29,21 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 			{data : {}}, //data
 			function(data){ //success
 				
+				//tableHeader
 				$scope.tableHeader = data.tableHeader;
-				$scope.tableBody = data.tableBody;
+				
+				//tableBody
+				//新增 index, isShow for pagination
+				for(var i in data.tableBody){
+					$scope.tableBody .push({
+						data : data.tableBody[i],
+						index : i,
+						isShow : true,
+						isChecked : false
+					});
+				}
+				
+				//addCfgSysConBean && editCfgSysConBean
 				if(data.addCfgSysConBean){
 					for(var attr in data.addCfgSysConBean){
 						
@@ -124,36 +141,37 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 	//Start edit()
 	$scope.edit = function(item){
 		
-		$scope.oldEditId = item[0];
-		
-		var data = {
-				cfgSysId : item[0]
-			};	
-		
-		httpFactory.post(
-				"searchCfgSysConById.action", {//url
-					data : {
-						cfgSysId : item[0]
-					} 
-				},function(data){ //success	
-					
-					var tmpValueData = data;
-					for(var i in $scope.editCfgSysConBean){
-						var tmpKey = $scope.editCfgSysConBean[i].key;
-						for(var key in tmpValueData){
-							if(tmpKey == key){
-								$scope.editCfgSysConBean[i].value = tmpValueData[key];
+		if(!$scope.isBatchDeleteModel){
+			$scope.oldEditId = item[0];
+			
+			var data = {
+					cfgSysId : item[0]
+				};	
+			
+			httpFactory.post(
+					"searchCfgSysConById.action", {//url
+						data : {
+							cfgSysId : item[0]
+						} 
+					},function(data){ //success	
+						
+						var tmpValueData = data;
+						for(var i in $scope.editCfgSysConBean){
+							var tmpKey = $scope.editCfgSysConBean[i].key;
+							for(var key in tmpValueData){
+								if(tmpKey == key){
+									$scope.editCfgSysConBean[i].value = tmpValueData[key];
+								}
 							}
 						}
+						
+					},function(data){ //error
+						confirm('search cfg_System_Config data error : ' + data);
 					}
-					
-				},function(data){ //error
-					confirm('search cfg_System_Config data error : ' + data);
-				}
-		);	
-		
-		//Open model
-		$scope.openModel('editModel');
+			);	
+			//Open model
+			$scope.openModel('editModel');
+		}
 		
 	}//END edit()
 	
@@ -291,11 +309,58 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		});
 		
 	}
-	
-	var t = function() {
-
+	//---
+	$scope.batchDeleteModelSwitch = function() {
+		
+		$scope.isBatchDeleteModel = !$scope.isBatchDeleteModel;
+		//all checked = false
+		for(var i in $scope.tableBody){
+			$scope.tableBody[i].isChecked = false;
+		}
 	}
 	
-	t();
+	$scope.batchDelete = function() {
+		
+		if(confirm("Are you sure you want to DELETE(Batch)")){
+			
+			var deleteCfgSysIdList = [];
+			
+			for(var i in $scope.tableBody){
+				if($scope.tableBody[i].isChecked){
+					deleteCfgSysIdList.push($scope.tableBody[i].data[0]);
+				}
+			}
+			
+			httpFactory.post(
+				"removeCfgSysByBatch.action", {//url
+					data : {
+						deleteCfgSysIdList : deleteCfgSysIdList
+					} 
+				},function(data){ //success					
+					$scope.isBatchDeleteModel = false;
+				},function(data){ //error
+					confirm('delete cfg_System_Config data(batch) error : ' + data);
+				}
+			);
+			
+		}
+
+	}	
 	
+	$scope.$watch('isAllChecked', function(newValue, oldValue) {
+		 if(newValue){
+			for(var i in $scope.tableBody){
+				if($scope.tableBody[i].isShow = true){
+					$scope.tableBody[i].isChecked = true;
+				}
+			} 
+		 }else{
+			for(var i in $scope.tableBody){
+				if($scope.tableBody[i].isShow = true){
+					$scope.tableBody[i].isChecked = false;
+				}
+			} 
+		 }	    
+	},true);
+
 }]);

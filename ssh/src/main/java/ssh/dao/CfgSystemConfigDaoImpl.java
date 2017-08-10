@@ -153,4 +153,10 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		return query.list();
 	}
+
+	@Override
+	public void deleteByIdList(List<String> deleteCfgSysIdList) {
+		// TODO Auto-generated method stub
+		
+	}
 }

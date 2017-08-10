@@ -274,6 +274,20 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		}
 	}
 
+	@Override
+	public void removeCfgSysByBatch(List<String> deleteCfgSysIdList) {	
+		
+		try{
+		
+			cfgSystemConfigDao.deleteByIdList(deleteCfgSysIdList);
+			
+			cacheUtil.init();
+		
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+
 	
 	
 }

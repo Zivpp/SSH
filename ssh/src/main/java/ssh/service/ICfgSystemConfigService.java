@@ -1,6 +1,7 @@
 package ssh.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import bean.CfgSystemConfig;
 
@@ -31,5 +32,11 @@ public interface ICfgSystemConfigService{
 	 * @param removeData
 	 */
 	public void removeFromConfigPage(CfgSystemConfig removeData);
+
+	/**
+	 * batch remove cfg_system_config data
+	 * @param deleteCfgSysIdList
+	 */
+	public void removeCfgSysByBatch(List<String> deleteCfgSysIdList);
 
 }

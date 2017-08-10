@@ -28,7 +28,7 @@ public interface ICfgSystemConfigDao {
 	public CfgSystemConfig update(CfgSystemConfig csc);
 
 	/**
-	 * delete need transaction
+	 * delete by id
 	 * @param id
 	 */
 	public void deleteById(int id);
@@ -52,5 +52,11 @@ public interface ICfgSystemConfigDao {
 	 * @return
 	 */
 	public List<CfgSystemConfig> searchCfgSysDataBySort(String orderKey, String type);
+
+	/**
+	 * batch delete by id
+	 * @param deleteCfgSysIdList
+	 */
+	public void deleteByIdList(List<String> deleteCfgSysIdList);
     
 }
