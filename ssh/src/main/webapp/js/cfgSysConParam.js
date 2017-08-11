@@ -338,6 +338,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 					} 
 				},function(data){ //success					
 					$scope.isBatchDeleteModel = false;
+					initial();
 				},function(data){ //error
 					confirm('delete cfg_System_Config data(batch) error : ' + data);
 				}

@@ -96,11 +96,6 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		List tempList = query.list();
 		List<CfgSystemConfig> result = new ArrayList<CfgSystemConfig>();
 		
-		for(Object obj : tempList){
-			//CfgSystemConfig tempCsc = (CfgSystemConfig)obj;
-			//result.add(tempCsc);
-		}
-		
 		return query.list();
 	}
 
@@ -156,7 +151,21 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 
 	@Override
 	public void deleteByIdList(List<String> deleteCfgSysIdList) {
-		// TODO Auto-generated method stub
+		
+		Session session = getSessionFactory();
+		
+		Transaction tx = session.beginTransaction();
+		
+		String sql = "DELETE FROM cfg_system_config WHERE id in (:idList)";
+		
+		Query query = session.createSQLQuery(sql)
+				.setParameterList("idList", deleteCfgSysIdList);
+		
+		query.executeUpdate();
+		
+		tx.commit();
+		
+		session.close(); 
 		
 	}
 }
