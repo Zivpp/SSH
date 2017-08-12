@@ -1,5 +1,5 @@
 /**
- * 自訂義 angularJs factory
+ * angularJs factory : 連線方法
  * 
  */
 var sshConnectionFactory = angular.module('sshConnectionFactory', []);
@@ -32,11 +32,9 @@ sshConnectionFactory.factory('httpFactory',['$http',function($http){
 					error(data.result.exception);
 				}						
 			}).error(function (data, status) {
+				alert("unknow error " + status +" : " + data);
 				console.log("unknow error " + status +" : " + data);
 			});
-			
-			
-			
 			
 		}
     }

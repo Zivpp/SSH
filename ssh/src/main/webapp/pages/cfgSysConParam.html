@@ -12,6 +12,7 @@
 	<!-- Customize JS -->
 	<script type="text/javascript" src="/ssh/js/cfgSysConParam.js"></script>
 	<script type="text/javascript" src="/ssh/js/factory/sshConnectionFactory.js"></script>
+		<script type="text/javascript" src="/ssh/js/factory/sshGeneralFactory.js"></script>
 
 	<!-- Customize CSS -->
 	<link rel="stylesheet" href="/ssh/resources/css/cfgSysConParam.css">
@@ -21,23 +22,25 @@
 
 	<h2>Cfg_system_config parameters</h2>
 	<div style="position: relative; top:-30px;">
-	<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel">Add</button>
+	<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel" ng-click="initAdd()">Add</button>
 	<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">Batch Delete</button>
 	<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">Delete</button>
 	<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">Cancel</button>
 	<input type="text" ng-disabled="isBatchDeleteModel">
 	<button class="btn btn-default" ng-disabled="isBatchDeleteModel">Search</button>
 	<lable>Records Per Page : </lable>
-	<select ng-disabled="isBatchDeleteModel">
-		<option>10</option>
-		<option>50</option>
-		<option>100</option>
-		<option>ALL</option>
+	<select ng-disabled="isBatchDeleteModel" 
+			onchange="TT()" 
+			id="rppSelect">
+		<option ng-repeat="item in recordsPerPage track by $index" value={{item}}>
+			{{item}}
+		</option>
 	</select>
-	<ul class="pagination" style="position: relative; top:30px;">
-	  <li><a href="#">1</a></li>
-	  <li class="active"><a href="#">2</a></li>
-	  <li><a href="#">3</a></li>
+	<ul class="pagination" style="position: relative; top:30px;"
+		 ng-repeat="i in paginationCount track by $index">
+	  <li ng-click="goPagination($index+1)" id="pIndex{{$index+1}}">
+	  	<a>{{$index+1}}</a>
+	  </li>
 	</ul>
 	<table>
 		<thead t-block="blockPagination">
@@ -54,12 +57,16 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="itmes in tableBody track by $index"
-				ng-click="edit(itmes.data)">
+				ng-click="edit(itmes.data)"
+				ng-show="itmes.isShow">
 				<td class="tdIndex">
-					{{$index}}
-					<span ng-show="isBatchDeleteModel"> | <input type="checkbox" ng-model="itmes.isChecked"></span>
+					{{$index+1}}
+					<span ng-show="isBatchDeleteModel"> | 
+						<input type="checkbox" ng-model="itmes.isChecked">
+					</span>
 				</td>
-				<td ng-repeat="item in itmes.data track by $index" ng-model="item">
+				<td ng-repeat="item in itmes.data track by $index" 
+					ng-model="item">
 					<strong style="font-size: 5px;">{{item}}</strong>
 				</td>
 			</tr>
@@ -68,100 +75,100 @@
 	</div>
 </body>
 
-<!-- add model -->
-<div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="addModel" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-      	<!-- header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ADD ITEM</h4>
-        </div>
-      	<!-- body -->
-        <div class="modal-body" ng-repeat="addThItems in addCfgSysConBean track by $index">
-	       	<div>
-				<label class="col-md-4">
-					{{addThItems.key}} :
-				</label>
-				<div class="col-md-8">
-					<input type="text" style="width:100%;" ng-model="addThItems.value" id={{addThItems.key}}>
-				</div>
-	       	</div>
-	  	</div>
-       	<br/>
-       	<!-- footer -->
-        <div class="modal-footer">
-        	<button type="button" class="btn btn-info" ng-click="add()">Add</button>
-          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- add model -->
+	<div class="container">
+	  <!-- Modal -->
+	  <div class="modal fade" id="addModel" role="dialog">
+	    <div class="modal-dialog">
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	      	<!-- header -->
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">ADD ITEM</h4>
+	        </div>
+	      	<!-- body -->
+	        <div class="modal-body" ng-repeat="addThItems in addCfgSysConBean track by $index">
+		       	<div>
+					<label class="col-md-4">
+						{{addThItems.key}} :
+					</label>
+					<div class="col-md-8">
+						<input type="text" style="width:100%;" ng-model="addThItems.value" id={{addThItems.key}}>
+					</div>
+		       	</div>
+		  	</div>
+	       	<br/>
+	       	<!-- footer -->
+	        <div class="modal-footer">
+	        	<button type="button" class="btn btn-info" ng-click="add()">Add</button>
+	          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-<!-- edit model -->
-<div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="editModel" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-      	<!-- header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">EDIT ITEM</h4>
-        </div>
-      	<!-- body -->
-        <div class="modal-body" ng-repeat="item in editCfgSysConBean track by $index">
-	       	<div>
-				<label class="col-md-4">
-					{{item.key}} :
-				</label>
-				<div class="col-md-8">
-					<input type="text" style="width:100%;" ng-model="item.value" id={{item.key}}>
-				</div>
-	       	</div>
-	  	</div>
-       	<br/>
-       	<!-- footer -->
-        <div class="modal-footer">
-        	<button type="button" class="btn" ng-click="copyForAdd()">Copy to add</button>
-        	<button type="button" class="btn btn-success" ng-click="save()">Save</button>
-        	<button type="button" class="btn btn-danger" ng-click="remove()">Delete</button>
-          	<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- edit model -->
+	<div class="container">
+	  <!-- Modal -->
+	  <div class="modal fade" id="editModel" role="dialog">
+	    <div class="modal-dialog">
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	      	<!-- header -->
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">EDIT ITEM</h4>
+	        </div>
+	      	<!-- body -->
+	        <div class="modal-body" ng-repeat="item in editCfgSysConBean track by $index">
+		       	<div>
+					<label class="col-md-4">
+						{{item.key}} :
+					</label>
+					<div class="col-md-8">
+						<input type="text" style="width:100%;" ng-model="item.value" id={{item.key}}>
+					</div>
+		       	</div>
+		  	</div>
+	       	<br/>
+	       	<!-- footer -->
+	        <div class="modal-footer">
+	        	<button type="button" class="btn" ng-click="copyForAdd()">Copy to add</button>
+	        	<button type="button" class="btn btn-success" ng-click="save()">Save</button>
+	        	<button type="button" class="btn btn-danger" ng-click="remove()">Delete</button>
+	          	<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-<!-- editResponseModel model -->
-<div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="editResponseModel" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-      	<!-- header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">EDIT RESPONSE</h4>
-        </div>
-      	<!-- body -->
-        <div class="modal-body">
-	       	<h1 id="editResponseStr">{{editResponseStr}}</h1>
-	  	</div>
-       	<br/>
-       	<!-- footer -->
-        <div class="modal-footer">
-          	<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- editResponseModel model -->
+	<div class="container">
+	  <!-- Modal -->
+	  <div class="modal fade" id="editResponseModel" role="dialog">
+	    <div class="modal-dialog">
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	      	<!-- header -->
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">EDIT RESPONSE</h4>
+	        </div>
+	      	<!-- body -->
+	        <div class="modal-body">
+		       	<h1 id="editResponseStr">{{editResponseStr}}</h1>
+		  	</div>
+	       	<br/>
+	       	<!-- footer -->
+	        <div class="modal-footer">
+	          	<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 </html>

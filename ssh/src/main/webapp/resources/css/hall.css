@@ -3,6 +3,12 @@
 	background-color: rgb(0, 102, 204);
 	color: rgb(255, 255, 255);
 }
+
+/* col-md nopadding*/
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 		
 /*	treeRoot 設定 不要空隙, 不要編號 */
 .treeRoot ul.treeBranches li a{

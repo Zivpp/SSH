@@ -16,6 +16,7 @@ public class SysCfgCode {
 		
 		public static final String TableHeader = "TableHeader";
 		public static final String Add_TableHeader = "Add_TableHeader";
+		public static final String RecordsPerPage = "RecordsPerPage";
 		
 	}
 	

@@ -1,6 +1,6 @@
-var app = angular.module("sysCfgParamApp", ['sshConnectionFactory']); 
+var app = angular.module("sysCfgParamApp", ['sshConnectionFactory','sshGeneralFactory']); 
 
-app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',function($scope,$http,$location,httpFactory) {
+app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','generalFactory',function($scope,$http,$location,httpFactory,generalFactory) {
 	
 	//*Parameter
 	$scope.tableHeader;
@@ -11,8 +11,14 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 	$scope.oldEditId;
 	$scope.isBatchDeleteModel;
 	$scope.isAllChecked;
+	$scope.recordsPerPage;
+	$scope.nowRPP;
+	$scope.paginationCount;
+	$scope.dataShowRange;
+	$scope.DataWithInRange;
 	
 	//*Function
+	//S-initial()
 	var initial = function(){
 		
 		$scope.tableHeader = [];
@@ -22,7 +28,12 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		$scope.oldEditId = null;
 		$scope.isBatchDeleteModel = false;
 		$scope.isAllChecked = false;
-		
+		$scope.recordsPerPage = [];
+		$scope.nowRPP = null;
+		$scope.paginationCount = null;
+		$scope.dataShowRange = [];
+		$scope.DataWithInRange = null;
+	
 		//datas
 		httpFactory.post(
 			"getSCPInitialData.action", //url
@@ -35,10 +46,10 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 				//tableBody
 				//新增 index, isShow for pagination
 				for(var i in data.tableBody){
-					$scope.tableBody .push({
+					$scope.tableBody.push({
 						data : data.tableBody[i],
 						index : i,
-						isShow : true,
+						isShow : false,
 						isChecked : false
 					});
 				}
@@ -59,16 +70,85 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 	            		});
 	        		};
 				}
+				
+				//recordsPerPage
+				if(data.recordsPerPage){
+					$scope.recordsPerPage = data.recordsPerPage;
+				}
+				computeRagRange();
+				$scope.goPagination(1);
+				
 			},function(data){ //error
 				confirm('get cfg_System_Config data error : ' + data);
 				console.log('get cfg_System_Config data error : ' + data);
 			}
 		);
-	}
+	}//E-initial()
 	
-	//*function
-	//Start add()
-	$scope.add = function(){
+	//S-getPaginationCount()
+	var computeRagRange = function() {
+		
+		//Count
+		var rpp = generalFactory.clone($scope.recordsPerPage[0]); //default
+		var count = Math.ceil($scope.tableBody.length / rpp); //強制四捨五入
+		$scope.paginationCount = new Array(count);
+		//Range
+		for(var i =0;i < count;i++){
+			var index = i+1;
+			$scope.dataShowRange.push({
+				pIndex : index,
+				start : index*rpp - rpp,
+				end : index*rpp - 1
+			})
+		 }
+		
+	}//E-getPaginationCount()
+	
+	//S-goPaination
+	$scope.goPagination = function(pIndex) {
+
+		//target active
+		for(var i =1;i <=  $scope.paginationCount.length;i++){
+			$("#pIndex"+i).removeClass("active");
+		}
+		$("#pIndex"+pIndex).addClass("active");
+		
+		chagneDataShowRange(pIndex);
+		
+	}//E-goPaination
+	
+	//S-isDataWithInRange()
+	var chagneDataShowRange = function(pIndex) {
+		var start = null;
+		var end = null;
+		for(var i in $scope.dataShowRange){
+			if($scope.dataShowRange[i].pIndex == pIndex){
+				
+				if($scope.DataWithInRange){ //old to false;
+					var tmp = generalFactory.clone($scope.DataWithInRange);
+					for(var j=tmp.start;j<=tmp.end;j++){
+						if($scope.tableBody[j]){
+							$scope.tableBody[j].isShow = false;
+						}
+					}
+				}
+				
+				//New
+				$scope.DataWithInRange = {
+					start : $scope.dataShowRange[i].start,
+					end : $scope.dataShowRange[i].end
+				};
+				for(var i=$scope.DataWithInRange.start;i<=$scope.DataWithInRange.end;i++){
+					if($scope.tableBody[i]){
+						$scope.tableBody[i].isShow = true;
+					}
+				}
+			}
+		}		
+	}//E-isDataWithInRange()
+	
+	//S-add()
+	$scope.add = function() {
 		
 		var passCount = 0; //($scope.addCfgSysConBean must be all pass
 		
@@ -136,9 +216,9 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 			);					
 
 		}
-	};//END add()
+	};//E-add()
 	
-	//Start edit()
+	//S-edit()
 	$scope.edit = function(item){
 		
 		if(!$scope.isBatchDeleteModel){
@@ -173,23 +253,20 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 			$scope.openModel('editModel');
 		}
 		
-	}//END edit()
+	}//E-edit()
 	
-	//START save()
+	//S-save()
 	$scope.save = function(){	
-		
 		var editData = {};
 		for(var index in $scope.editCfgSysConBean){
 			var tmpKey = $scope.editCfgSysConBean[index].key;
 			var tmpValue = $scope.editCfgSysConBean[index].value;
 			editData[tmpKey] = tmpValue;
 		}
-		
 		var data = {
 				editData : editData,
 				oldEditId : $scope.oldEditId
 		}	
-		
 		httpFactory.post(
 				"editCfgSysCon.action", {//url
 					data : {
@@ -199,33 +276,27 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 				},function(data){ //success	
 					
 					if(data){
-						
 						$scope.closeModel('editModel');
-
 						for(var attr in data){
 							var rsponse = attr;
 							var massage = data[attr];
 						}
-						
 						if(rsponse == 'true'){
 							$scope.editResponseStr ="SUCCESS" + massage;
 						}else{
 							$scope.editResponseStr ="FAIL : " + massage;
 						}
-						
 						$scope.openModel('editResponseModel');
-						
 						initial();
 					}				
-					
 				},function(data){ //error
 					confirm('save cfg_System_Config data error : ' + data);
 				}
 		);			
 		
-	}//END save()
+	}//E-save()
 	
-	//START remove()
+	//S-remove()
 	$scope.remove = function(){
 		
 		var cfm = confirm("Are you sure you want to DELETE?");
@@ -257,9 +328,9 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 			//not do something
 		}
 
-	}//END remove()
+	}//E-remove()
 	
-	//START copyForAdd()
+	//S-copyForAdd()
 	$scope.copyForAdd = function(){
 		
 		$scope.closeModel('editModel');
@@ -275,41 +346,9 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		
 		$scope.openModel('addModel')	
 		
-	}//END copyForAdd()
+	}//E-copyForAdd()
 	
-	$scope.openModel = function(id) {
-		$('#'+id).modal('show');
-	}
-	
-	$scope.closeModel = function(id) {
-		$('#'+id).modal('hide');
-	}
-	
-	//Initialize
-	initial();
-	
-	$scope.sortByHeader = function(orderKey){
-		
-		var data = {
-				orderKey : orderKey
-		}
-		
-		$http({
-			method : 'POST',
-			url : "getCfgSysyeDataBySort.action",
-			data : data
-		}).success(function (data, status) {
-			
-			if(data){
-
-			}
-			
-		}).error(function (data, status) {
-			console.log(data);
-		});
-		
-	}
-	//---
+	//S-batchDeleteModelSwitch()
 	$scope.batchDeleteModelSwitch = function() {
 		
 		$scope.isBatchDeleteModel = !$scope.isBatchDeleteModel;
@@ -317,8 +356,9 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 		for(var i in $scope.tableBody){
 			$scope.tableBody[i].isChecked = false;
 		}
-	}
+	}//E-batchDeleteModelSwitch()
 	
+	//S-batchDelete()
 	$scope.batchDelete = function() {
 		
 		if(confirm("Are you sure you want to DELETE(Batch)")){
@@ -343,25 +383,70 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory',fun
 					confirm('delete cfg_System_Config data(batch) error : ' + data);
 				}
 			);
-			
 		}
-
-	}	
+	}//E-batchDelete()	
 	
+	//S-initAdd()
+	$scope.initAdd = function() {
+		for(var i in $scope.addCfgSysConBean){
+			$scope.addCfgSysConBean[i].value = null;
+		}
+	}//E-initAdd()
+	
+	$scope.openModel = function(id) {
+		$('#'+id).modal('show');
+	}
+	
+	$scope.closeModel = function(id) {
+		$('#'+id).modal('hide');
+	}
+	
+	//*Watch
 	$scope.$watch('isAllChecked', function(newValue, oldValue) {
 		 if(newValue){
 			for(var i in $scope.tableBody){
-				if($scope.tableBody[i].isShow = true){
+				if($scope.tableBody[i].isShow == true){
 					$scope.tableBody[i].isChecked = true;
 				}
 			} 
 		 }else{
 			for(var i in $scope.tableBody){
-				if($scope.tableBody[i].isShow = true){
+				if($scope.tableBody[i].isShow == true){
 					$scope.tableBody[i].isChecked = false;
 				}
 			} 
 		 }	    
-	},true);
+	},true);	
+	
+	//*Do Initialize
+	initial();
+	
+	$scope.sortByHeader = function(orderKey){
+		
+		var data = {
+				orderKey : orderKey
+		}
+		
+		$http({
+			method : 'POST',
+			url : "getCfgSysyeDataBySort.action",
+			data : data
+		}).success(function (data, status) {
+			
+			if(data){
+
+			}
+			
+		}).error(function (data, status) {
+			console.log(data);
+		});
+		
+	}
+	//---
+	
+	
+	window.TT = function() {
+		$scope.nowRPP = $('#rppSelect').val();
+	}
 
 }]);

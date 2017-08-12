@@ -57,12 +57,20 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				}
 			}
 			
-			//Add_TableHeader && empty cfg_sysytem_config bean
+			//Add_TableHeader
 			List<CfgSystemConfig> tmpAddTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.Add_TableHeader);
 			if(tmpAddTHData != null && tmpAddTHData.size() > 0){
 				List<AddCSCData> addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
 				result.put("addCfgSysConBean", addThData);
 			}
+			
+			//RecordsPerPage
+			List<CfgSystemConfig> tmpRPP = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.RecordsPerPage);
+			List<String> recordsPerPage = new ArrayList<String>();
+			for(CfgSystemConfig rpp : tmpRPP){
+				recordsPerPage.add(rpp.getCodeValue());
+			}
+			result.put("recordsPerPage", recordsPerPage);
 			
 		}catch(Exception e){
 			throw new Exception(e);
