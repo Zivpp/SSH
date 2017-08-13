@@ -12,10 +12,11 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	$scope.isBatchDeleteModel;
 	$scope.isAllChecked;
 	$scope.recordsPerPage;
+	$scope.dataShowRangeMenu;
+	$scope.pagBtnCountMenu;
+	$scope.nowPagCount;
 	$scope.nowRPP;
-	$scope.paginationCount;
-	$scope.dataShowRange;
-	$scope.DataWithInRange;
+	var tmpNowPagCount;
 	
 	//*Function
 	//S-initial()
@@ -28,12 +29,13 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		$scope.oldEditId = null;
 		$scope.isBatchDeleteModel = false;
 		$scope.isAllChecked = false;
-		$scope.recordsPerPage = [];
+		$scope.recordsPerPage = []; //for ng-repeat
+		$scope.dataShowRangeMenu = [];
+		$scope.pagBtnCountMenu = [];
+		$scope.nowPagCount = []; //for ng-repeat
 		$scope.nowRPP = null;
-		$scope.paginationCount = null;
-		$scope.dataShowRange = [];
-		$scope.DataWithInRange = null;
-	
+		tmpNowPagCount = [];
+		
 		//datas
 		httpFactory.post(
 			"getSCPInitialData.action", //url
@@ -71,12 +73,11 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	        		};
 				}
 				
-				//recordsPerPage
-				if(data.recordsPerPage){
-					$scope.recordsPerPage = data.recordsPerPage;
-				}
-				computeRagRange();
-				$scope.goPagination(1);
+				//recordsPerPage && dataShowRangeMenu && pagBtnCountMenu
+				$scope.recordsPerPage = data.recordsPerPage;
+				$scope.dataShowRangeMenu = data.dataShowRangeMenu;
+				$scope.pagBtnCountMenu = data.pagBtnCountMenu;
+				initPagBtnCount();
 				
 			},function(data){ //error
 				confirm('get cfg_System_Config data error : ' + data);
@@ -85,67 +86,51 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		);
 	}//E-initial()
 	
-	//S-getPaginationCount()
-	var computeRagRange = function() {
+	//S-initPagBtnCount()
+	var initPagBtnCount = function() {
+		$scope.nowRPP = $scope.recordsPerPage[0]; //default get [0]
+		for(var attr in $scope.pagBtnCountMenu){
+			if($scope.nowRPP == attr && attr != 'All'){
+				$scope.nowPagCount = new Array($scope.pagBtnCountMenu[attr]);
+				break;
+			}
+		}
+	}//E-initPagBtnCount()
+	
+	//S-reSetPagCount()
+	window.reSetPagCount = function() {
 		
-		//Count
-		var rpp = generalFactory.clone($scope.recordsPerPage[0]); //default
-		var count = Math.ceil($scope.tableBody.length / rpp); //強制四捨五入
-		$scope.paginationCount = new Array(count);
-		//Range
-		for(var i =0;i < count;i++){
-			var index = i+1;
-			$scope.dataShowRange.push({
-				pIndex : index,
-				start : index*rpp - rpp,
-				end : index*rpp - 1
-			})
-		 }
+		if($('#rppSelect').val()){
+			$scope.nowRPP = $('#rppSelect').val();
+		}
 		
-	}//E-getPaginationCount()
+		for(var attr in $scope.pagBtnCountMenu){
+			if($scope.nowRPP == attr && attr != 'All'){
+				$scope.nowPagCount = new Array($scope.pagBtnCountMenu[attr]);
+				break;
+			}
+		}
+		
+		if($scope.nowRPP == attr && attr == 'All'){
+			$scope.nowPagCount = new Array(1);
+		}
+		
+		$scope.$apply(); //**刷新 $scope, ng-repeat 為靜態
+			
+	}//E-reSetPagCount()
 	
 	//S-goPaination
 	$scope.goPagination = function(pIndex) {
 
 		//target active
-		for(var i =1;i <=  $scope.paginationCount.length;i++){
+		for(var i =1;i <=  $scope.nowPagCount.length;i++){
 			$("#pIndex"+i).removeClass("active");
 		}
 		$("#pIndex"+pIndex).addClass("active");
 		
-		chagneDataShowRange(pIndex);
+		//chagneDataShowRange(pIndex);
 		
 	}//E-goPaination
-	
-	//S-isDataWithInRange()
-	var chagneDataShowRange = function(pIndex) {
-		var start = null;
-		var end = null;
-		for(var i in $scope.dataShowRange){
-			if($scope.dataShowRange[i].pIndex == pIndex){
-				
-				if($scope.DataWithInRange){ //old to false;
-					var tmp = generalFactory.clone($scope.DataWithInRange);
-					for(var j=tmp.start;j<=tmp.end;j++){
-						if($scope.tableBody[j]){
-							$scope.tableBody[j].isShow = false;
-						}
-					}
-				}
-				
-				//New
-				$scope.DataWithInRange = {
-					start : $scope.dataShowRange[i].start,
-					end : $scope.dataShowRange[i].end
-				};
-				for(var i=$scope.DataWithInRange.start;i<=$scope.DataWithInRange.end;i++){
-					if($scope.tableBody[i]){
-						$scope.tableBody[i].isShow = true;
-					}
-				}
-			}
-		}		
-	}//E-isDataWithInRange()
 	
 	//S-add()
 	$scope.add = function() {
@@ -443,10 +428,5 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		
 	}
 	//---
-	
-	
-	window.TT = function() {
-		$scope.nowRPP = $('#rppSelect').val();
-	}
 
 }]);

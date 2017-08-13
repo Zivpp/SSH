@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import bean.AddCSCData;
 import bean.CfgSystemConfig;
+import bean.PaginatinStartEnd;
 import ssh.dao.ICfgSystemConfigDao;
 import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
@@ -39,8 +40,17 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		try{
+			
+			List<CfgSystemConfig> tmpTHData = null;
+			List<CfgSystemConfig> allCSCData = null;
+			ArrayList<ArrayList<Object>> tbData = null;
+			List<AddCSCData> addThData = null;
+			List<String> recordsPerPage = null;
+			HashMap<String,Integer> pagBtnCountMenu = null;
+			HashMap<String,List<PaginatinStartEnd>> dataShowRangeMenu = null;
+		
 			//TableHeader
-			List<CfgSystemConfig> tmpTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.TableHeader);
+			tmpTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.TableHeader);
 			if(tmpTHData != null && tmpTHData.size() > 0){
 				
 				List<String> thData = new ArrayList<String>();
@@ -50,9 +60,9 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				result.put("tableHeader", thData);
 				
 				//TableBody : match thData which success
-				List<CfgSystemConfig> tmpCSC = CacheUtil.getSysCfgDatas();
-				if(tmpCSC != null && tmpCSC.size() > 0){		
-					ArrayList<ArrayList<Object>> tbData = buildTableBodyData(thData,tmpCSC);
+				allCSCData = CacheUtil.getSysCfgDatas();
+				if(allCSCData != null && allCSCData.size() > 0){		
+					tbData = buildTableBodyData(thData,allCSCData);
 					result.put("tableBody", tbData);
 				}
 			}
@@ -60,18 +70,61 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			//Add_TableHeader
 			List<CfgSystemConfig> tmpAddTHData = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.Add_TableHeader);
 			if(tmpAddTHData != null && tmpAddTHData.size() > 0){
-				List<AddCSCData> addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
+				addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
 				result.put("addCfgSysConBean", addThData);
 			}
 			
-			//RecordsPerPage
+			//RecordsPerPage && dataShowMenu && pagBtnCountMenu
 			List<CfgSystemConfig> tmpRPP = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.RecordsPerPage);
-			List<String> recordsPerPage = new ArrayList<String>();
-			for(CfgSystemConfig rpp : tmpRPP){
-				recordsPerPage.add(rpp.getCodeValue());
+			if(tmpRPP != null && tmpRPP.size() > 0){
+				recordsPerPage = new ArrayList<String>();
+				for(CfgSystemConfig rpp : tmpRPP){
+					recordsPerPage.add(rpp.getCodeValue());
+				}
+				result.put("recordsPerPage", recordsPerPage);
+				
+				Float allDataCount  = Float.valueOf(allCSCData.size());
+				pagBtnCountMenu = new HashMap<String,Integer>();
+				for(String rpp : recordsPerPage){
+					if(!"All".equals(rpp)){
+						int count = (int)Math.ceil(allDataCount/Float.valueOf(Integer.valueOf(rpp)));
+						pagBtnCountMenu.put(rpp, count);
+					}else{
+						pagBtnCountMenu.put(rpp, 1);
+					}
+				}
+				result.put("pagBtnCountMenu", pagBtnCountMenu);
+				
+				dataShowRangeMenu = new HashMap<String,List<PaginatinStartEnd>>();
+				List<PaginatinStartEnd> tmpPSEList = null;
+				PaginatinStartEnd tmpPSE = null;
+				for(String rpp : recordsPerPage){
+					
+					tmpPSEList = new ArrayList<PaginatinStartEnd>();
+					
+					if(!"All".equals(rpp)){
+						
+						int intRpp = Integer.valueOf(rpp);
+						Integer pCount  = pagBtnCountMenu.get(rpp);
+						
+						for(int i=1;i<=pCount;i++){
+							tmpPSE = new PaginatinStartEnd();
+							tmpPSE.setpIndex(i);
+							tmpPSE.setStart(intRpp * i - intRpp);
+							tmpPSE.setEnd(intRpp * i - 1);
+							tmpPSEList.add(tmpPSE);
+						}
+						dataShowRangeMenu.put(rpp, tmpPSEList);
+						
+					}else{
+						tmpPSE = new PaginatinStartEnd(1,0,(int)(allDataCount-1));
+						tmpPSEList.add(tmpPSE);
+						dataShowRangeMenu.put(rpp, tmpPSEList);
+					}
+				}
+				result.put("dataShowRangeMenu", dataShowRangeMenu);
+				
 			}
-			result.put("recordsPerPage", recordsPerPage);
-			
 		}catch(Exception e){
 			throw new Exception(e);
 		}
