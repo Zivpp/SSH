@@ -4,15 +4,17 @@
 	<meta charset="utf-8">
 	<!-- 外部資源引入 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/ssh/resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/ssh/resources/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="/ssh/resources/font-awesome/css/font-awesome.min.css">
 	<script type="text/javascript" src="/ssh/resources/jquery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/ssh/resources/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/ssh/resources/angularjs/angular-1.5.6.min.js"></script>
+
 	
 	<!-- Customize JS -->
 	<script type="text/javascript" src="/ssh/js/cfgSysConParam.js"></script>
 	<script type="text/javascript" src="/ssh/js/factory/sshConnectionFactory.js"></script>
-		<script type="text/javascript" src="/ssh/js/factory/sshGeneralFactory.js"></script>
+	<script type="text/javascript" src="/ssh/js/factory/sshGeneralFactory.js"></script>
 
 	<!-- Customize CSS -->
 	<link rel="stylesheet" href="/ssh/resources/css/cfgSysConParam.css">
@@ -20,13 +22,21 @@
 </head>
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
-	<h2>Cfg_system_config parameters</h2>
+	<h2>CFG_SYSTEM_CONFIG PARAMETERS</h2>
 	<div style="position: relative; top:-50px;">
 	
-		<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel" ng-click="initAdd()">Add</button>
-		<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">Batch Delete</button>
-		<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">Delete</button>
-		<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">Cancel</button>
+		<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel" ng-click="initAdd()">
+			<i class="fa fa-plus fa-fw" aria-hidden="true"></i>Add
+		</button>
+		<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">
+			<i class="fa fa-trash fa-fw" aria-hidden="true"></i>Batch Delete
+		</button>
+		<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">
+			<i class="fa fa-trash fa-fw" aria-hidden="true"></i>Delete
+		</button>
+		<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">
+			<i class="fa fa-times fa-fw" aria-hidden="true"></i>Cancel
+		</button>
 
 		<lable>Records Per Page : </lable>
 		<select ng-disabled="isBatchDeleteModel" 
