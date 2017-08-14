@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant-TW">
 <head>
 	<meta charset="utf-8">
 	<!-- 外部資源引入 -->
@@ -21,57 +21,58 @@
 <body ng-app="sysCfgParamApp" ng-controller="sysCfgParamCtrl">
 
 	<h2>Cfg_system_config parameters</h2>
-	<div style="position: relative; top:-30px;">
-	<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel" ng-click="initAdd()">Add</button>
-	<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">Batch Delete</button>
-	<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">Delete</button>
-	<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">Cancel</button>
-	<input type="text" ng-disabled="isBatchDeleteModel">
-	<button class="btn btn-default" ng-disabled="isBatchDeleteModel">Search</button>
-	<lable>Records Per Page : </lable>
-	<select ng-disabled="isBatchDeleteModel" 
-			onchange="reSetPagCount()" 
-			id="rppSelect">
-		<option ng-repeat="item in recordsPerPage track by $index" value={{item}}>
-			{{item}}
-		</option>
-	</select>
-	<ul class="pagination" style="position: relative; top:30px;"
-		 ng-repeat="i in nowPagCount track by $index">
-	  <li ng-click="goPagination($index+1)" id="pIndex{{$index+1}}">
-	  	<span>{{$index+1}}</span>
-	  </li>
-	</ul>
-	<table>
-		<thead t-block="blockPagination">
-			<tr>
-				<th>
-					<span ng-show="!isBatchDeleteModel">No.</span>
-					<span ng-show="isBatchDeleteModel"><input type="checkbox" ng-model="isAllChecked">
-				</th>
-				<th ng-repeat="thItem in tableHeader track by $index"
-					ng-click="sortByHeader(thItem)">
-					{{thItem}}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="itmes in tableBody track by $index"
-				ng-click="edit(itmes.data)"
-				ng-show="itmes.isShow">
-				<td class="tdIndex">
-					{{$index+1}}
-					<span ng-show="isBatchDeleteModel"> | 
-						<input type="checkbox" ng-model="itmes.isChecked">
-					</span>
-				</td>
-				<td ng-repeat="item in itmes.data track by $index" 
-					ng-model="item">
-					<strong style="font-size: 5px;">{{item}}</strong>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div style="position: relative; top:-50px;">
+	
+		<button class="btn btn-success" data-toggle="modal" data-target="#addModel" ng-disabled="isBatchDeleteModel" ng-click="initAdd()">Add</button>
+		<button class="btn btn-warning" ng-click="batchDeleteModelSwitch()" ng-show="!isBatchDeleteModel">Batch Delete</button>
+		<button class="btn btn-danger" ng-click="batchDelete()" ng-show="isBatchDeleteModel">Delete</button>
+		<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">Cancel</button>
+
+		<lable>Records Per Page : </lable>
+		<select ng-disabled="isBatchDeleteModel" 
+				onchange="reSetPagCount()" 
+				id="rppSelect">
+			<option ng-repeat="item in recordsPerPage track by $index" value={{item}}>
+				{{item}}
+			</option>
+		</select>
+		<ul class="pagination" style="position: relative; top:30px;"
+			 ng-repeat="i in nowPagCount track by $index">
+		  <li ng-click="goPagination($index+1)" id="pIndex{{$index+1}}">
+		  	<span>{{$index+1}}</span>
+		  </li>
+		</ul>
+		
+		<table>
+			<thead t-block="blockPagination">
+				<tr>
+					<th>
+						<span ng-show="!isBatchDeleteModel">No.</span>
+						<span ng-show="isBatchDeleteModel"><input type="checkbox" ng-model="isAllChecked">
+					</th>
+					<th ng-repeat="thItem in tableHeader track by $index"
+						ng-click="sortByHeader(thItem)">
+						{{thItem.header}}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="itmes in tableBody track by $index"
+					ng-click="edit(itmes.data)"
+					ng-show="itmes.isShow">
+					<td class="tdIndex">
+						{{$index+1}}
+						<span ng-show="isBatchDeleteModel"> | 
+							<input type="checkbox" ng-model="itmes.isChecked">
+						</span>
+					</td>
+					<td ng-repeat="item in itmes.data track by $index" 
+						ng-model="item">
+						<strong style="font-size: 5px;">{{item}}</strong>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 

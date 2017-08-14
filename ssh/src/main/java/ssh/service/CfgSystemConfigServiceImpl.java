@@ -349,6 +349,20 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		}
 	}
 
+	@Override
+	public List<String> cfgSysConSortByHeader(String header, Boolean sortBy, List<String> sortIdList) {
+		
+		String orderKey;
+		
+		if(sortBy){
+			orderKey = SysCfgCode.asc;
+		}else{
+			orderKey = SysCfgCode.desc;
+		}
+		
+		return cfgSystemConfigDao.cfgSysConSortByHeader(header,orderKey,sortIdList);
+	}
+
 	
 	
 }

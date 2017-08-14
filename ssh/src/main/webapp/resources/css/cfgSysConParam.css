@@ -37,3 +37,7 @@ tr:hover {
 .errorInput {
 	border:1px solid red;
 }
+.hideTr {
+	background-color:#FFFFFF;
+	color:#000000;
+}

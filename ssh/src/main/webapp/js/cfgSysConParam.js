@@ -16,7 +16,6 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	$scope.pagBtnCountMenu;
 	$scope.nowPagCount;
 	$scope.nowRPP;
-	var tmpNowPagCount;
 	
 	//*Function
 	//S-initial()
@@ -34,7 +33,6 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		$scope.pagBtnCountMenu = [];
 		$scope.nowPagCount = []; //for ng-repeat
 		$scope.nowRPP = null;
-		tmpNowPagCount = [];
 		
 		//datas
 		httpFactory.post(
@@ -43,14 +41,18 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 			function(data){ //success
 				
 				//tableHeader
-				$scope.tableHeader = data.tableHeader;
+				for(var i in data.tableHeader){
+					$scope.tableHeader.push({
+						header : data.tableHeader[i],
+						sort : true
+					});
+				}
 				
 				//tableBody
 				//新增 index, isShow for pagination
 				for(var i in data.tableBody){
 					$scope.tableBody.push({
 						data : data.tableBody[i],
-						index : i,
 						isShow : false,
 						isChecked : false
 					});
@@ -95,6 +97,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				break;
 			}
 		}
+		chagneDataShowRange(1);
 	}//E-initPagBtnCount()
 	
 	//S-reSetPagCount()
@@ -115,22 +118,58 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 			$scope.nowPagCount = new Array(1);
 		}
 		
+		chagneDataShowRange(1);
 		$scope.$apply(); //**刷新 $scope, ng-repeat 為靜態
-			
 	}//E-reSetPagCount()
 	
 	//S-goPaination
 	$scope.goPagination = function(pIndex) {
 
-		//target active
+		//active : 標註藍色好認
 		for(var i =1;i <=  $scope.nowPagCount.length;i++){
 			$("#pIndex"+i).removeClass("active");
 		}
 		$("#pIndex"+pIndex).addClass("active");
 		
-		//chagneDataShowRange(pIndex);
+		chagneDataShowRange(pIndex);
 		
 	}//E-goPaination
+	
+	//S-chagneDataShowRange()
+	var chagneDataShowRange = function(pIndex) {
+		
+		var tmpRpp = $scope.nowRPP;
+		var start = null;
+		var end = null;
+		
+		for(var attr in $scope.dataShowRangeMenu){
+			if(tmpRpp == attr){
+				var menu = $scope.dataShowRangeMenu[attr];
+				for(var i in menu){
+					if(pIndex == menu[i].pIndex){
+						start = menu[i].start;
+						end = menu[i].end;
+						break;
+					}
+				}
+			}
+		}
+
+		if(start != null && end != null){
+			//all re set
+			for(var j in $scope.tableBody){
+				if($scope.tableBody[j].isShow = true){
+					$scope.tableBody[j].isShow = false;
+				}
+			}
+			//new data show
+			for(var i=start;i<=end;i++){
+				if($scope.tableBody[i]){
+					$scope.tableBody[i].isShow = true;
+				}
+			}
+		}	
+	}//E-chagneDataShowRange()
 	
 	//S-add()
 	$scope.add = function() {
@@ -406,27 +445,55 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	//*Do Initialize
 	initial();
 	
-	$scope.sortByHeader = function(orderKey){
+	//---
+	$scope.sortByHeader = function(data){
 		
-		var data = {
-				orderKey : orderKey
+		var sortIdList = [];
+		var backupData = [];
+		
+		data.sort = !data.sort;
+		
+		for(var i in $scope.tableBody){
+			if($scope.tableBody[i].isShow == true){
+				var tmpId = generalFactory.clone($scope.tableBody[i].data[0]);
+				var tmpData = generalFactory.clone($scope.tableBody[i].data);
+				sortIdList.push(tmpId);
+				backupData.push({
+					id : tmpId,
+					data : tmpData,
+					index : i
+				});
+			}
 		}
 		
-		$http({
-			method : 'POST',
-			url : "getCfgSysyeDataBySort.action",
-			data : data
-		}).success(function (data, status) {
-			
-			if(data){
-
-			}
-			
-		}).error(function (data, status) {
-			console.log(data);
-		});
-		
+		httpFactory.post(
+				"cfgSysConSortByHeader.action", {//url
+					data : {
+						header : data.header,
+						sortBy : data.sort,
+						sortIdList : sortIdList
+					} 
+				},function(data){ //success
+					
+					var sortResultData = [];
+					//先排出新的資料排序
+					for(var j in data){
+						for(var i in backupData){
+							if(data[j] == backupData[i].id){
+								sortResultData.push($scope.tableBody[backupData[i].index].data);
+								break;
+							}
+						}
+					}
+					//直接將原來資料全部覆蓋
+					for(var i in backupData){
+						$scope.tableBody[backupData[i].index].data = generalFactory.clone(sortResultData[i]);
+					}
+					
+				},function(data){ //error
+					confirm('sort by {' + data.header + '} error :' + data);
+				}
+			);
 	}
-	//---
 
 }]);

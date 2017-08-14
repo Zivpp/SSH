@@ -1,5 +1,6 @@
 package ssh.action.systemConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class SystemConfigAction extends BaseAction{
 	private String cfgSysId;
 	private String oldEditId;
 	private List<String> deleteCfgSysIdList;
+	private String header;
+	private Boolean sortBy;
+	private List<String> sortIdList;
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigServiceImpl")
@@ -146,6 +150,26 @@ public class SystemConfigAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	/**
+	 * ®Ú¾Ú table header ±Æ§Ç
+	 * @return
+	 * @throws Exception
+	 */
+	public String cfgSysConSortByHeader() throws Exception {
+
+		try{
+
+			List<String> sortResult = cfgSystemConfigService.cfgSysConSortByHeader(header,sortBy,sortIdList);
+			super.dataHandler(sortResult);
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
 
 	public CfgSystemConfig getAddData() {
 		return addData;
@@ -193,6 +217,30 @@ public class SystemConfigAction extends BaseAction{
 
 	public void setDeleteCfgSysIdList(List<String> deleteCfgSysIdList) {
 		this.deleteCfgSysIdList = deleteCfgSysIdList;
+	}
+
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	public List<String> getSortIdList() {
+		return sortIdList;
+	}
+
+	public void setSortIdList(List<String> sortIdList) {
+		this.sortIdList = sortIdList;
+	}
+
+	public Boolean getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(Boolean sortBy) {
+		this.sortBy = sortBy;
 	}
 
 }

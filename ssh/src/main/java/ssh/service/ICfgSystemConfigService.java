@@ -39,4 +39,13 @@ public interface ICfgSystemConfigService{
 	 */
 	public void removeCfgSysByBatch(List<String> deleteCfgSysIdList);
 
+	/**
+	 * Id List sort by table header
+	 * @param header
+	 * @param sortBy
+	 * @param sortIdList
+	 * @return
+	 */
+	public List<String> cfgSysConSortByHeader(String header, Boolean sortBy, List<String> sortIdList);
+
 }

@@ -58,5 +58,14 @@ public interface ICfgSystemConfigDao {
 	 * @param deleteCfgSysIdList
 	 */
 	public void deleteByIdList(List<String> deleteCfgSysIdList);
+
+	/**
+	 * id list sort by table header
+	 * @param header
+	 * @param sortBy
+	 * @param sortIdList
+	 * @return
+	 */
+	public List<String> cfgSysConSortByHeader(String header, String orderkey, List<String> sortIdList);
     
 }

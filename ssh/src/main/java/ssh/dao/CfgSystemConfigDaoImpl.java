@@ -16,6 +16,7 @@ import bean.CfgSystemConfig;
 import ssh.dao.baseDao.DaoBaseMariadb;
 import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
+import systemConfig.SysCfgCode;
 
 @Component("cfgSystemConfigDaoImpl")
 public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{ 
@@ -167,5 +168,20 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		session.close(); 
 		
+	}
+
+	@Override
+	public List<String> cfgSysConSortByHeader(String header, String orderKey, List<String> sortIdList) {
+		
+		Session session = getSessionFactory();
+		
+		Transaction tx = session.beginTransaction();
+		
+		String sql = "select id from cfg_system_config where id in(:sortIdList) order by " + header + " " + orderKey;
+		
+		Query query = session.createSQLQuery(sql)
+				.setParameterList("sortIdList", sortIdList);
+		
+		return query.list();
 	}
 }
