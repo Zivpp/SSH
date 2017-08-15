@@ -7,12 +7,14 @@ th, td {
     padding: 8px;
     text-align:center;
     white-space: nowrap;
+    font-size: 5px;
 }
 tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #06425C;
     color: #F2F2F2;
+    font-size: 8px;
 }
 th:hover {
 	background-color: #B7695C;
@@ -32,7 +34,7 @@ tr:hover {
 
 }
 .glyphicon {
-  		font-size: 20px;
+  	font-size: 20px;
 }
 .errorInput {
 	border:1px solid red;

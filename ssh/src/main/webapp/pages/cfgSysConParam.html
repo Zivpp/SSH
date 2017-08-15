@@ -63,6 +63,8 @@
 					<th ng-repeat="thItem in tableHeader track by $index"
 						ng-click="sortByHeader(thItem)">
 						{{thItem.header}}
+						<i class="fa fa-sort-desc fa-fw" aria-hidden="true" ng-show="thItem.descIcon"></i>
+						<i class="fa fa-sort-asc fa-fw" aria-hidden="true" ng-show="thItem.ascIcon"></i>
 					</th>
 				</tr>
 			</thead>
@@ -78,7 +80,7 @@
 					</td>
 					<td ng-repeat="item in itmes.data track by $index" 
 						ng-model="item">
-						<strong style="font-size: 5px;">{{item}}</strong>
+						{{item}}
 					</td>
 				</tr>
 			</tbody>

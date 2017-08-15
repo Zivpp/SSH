@@ -44,8 +44,11 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				for(var i in data.tableHeader){
 					$scope.tableHeader.push({
 						header : data.tableHeader[i],
-						sort : true
+						sort : true, //決定 asc/desc
+						ascIcon : false, //決定 icon show
+						descIcon : false //決定 icon show
 					});
+
 				}
 				
 				//tableBody
@@ -430,6 +433,18 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		
 		data.sort = !data.sort;
 		
+		//全部顯示 false -> 點擊的 header = true
+		for(var i in $scope.tableHeader){
+			$scope.tableHeader[i].descIcon = false;
+			$scope.tableHeader[i].ascIcon = false;
+		}
+		if(data.sort){
+			data.ascIcon = true;
+		}else{
+			data.descIcon = true;
+		}
+		
+		//複製一份要排列的檔案
 		for(var i in $scope.tableBody){
 			if($scope.tableBody[i].isShow == true){
 				var tmpId = generalFactory.clone($scope.tableBody[i].data[0]);
@@ -442,7 +457,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				});
 			}
 		}
-		
+		//取得新排序
 		httpFactory.post(
 				"cfgSysConSortByHeader.action", {//url
 					data : {
@@ -453,7 +468,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				},function(data){ //success
 					
 					var sortResultData = [];
-					//先排出新的資料排序
+					//根據新排序, 從備份資料取出
 					for(var j in data){
 						for(var i in backupData){
 							if(data[j] == backupData[i].id){
@@ -462,7 +477,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 							}
 						}
 					}
-					//直接將原來資料全部覆蓋
+					//直接將原來資料根據新排序(上述)全部覆蓋
 					for(var i in backupData){
 						$scope.tableBody[backupData[i].index].data = generalFactory.clone(sortResultData[i]);
 					}
