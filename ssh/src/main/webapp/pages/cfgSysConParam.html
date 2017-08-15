@@ -37,11 +37,12 @@
 		<button class="btn btn-default" ng-click="batchDeleteModelSwitch()" ng-show="isBatchDeleteModel">
 			<i class="fa fa-times fa-fw" aria-hidden="true"></i>Cancel
 		</button>
-
+		<i class="fa fa-list-ol fa-fw" aria-hidden="true"></i>
 		<lable>Records Per Page : </lable>
 		<select ng-disabled="isBatchDeleteModel" 
-				onchange="reSetPagCount()" 
-				id="rppSelect">
+				ng-change="reSetPagCount()" 
+				id="rppSelect"
+				ng-model="nowRPP">
 			<option ng-repeat="item in recordsPerPage track by $index" value={{item}}>
 				{{item}}
 			</option>

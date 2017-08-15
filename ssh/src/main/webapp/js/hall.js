@@ -1,6 +1,37 @@
-var app = angular.module("hallApp", []); 
+var app = angular.module("hallApp", ['sshConnectionFactory','sshGeneralFactory']); 
 
-app.controller("hallCtrl", function($scope,$http,$location) {
+app.controller("hallCtrl",['$scope','$http', '$location','httpFactory','generalFactory', 
+	function($scope,$http,$location,httpFactory,generalFactory) {
+	
+	//*Parameter
+	$scope.tree;
+	
+	//*Function
+	//S-initial()
+	var initial = function(){
+		
+		$scope.tree = {
+			root : [],
+			trunk : [],
+			Branch : []
+		};
+		
+//		httpFactory.post(
+//				"hallPageInitial.action", {//url
+//					data : {} 
+//				},function(data) { //success
+//					
+//					tree.root = data.root;
+//					tree.trunk = data.trunk;
+//					tree.Branch = data.Branch;
+//					
+//				},function(data) { //error
+//					confirm('add cfg_System_Config data error : ' + data);
+//				}
+//		);	
+		
+	}//E-initial()
+	
 	
 	$scope.iframeUrl = ""; // The url of embed pages. Key decide/Only.
 	
@@ -30,4 +61,4 @@ app.controller("hallCtrl", function($scope,$http,$location) {
 	}
 	//*Test End
 	
-});
+}]);

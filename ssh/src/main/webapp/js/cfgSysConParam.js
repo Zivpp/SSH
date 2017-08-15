@@ -1,6 +1,7 @@
 var app = angular.module("sysCfgParamApp", ['sshConnectionFactory','sshGeneralFactory']); 
 
-app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','generalFactory',function($scope,$http,$location,httpFactory,generalFactory) {
+app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','generalFactory',
+	function($scope,$http,$location,httpFactory,generalFactory) {
 	
 	//*Parameter
 	$scope.tableHeader;
@@ -108,11 +109,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	}//E-initPagBtnCount()
 	
 	//S-reSetPagCount()
-	window.reSetPagCount = function() {
-		
-		if($('#rppSelect').val()){
-			$scope.nowRPP = $('#rppSelect').val();
-		}
+	$scope.reSetPagCount = function() {
 		
 		for(var attr in $scope.pagBtnCountMenu){
 			if($scope.nowRPP == attr && attr != 'All'){
@@ -126,7 +123,6 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		}
 		
 		chagneDataShowRange(1);
-		$scope.$apply(); //**刷新 $scope, ng-repeat 為靜態
 		
 	}//E-reSetPagCount()
 	

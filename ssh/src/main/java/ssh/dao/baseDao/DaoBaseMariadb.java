@@ -5,7 +5,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import ssh.apconfig.SqlProperties;
+
 public class DaoBaseMariadb {
+	
+    @Autowired
+    @Qualifier("sqlProperties")
+    private SqlProperties sqlProperties;
 
 	@Autowired
 	@Qualifier("sessionFactory_MariaDB")
@@ -19,5 +25,13 @@ public class DaoBaseMariadb {
 		this.sessionFactory = sessionFactory;
 	} 
 	
-	
+	/**
+	 * ¨ú±oSQL»y¥y
+	 * from sqlProperties
+	 * @param key
+	 * @return
+	 */
+    public String getSqlStatment(String key) {
+        return this.sqlProperties.getProperty(key);
+    }
 }

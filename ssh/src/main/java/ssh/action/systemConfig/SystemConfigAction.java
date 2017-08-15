@@ -1,6 +1,5 @@
 package ssh.action.systemConfig;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class SystemConfigAction extends BaseAction{
 	public String getSCPInitialData() {
 		
 		try{
-			
+
 			HashMap<String,Object> result = cfgSystemConfigService.getSCPInitialData();
 			
 			super.dataHandler(result);

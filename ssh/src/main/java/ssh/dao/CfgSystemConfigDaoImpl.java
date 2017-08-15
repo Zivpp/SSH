@@ -8,15 +8,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.transform.Transformers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import bean.CfgSystemConfig;
 import ssh.dao.baseDao.DaoBaseMariadb;
-import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
-import systemConfig.SysCfgCode;
+import systemConfig.Sqlmapping;
 
 @Component("cfgSystemConfigDaoImpl")
 public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystemConfigDao{ 
@@ -88,7 +85,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Session session = getSessionFactory();
 		
-		String sql = "Select id from cfg_system_config where id = :id";
+		String sql = super.getSqlStatment(Sqlmapping.CFG_SYSTEM_CONFIG_SEARCH_BY_ID);		
 		
 		Query query = session.createSQLQuery(sql)
 			.setParameter("id", id)
@@ -120,20 +117,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Session session = getSessionFactory();
 		
-		String sql = "Select "
-				+ "id id,"
-				+ "code_cate codeCate,"
-				+ "code_name codeName,"
-				+ "code code, "
-				+ "code_value codeValue,"
-				+ "code_desc codeDesc,"
-				+ "parent_id parentId,"
-				+ "seq seq,"
-				+ "create_date createDate,"
-				+ "create_user createUser,"
-				+ "update_date updateDate,"
-				+ "update_user updateUser"
-				+ " from cfg_system_config order by :orderKey";
+		String sql = super.getSqlStatment(Sqlmapping.SEARCH_CFG_SYSTEM_DATA_FOR_SORT);
 		
 		if(StringUtil.isEmpty(orderKey)){
 			orderKey = "id"; //default
@@ -157,7 +141,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Transaction tx = session.beginTransaction();
 		
-		String sql = "DELETE FROM cfg_system_config WHERE id in (:idList)";
+		String sql = super.getSqlStatment(Sqlmapping.CFG_SYSTEM_CONFIG_DELETE_BY_ID);
 		
 		Query query = session.createSQLQuery(sql)
 				.setParameterList("idList", deleteCfgSysIdList);
@@ -177,7 +161,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Transaction tx = session.beginTransaction();
 		
-		String sql = "select id from cfg_system_config where id in(:sortIdList) order by " + header + " " + orderKey;
+		String sql =  super.getSqlStatment(Sqlmapping.CFG_SYSTEM_CONFIG_DATA_SORT_BY_HEANDER) + " " + header + " " + orderKey;
 		
 		Query query = session.createSQLQuery(sql)
 				.setParameterList("sortIdList", sortIdList);
