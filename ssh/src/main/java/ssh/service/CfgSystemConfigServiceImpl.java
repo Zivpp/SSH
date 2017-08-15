@@ -3,13 +3,9 @@ package ssh.service;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -73,6 +69,10 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 				addThData = buildAddCfgSystemConfigBean(tmpAddTHData);
 				result.put("addCfgSysConBean", addThData);
 			}
+			
+			//RecordsPerPage default
+			CfgSystemConfig rppDefault = CacheUtil.getSysCfgByCode(SysCfgCode.Code.RPPdefault_use);
+			result.put("rppDefault", rppDefault.getCodeValue());
 			
 			//RecordsPerPage && dataShowMenu && pagBtnCountMenu
 			List<CfgSystemConfig> tmpRPP = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.RecordsPerPage);
@@ -362,7 +362,5 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		
 		return cfgSystemConfigDao.cfgSysConSortByHeader(header,orderKey,sortIdList);
 	}
-
-	
 	
 }

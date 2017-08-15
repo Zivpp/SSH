@@ -170,7 +170,7 @@ public class SystemConfigAction extends BaseAction{
 		
 		return SUCCESS;
 	}
-
+	
 	public CfgSystemConfig getAddData() {
 		return addData;
 	}

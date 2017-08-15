@@ -79,7 +79,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				$scope.recordsPerPage = data.recordsPerPage;
 				$scope.dataShowRangeMenu = data.dataShowRangeMenu;
 				$scope.pagBtnCountMenu = data.pagBtnCountMenu;
-				initPagBtnCount();
+				initPagBtnCount(data.rppDefault);
 				
 			},function(data){ //error
 				confirm('get cfg_System_Config data error : ' + data);
@@ -89,11 +89,15 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 	}//E-initial()
 	
 	//S-initPagBtnCount()
-	var initPagBtnCount = function() {
-		$scope.nowRPP = $scope.recordsPerPage[0]; //default get [0]
+	var initPagBtnCount = function(rppDefault) {
+		$scope.nowRPP = rppDefault;
 		for(var attr in $scope.pagBtnCountMenu){
 			if($scope.nowRPP == attr && attr != 'All'){
 				$scope.nowPagCount = new Array($scope.pagBtnCountMenu[attr]);
+				break;
+			}
+			if($scope.nowRPP == 'All'){
+				$scope.nowPagCount = new Array($scope.pagBtnCountMenu['All']);
 				break;
 			}
 		}
@@ -120,6 +124,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		
 		chagneDataShowRange(1);
 		$scope.$apply(); //**刷新 $scope, ng-repeat 為靜態
+		
 	}//E-reSetPagCount()
 	
 	//S-goPaination
@@ -417,35 +422,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 		}
 	}//E-initAdd()
 	
-	$scope.openModel = function(id) {
-		$('#'+id).modal('show');
-	}
-	
-	$scope.closeModel = function(id) {
-		$('#'+id).modal('hide');
-	}
-	
-	//*Watch
-	$scope.$watch('isAllChecked', function(newValue, oldValue) {
-		 if(newValue){
-			for(var i in $scope.tableBody){
-				if($scope.tableBody[i].isShow == true){
-					$scope.tableBody[i].isChecked = true;
-				}
-			} 
-		 }else{
-			for(var i in $scope.tableBody){
-				if($scope.tableBody[i].isShow == true){
-					$scope.tableBody[i].isChecked = false;
-				}
-			} 
-		 }	    
-	},true);	
-	
-	//*Do Initialize
-	initial();
-	
-	//---
+	//S-sortByHeader()
 	$scope.sortByHeader = function(data){
 		
 		var sortIdList = [];
@@ -494,6 +471,38 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 					confirm('sort by {' + data.header + '} error :' + data);
 				}
 			);
+	}//E-sortByHeader()
+	
+	//*Model
+	$scope.openModel = function(id) {
+		$('#'+id).modal('show');
 	}
+	
+	$scope.closeModel = function(id) {
+		$('#'+id).modal('hide');
+	}
+	
+	//*Watch
+	$scope.$watch('isAllChecked', function(newValue, oldValue) {
+		 if(newValue){
+			for(var i in $scope.tableBody){
+				if($scope.tableBody[i].isShow == true){
+					$scope.tableBody[i].isChecked = true;
+				}
+			} 
+		 }else{
+			for(var i in $scope.tableBody){
+				if($scope.tableBody[i].isShow == true){
+					$scope.tableBody[i].isChecked = false;
+				}
+			} 
+		 }	    
+	},true);	
+	
+	//*Do Initialize
+	initial();
+	
+	//---
+	
 
 }]);

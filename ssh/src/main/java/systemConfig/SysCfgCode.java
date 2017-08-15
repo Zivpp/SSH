@@ -8,6 +8,16 @@ public class SysCfgCode {
 	public static final String asc = "asc";
 	
 	/**
+	 * table : CFG_SYSTEM_CONFIG.CODE
+	 * @author Ziv
+	 *
+	 */
+	public static final class Code {
+		public static final String RPPdefault_use ="RPPdefault_use";
+
+	}
+	
+	/**
 	 * table : CFG_SYSTEM_CONFIG.CODE_CATE
 	 * @author Ziv
 	 *

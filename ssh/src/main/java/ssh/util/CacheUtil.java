@@ -18,8 +18,8 @@ public class CacheUtil {
 	
 	public static List<CfgSystemConfig> allSysCfgData = new ArrayList<CfgSystemConfig>(); //all cfg_system_config data
 	public static ConcurrentHashMap<String,CfgSystemConfig> sysCfgById = new ConcurrentHashMap<String,CfgSystemConfig>(); //by Id
+	public static ConcurrentHashMap<String,CfgSystemConfig> sysCfgByCode = new ConcurrentHashMap<String,CfgSystemConfig>(); //by code
 	public static ConcurrentHashMap<String,List<CfgSystemConfig>> sysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>(); //by codeCate
-	//by code
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigDaoImpl")
@@ -40,6 +40,7 @@ public class CacheUtil {
 		List<CfgSystemConfig> tmpAllSysCfgData = cfgSystemConfigDao.getAllData();
 		ConcurrentHashMap<String,List<CfgSystemConfig>> tmpSysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>();
 		ConcurrentHashMap<String,CfgSystemConfig> tmpSysCfgById = new ConcurrentHashMap<String,CfgSystemConfig>();
+		ConcurrentHashMap<String,CfgSystemConfig> tmpSysCfgByCode = new ConcurrentHashMap<String,CfgSystemConfig>();
 		
 		if(tmpAllSysCfgData != null && tmpAllSysCfgData.size() > 0){
 			
@@ -47,6 +48,9 @@ public class CacheUtil {
 				
 				//By Id
 				tmpSysCfgById.put(String.valueOf(csc.getId()), csc);
+				
+				//By Code
+				tmpSysCfgByCode.put(csc.getCode(), csc);
 
 				//By Code Cate : 如果 codeCate list 存在就取出 -> 新增一筆 -> 再存入 ; 沒有就新創一組 List
 				String tmpCodeCate = csc.getCodeCate();
@@ -60,6 +64,7 @@ public class CacheUtil {
 		
 		allSysCfgData = tmpAllSysCfgData;
 		sysCfgById = tmpSysCfgById;
+		sysCfgByCode = tmpSysCfgByCode;
 		sysCfgByCodeCate = tmpSysCfgByCodeCate;
 		
 	}
@@ -76,10 +81,6 @@ public class CacheUtil {
 	
 	public static List<CfgSystemConfig> getSysCfgDatas() {
 		return allSysCfgData;
-	}
-
-	public void setSysCfgDatas(List<CfgSystemConfig> sysCfgDatas) {
-		this.allSysCfgData = sysCfgDatas;
 	}
 
 	public ICfgSystemConfigDao getCfgSystemConfigDao() {
@@ -102,6 +103,15 @@ public class CacheUtil {
 		}
 		
 		return null;
+	}
+
+	/**
+	 * 取得 CFG_SYSTEM_CONFIG by Code
+	 * @param string
+	 * @return
+	 */
+	public static CfgSystemConfig getSysCfgByCode(String code) {
+		return sysCfgByCode.get(code);
 	}
 
 	
