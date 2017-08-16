@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import bean.CfgSystemConfig;
 import ssh.action.BaseAction;
 import ssh.service.ICfgSystemConfigService;
+import ssh.service.IHallService;
 import ssh.util.BeanUtil;
 import ssh.util.CacheUtil;
 
@@ -31,6 +32,10 @@ public class SystemConfigAction extends BaseAction{
 	@Autowired
 	@Qualifier("cfgSystemConfigServiceImpl")
 	private ICfgSystemConfigService cfgSystemConfigService;
+	
+	@Autowired
+	@Qualifier("hallServiceImpl")
+	private IHallService hallService;
 	
 	public String getSCPInitialData() {
 		
@@ -169,6 +174,28 @@ public class SystemConfigAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	/**
+	 * 取得 hall 頁面初始資料
+	 * @return
+	 * @throws Exception
+	 */
+	public String hallPageInitial() throws Exception {
+
+		try{
+
+			HashMap<String,Object> result = hallService.hallPageInitial();
+			super.dataHandler(result);
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
+	
 	
 	public CfgSystemConfig getAddData() {
 		return addData;

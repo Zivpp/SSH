@@ -9,9 +9,17 @@
    padding: 0 !important;
    margin: 0 !important;
 }
+
+/* treeBranch 美化 */
+.treeBranch li{
+	border-top:1px solid #FFFFFF;
+	border-bottom:1px solid #e8e8e8;
+  	padding:0 10px;
+  	line-height:32px;
+}
 		
-/*	treeRoot 設定 不要空隙, 不要編號 */
-.treeRoot ul.treeBranches li a{
+/*	treeTrunk 設定 不要空隙, 不要編號 */
+.treeTrunk ul.treeBranch li a{
 	list-style-type:none; 
 	padding:0px; 
 	margin:0px; 
@@ -27,16 +35,8 @@
   	padding:0 8px; /* 先清空 0 -> 在增加為 8px*/
   	font-weight:600;
 }
-
-/* treeBranches 美化 */
-.treeBranches li{
-	border-top:1px solid #FFFFFF;
-	border-bottom:1px solid #e8e8e8;
-  	padding:0 10px;
-  	line-height:32px;
-}
 		
-.siderBarBorder {
+.trunkBorder {
 	border-left:1px solid;
 	border-right:1px solid;
 	border-bottom:1px solid;
@@ -47,4 +47,9 @@
 .DFKai_sb {
 	font-family : DFKai-sb;
 	font-size : 110%;
+}
+
+.hall-revise {
+	padding-right:2%;
+	padding-left:2%;
 }	

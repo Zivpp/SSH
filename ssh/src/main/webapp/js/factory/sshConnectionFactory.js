@@ -29,7 +29,7 @@ sshConnectionFactory.factory('httpFactory',['$http',function($http){
 						success(data.result);
 					}	
 				}else{
-					error(data.result.exception);
+					error(data.result);
 				}						
 			}).error(function (data, status) {
 				alert("unknow error " + status +" : " + data);

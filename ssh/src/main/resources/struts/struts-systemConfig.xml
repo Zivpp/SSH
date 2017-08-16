@@ -73,6 +73,16 @@
                 <param name="callbackParameter">callback</param>
 				<param name="includeProperties" >result,result.*</param>
 			</result>
+		</action>
+		
+		<action name="hallPageInitial" class="ssh.action.systemConfig.SystemConfigAction" method="hallPageInitial">
+			<result type="json">	
+                <param name="enableGZIP">true</param>
+                <param name="noCache">true</param>
+                <param name="ignoreHierarchy">false</param>
+                <param name="callbackParameter">callback</param>
+				<param name="includeProperties" >result,result.*</param>
+			</result>
 		</action>				
 
     </package>

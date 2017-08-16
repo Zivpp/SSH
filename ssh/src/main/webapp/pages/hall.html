@@ -21,83 +21,54 @@
 	
 </head>
 <body ng-app="hallApp" ng-controller="hallCtrl">
-	<div style="padding-right:10%;padding-left:10%;">
+
+	<!-- S : HALL -->
+	<div class="hall-revise">
 		<h2>SSH Demo Hall</h2>
+		<!-- S : MENU -->
 		<div class="row">
 			<nav class="navbar navbar-default">
 				<div class="navbar-header">
-			      <a class="navbar-brand" href="#">WebSiteName</a>
+			      <a class="navbar-brand" href="http://localhost:8080/ssh/">WebSiteName</a>
 			    </div>
 			    <ul class="nav navbar-nav"> 
 			      <li><a href="#">Home</a></li>
 			      <li><a href="#">Page 1</a></li>
 			      <li><a href="#">Page 2</a></li>
 			      <li><a href="#">Page 3</a></li>
-<!-- 			      計畫 : 進行一些設定，設計要從能設定角度 -->
 			    </ul>
 			</nav>
-		</div>
+		</div><!-- E : MENU -->
+		<!-- S : BODY -->
 		<div class="row">
-			<!-- sideBar -->
+			<!-- S : SIDE BAR -->
 			<div class="col-md-2">
-				<ul class="nav nav-tabs ">
-		    		<li><a  data-toggle="tab" href="#codingExp">DEMO</a></li>
-		    		<li><a data-toggle="tab" href="#config">SYSTEM</a></li>
+				<ul class="nav nav-tabs">
+		    		<li ng-repeat="root in tree track by $index">
+		    			<a data-toggle="tab" ng-href="#{{root.href}}" ng-click="rootToggle(root)">{{root.name}}</a>
+		    		</li>
 		  		</ul>
-		  		<div class="tab-content siderBarBorder">
-					<div id="codingExp" class="tab-pane fade">
-					    <div class="nav treeRoot">
-					    	<li> <!-- 縮放 root -->
-								<label class="treeHeader">AngularJs</label>
-								<ul class="nav treeBranches">
-									<li ng-repeat="url in angularJsList track by $index">
-										<a href="#" ng-click="going(url)">{{url}}</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<label class="treeHeader">Struts2</label>
-								<ul class="nav treeBranches">
-									<li><a href="#">Table</a></li>
-									<li><a href="#">branches_2</a></li> <!-- href="#" 不加這個會觸發縮放 -->
+				<div class="tab-content trunkBorder" ng-repeat="root in tree track by $index">
+		  			<div id="{{root.href}}" class="tab-pane fade" ng-show="root.isShow">
+						<div class="nav treeTrunk">
+					    	<li ng-repeat="trunk in root.trunk track by $index">
+					    		<label class="treeHeader" ng-click="trunkToggle(trunk)">{{trunk.name}}</label>
+								<ul class="nav treeBranch" ng-show="trunk.isShow">
+									<li ng-repeat="branch in trunk.branch track by $index">
+										<a href="#" ng-click="getPage(branch.url)" id="{{branch.name}}">{{branch.name}}</a>
+									</li>	
 								</ul>
 							</li>
 						</div>
-				  	</div>
-				  	<div id="config" class="tab-pane fade">
-				    	<div class="nav treeRoot">
-				    		<li>
-				    			<label class="treeHeader">CfgSystemConfig</label>
-								<ul class="nav treeBranches">
-									<li><a href="" ng-click="getIframeUrl('cfgSysConParam')">Parameters</a></li>
-								</ul>
-				    		</li>
-				    	</div>
-				  	</div>
-				</div>
-			</div>
-			<!-- content -->
-			<div class="col-md-10 nopadding">
+		  			</div>
+		  		</div>
+			</div><!-- E : SIDE BAR -->
+			<!-- S : CONTENT -->
+			<div class="col-md-10">
 				<iframe id="hallIframe" ng-src="{{iframeUrl}}" width="100%" height="700px" frameborder="0"></iframe>
-			</div>
-		</div>
-	</div>
-	
-	<script>
-	$(function(){
-		
-		//.parent()用法是因為如果選 treeRoot，會點不到(div)無法觸發 click，
-		//預設縮起
-		$(".treeHeader").parent().children('ul.treeBranches').toggle(200);
-		
-		//觸發縮放
-		$(".treeHeader").click(function(){
-			$(this).parent().children('ul.treeBranches').toggle(200);
-		});
-		
-	});
-	
-	</script>
+			</div><!-- E : CONTENT -->
+		</div><!-- E : BODY -->
+	</div><!-- E : HALL -->
 	
 </body>
 </html>

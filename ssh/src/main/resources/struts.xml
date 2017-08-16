@@ -10,7 +10,7 @@
 	<!-- 是否顯示更多錯誤訊息。 -->
 	<constant name="struts.devMode" value="false" />
 
-	<!-- extends : 繼承, abstract : true 代表僅被繼承 ,不能定義 action-->
+	<!-- extends : 繼承 ; abstract=true 代表僅能被繼承 ,不能定義 action,下方 include 的設定繼承此 package -->
 	<package name="ssh-default" extends="json-default" abstract="true">
 	
 		<interceptors>
@@ -26,10 +26,16 @@
 
 		<default-interceptor-ref name="defaultSSHStack" />
 		
+		
+		<global-results>
+    		<result name="error">/pages/Error.html</result>
+		</global-results>
+		<global-exception-mappings>
+		    <exception-mapping exception="java.lang.Exception" result="error"/>
+		</global-exception-mappings>
+		
 	</package>
 
-	<package name="default" namespace="/" extends="ssh-default"></package>
-	
 	<!-- 加入其它 Struts 設定 -->
 	<include file="struts/struts-login.xml"></include>
 	<include file="struts/struts-systemConfig.xml"></include>

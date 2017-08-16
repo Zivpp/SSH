@@ -27,7 +27,9 @@ public class SysCfgCode {
 		public static final String TableHeader = "TableHeader";
 		public static final String Add_TableHeader = "Add_TableHeader";
 		public static final String RecordsPerPage = "RecordsPerPage";
-		
+		public static final String TreeBranch = "TreeBranch";
+		public static final String TreeTrunk = "TreeTrunk";
+		public static final String TreeRoot = "TreeRoot";
 	}
 	
 	/**
