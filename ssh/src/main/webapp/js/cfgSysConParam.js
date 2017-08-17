@@ -1,7 +1,7 @@
 var app = angular.module("sysCfgParamApp", ['sshConnectionFactory','sshGeneralFactory']); 
 
-app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','generalFactory',
-	function($scope,$http,$location,httpFactory,generalFactory) {
+app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','generalFactory','$timeout',
+	function($scope,$http,$location,httpFactory,generalFactory,$timeout) {
 	
 	//*Parameter
 	$scope.tableHeader;
@@ -86,8 +86,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 				initPagBtnCount(data.rppDefault);
 				
 			},function(data){ //error
-				confirm('get cfg_System_Config data error : ' + data);
-				console.log('get cfg_System_Config data error : ' + data);
+				console.log(data);
 			}
 		);
 	}//E-initial()
@@ -239,7 +238,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 						$scope.closeModel('addModel');
 						initial();
 					},function(data){ //error
-						confirm('add cfg_System_Config data error : ' + data);
+						console.log(data);
 					}
 			);					
 
@@ -274,7 +273,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 						}
 						
 					},function(data){ //error
-						confirm('search cfg_System_Config data error : ' + data);
+						console.log(data);
 					}
 			);	
 			//Open model
@@ -318,7 +317,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 						initial();
 					}				
 				},function(data){ //error
-					confirm('save cfg_System_Config data error : ' + data);
+					console.log(data);
 				}
 		);			
 		
@@ -348,7 +347,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 							initial();
 						}
 					},function(data){ //error
-						confirm('delete cfg_System_Config data error : ' + data);
+						console.log(data);
 					}
 			);
 			
@@ -408,7 +407,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 					$scope.isBatchDeleteModel = false;
 					initial();
 				},function(data){ //error
-					confirm('delete cfg_System_Config data(batch) error : ' + data);
+					console.log(data);
 				}
 			);
 		}
@@ -479,7 +478,7 @@ app.controller("sysCfgParamCtrl",['$scope','$http','$location','httpFactory','ge
 					}
 					
 				},function(data){ //error
-					confirm('sort by {' + data.header + '} error :' + data);
+					console.log(data);
 				}
 			);
 	}//E-sortByHeader()

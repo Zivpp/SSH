@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import bean.CfgSystemConfig;
 import ssh.dao.baseDao.DaoBaseMariadb;
+import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
 import systemConfig.Sqlmapping;
 
@@ -68,7 +69,7 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 	@Override
 	public void deleteById(int id) {
 		
-		CfgSystemConfig target = queryById(id);
+		CfgSystemConfig target = CacheUtil.getSysCfgById(String.valueOf(id));
 		
 		if(target != null){
 			Session session = getSessionFactory();

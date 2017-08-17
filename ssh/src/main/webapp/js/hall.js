@@ -95,22 +95,7 @@ app.controller("hallCtrl",['$scope','$http', '$location','httpFactory','generalF
 		
 	}
 	
-	//*Test
-	$scope.angularJsList = ['Table','unknown','unknown'];
-	
-	//iframe url 前往
-	$scope.going = function(url){
-		
-		if(url == 'Table'){
-			$scope.iframeUrl ="/ssh/pages/configSidebar.html";
-		}else{
-			$scope.iframeUrl = "/ssh/pages/unknow1.html";
-		}
-	}
-	//*Test End
-	
-	
-	//*Initial
+	//*initialize
 	initial();
 	
 }]);

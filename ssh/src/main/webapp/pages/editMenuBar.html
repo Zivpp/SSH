@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+	<meta charset="utf-8">
+	<!-- 外部資源引入 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/ssh/resources/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="/ssh/resources/font-awesome/css/font-awesome.min.css">
+	<script type="text/javascript" src="/ssh/resources/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/ssh/resources/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/ssh/resources/angularjs/angular-1.5.6.min.js"></script>
+	
+	<!-- Customize JS -->
+	<script type="text/javascript" src="/ssh/js/editMenuBar.js"></script>
+	<script type="text/javascript" src="/ssh/js/factory/sshConnectionFactory.js"></script>
+	<script type="text/javascript" src="/ssh/js/factory/sshGeneralFactory.js"></script>
+	
+	<!-- Customize CSS -->
+	<link rel="stylesheet" href="/ssh/resources/css/editMenuBar.css">
+	
+</head>
+<body ng-app="editMenuBarApp" ng-controller="editMenuBarCtrl">
+	<div class="revise">
+		<h2>EDIT MENU BAR</h2>
+		<lable>
+			<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+			Tip : configuration saved. please logout and login to take effect.
+		</lable>
+		<div class="row">
+			<!-- S : TREE LIST -->
+			<div class="col-md-7">
+				<table style="width:100%">
+				 <tr>
+				 	<th width="20%">TYPE</th>
+				 	<th width="10%"></th>
+				 	<th width="70%">MUMBER</th>
+				 </tr>
+				 <tr>
+				 	<td>ROOT <span class="badge">{{rootCount}}</span></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td>
+				 		<span ng-repeat="r in root track by $index">
+				 			<button type="button" 
+				 					class="btn btn-default" 
+				 					id="{{r.id}}" 
+				 					ng-click="activeRoot(r)">
+				 				{{r.code}}
+				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 			</button>
+				 		</span>
+				 	</td>
+				 </tr>
+				<tr ng-show="isActive_Trunk">
+				 	<td>TRUNK <span class="badge">{{trunkCount}}</span></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td>
+				 		<span ng-repeat="t in trunk track by $index">
+				 			<button type="button" 
+				 					class="btn btn-default" 
+				 					id="{{t.id}}" 
+				 					ng-show="t.isShow"
+				 					ng-click="activeTrunk(t)">
+				 				{{t.code}}
+				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 			</button>
+				 		</span>
+				 	</td>
+				 </tr>
+				<tr ng-show="isActive_Branch">
+				 	<td>Branch <span class="badge">{{branchCount}}</span></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td>
+				 		<span ng-repeat="b in branch track by $index">
+				 			<button type="button" 
+				 					class="btn btn-default" 
+				 					id="{{b.id}}" 
+				 					ng-show="b.isShow"
+				 					ng-click="activeBranch(b)">
+				 				{{b.code}}
+				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 			</button>
+				 		</span>
+				 	</td>
+				 </tr>
+				</table>
+			</div><!-- E : TREE LIST -->
+			<!-- S : EDIT -->
+			<div class="col-md-5">
+				<div style="height:50vh;">
+					<h4><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit :</h4>
+					<hr>
+				</div>
+				<div align="right">
+					<button type="button" class="btn btn-success" ng-click="save()">
+	        			<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+	        		</button>
+					<button type="button" class="btn btn-danger" ng-click="remove()">
+	        			<i class="fa fa-trash fa-fw" aria-hidden="true"></i>Delete
+	        		</button>
+				</div>
+			</div><!-- E : EDIT -->
+		</div>
+	</div>
+</body>
+</html>
