@@ -19,10 +19,6 @@ app.controller("hallCtrl",['$scope','$http', '$location','httpFactory','generalF
 					data : {} 
 				},function(data) { //success
 					
-//					$scope.tree.root = data.root;
-//					$scope.tree.trunk = data.trunk;
-//					$scope.tree.branch = data.branch;
-					
 					for(var i in data.root) {
 						//get root
 						$scope.tree.push({

@@ -12,6 +12,41 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
-i.fa{
+i.fa {
 	cursor:pointer;
+}
+.editTable {
+	border-collapse: collapse;
+    width: 100%;
+}
+table.editTable td, table.editTable th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.editTd {
+    background-color: #5F9EA0;
+    color: #F2F2F2;
+    font-size: 20px;
+}
+input {
+	width: 100%;
+	box-sizing:border-box;
+	font-weight: bold;
+	font-size:20px;
+}
+.urlInput {
+	width: 89%;
+    box-sizing:border-box;
+   	font-weight: bold;
+	font-size:20px;
+}
+.urlInput:hover{
+	cursor:not-allowed;
+}
+.urlSubmit {
+	width: 10%;
+	float:right;
+}
+td .urlSubmit{
+	height: 100%;
 }

@@ -28,12 +28,12 @@
 		</lable>
 		<div class="row">
 			<!-- S : TREE LIST -->
-			<div class="col-md-7">
+			<div class="col-md-4">
 				<table style="width:100%">
 				 <tr>
-				 	<th width="20%">TYPE</th>
+				 	<th width="20%"><h4>TYPE</h4></th>
 				 	<th width="10%"></th>
-				 	<th width="70%">MUMBER</th>
+				 	<th width="70%"><h4>MUMBER</h4></th>
 				 </tr>
 				 <tr>
 				 	<td>ROOT <span class="badge">{{rootCount}}</span></td>
@@ -85,20 +85,51 @@
 				</table>
 			</div><!-- E : TREE LIST -->
 			<!-- S : EDIT -->
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<div style="height:50vh;">
-					<h4><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit :</h4>
-					<hr>
+					<h4>
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+						Edit :
+						<button id="editType" disabled ng-show="isEditActive">{{currentEditObj.code}}</button>
+					</h4>
+					<div>
+						<table class="editTable" style="width:100%"">
+							<tr ng-repeat="(key, value) in currentEditObj track by $index">
+								<!-- header -->
+								<td width="20%" ng-if="key != 'id'" class="editTd">
+									{{key}}
+								</td>
+								<!-- body -->
+								<td width="80%" ng-if="key != 'id'" ng-show="key == 'code' || key == 'codeDesc'">
+									<input type="text" ng-model="currentEditObj[key]">
+								</td>
+								<td width="80%" ng-if="key != 'id'" ng-show="key == 'codeValue'">
+									<input type="text" class="urlInput" disabled ng-model="currentEditObj[key]">
+									<button class="btn btn-primary urlSubmit"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></button>
+								</td>
+								<td width="80%" ng-if="key != 'id'" ng-show="key == 'parentId'">
+									  <select class="form-control">
+									    <option>1</option>
+									    <option>2</option>
+									    <option>3</option>
+									    <option>4</option>
+									  </select>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
+			</div><!-- E : EDIT -->
+			<div class="col-md-2"><!-- S : BTN -->
 				<div align="right">
-					<button type="button" class="btn btn-success" ng-click="save()">
+					<button type="button" class="btn btn-block" ng-click="save()">
 	        			<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
 	        		</button>
-					<button type="button" class="btn btn-danger" ng-click="remove()">
+					<button type="button" class="btn btn-block" ng-click="remove()">
 	        			<i class="fa fa-trash fa-fw" aria-hidden="true"></i>Delete
 	        		</button>
 				</div>
-			</div><!-- E : EDIT -->
+			</div><!-- E : BTN -->
 		</div>
 	</div>
 </body>
