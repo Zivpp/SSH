@@ -28,7 +28,7 @@
 		</lable>
 		<div class="row">
 			<!-- S : TREE LIST -->
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<table style="width:100%">
 				 <tr>
 				 	<th width="20%"><h4>TYPE</h4></th>
@@ -37,7 +37,7 @@
 				 </tr>
 				 <tr>
 				 	<td>ROOT <span class="badge">{{rootCount}}</span></td>
-				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true" ng-click="addNote('r')"></i></td>
 				 	<td>
 				 		<span ng-repeat="r in root track by $index">
 				 			<button type="button" 
@@ -45,14 +45,14 @@
 				 					id="{{r.id}}" 
 				 					ng-click="activeRoot(r)">
 				 				{{r.code}}
-				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 				<span class="badge" ng-show="r.isNew"><i class="fa fa-star-o" aria-hidden="true"></i></i></span>
 				 			</button>
 				 		</span>
 				 	</td>
 				 </tr>
 				<tr ng-show="isActive_Trunk">
 				 	<td>TRUNK <span class="badge">{{trunkCount}}</span></td>
-				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true" ng-click="addNote('t')"></i></td>
 				 	<td>
 				 		<span ng-repeat="t in trunk track by $index">
 				 			<button type="button" 
@@ -61,14 +61,14 @@
 				 					ng-show="t.isShow"
 				 					ng-click="activeTrunk(t)">
 				 				{{t.code}}
-				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 				<span class="badge" ng-show="t.isNew"><i class="fa fa-star-o" aria-hidden="true"></i></i></span>
 				 			</button>
 				 		</span>
 				 	</td>
 				 </tr>
 				<tr ng-show="isActive_Branch">
 				 	<td>Branch <span class="badge">{{branchCount}}</span></td>
-				 	<td><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+				 	<td><i class="fa fa-plus-circle" aria-hidden="true" ng-click="addNote('b')"></i></td>
 				 	<td>
 				 		<span ng-repeat="b in branch track by $index">
 				 			<button type="button" 
@@ -77,7 +77,7 @@
 				 					ng-show="b.isShow"
 				 					ng-click="activeBranch(b)">
 				 				{{b.code}}
-				 				<!-- <span class="badge"><i class="fa fa-times" aria-hidden="true"></i></span> -->
+				 				<span class="badge" ng-show="b.isNew"><i class="fa fa-star-o" aria-hidden="true"></i></i></span>
 				 			</button>
 				 		</span>
 				 	</td>
@@ -85,7 +85,7 @@
 				</table>
 			</div><!-- E : TREE LIST -->
 			<!-- S : EDIT -->
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<div style="height:50vh;">
 					<h4>
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -96,23 +96,22 @@
 						<table class="editTable" style="width:100%"">
 							<tr ng-repeat="(key, value) in currentEditObj track by $index">
 								<!-- header -->
-								<td width="20%" ng-if="key != 'id'" class="editTd">
+								<td width="20%" ng-if="key != 'id' && key != 'codeCate'" class="editTd">
 									{{key}}
 								</td>
 								<!-- body -->
-								<td width="80%" ng-if="key != 'id'" ng-show="key == 'code' || key == 'codeDesc'">
+								<td width="80%" ng-if="key != 'id' && key != 'codeCate'" ng-show="key == 'code' || key == 'codeDesc'">
 									<input type="text" ng-model="currentEditObj[key]">
 								</td>
-								<td width="80%" ng-if="key != 'id'" ng-show="key == 'codeValue'">
+								<td width="80%" ng-if="key != 'id' && key != 'codeCate'" ng-show="key == 'codeValue'">
 									<input type="text" class="urlInput" disabled ng-model="currentEditObj[key]">
 									<button class="btn btn-primary urlSubmit"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></button>
 								</td>
-								<td width="80%" ng-if="key != 'id'" ng-show="key == 'parentId'">
-									  <select class="form-control">
-									    <option>1</option>
-									    <option>2</option>
-									    <option>3</option>
-									    <option>4</option>
+								<td width="80%" ng-if="key != 'id' || key != 'codeCate'" ng-show="key == 'parentId'">
+									  <select class="form-control" ng-model="currentEditObj[key]" ng-change="look()">
+									  		<option ng-repeat="o in eOptions track by o.id" value="{{o.id}}">
+									  			{{o.name}}
+									  		</option>
 									  </select>
 								</td>
 							</tr>
@@ -133,4 +132,31 @@
 		</div>
 	</div>
 </body>
+
+<!-- editResponseModel model -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="editResponseModel" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      	<!-- header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-cogs" aria-hidden="true"></i> EDIT RESPONSE</h4>
+        </div>
+      	<!-- body -->
+        <div class="modal-body">
+	       	<h1 id="editResponseStr">{{editResponseStr}}</h1>
+	  	</div>
+       	<br/>
+       	<!-- footer -->
+        <div class="modal-footer">
+          	<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
 </html>

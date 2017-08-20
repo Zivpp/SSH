@@ -48,4 +48,18 @@ public interface ICfgSystemConfigService{
 	 */
 	public List<String> cfgSysConSortByHeader(String header, Boolean sortBy, List<String> sortIdList);
 
+	/**
+	 * save tree view edit data
+	 * @param tvEditDataList
+	 * @throws Exception 
+	 */
+	public void tvEditSave(List<CfgSystemConfig> tvEditDataList) throws Exception;
+
+	/**
+	 * remove tree view edit data
+	 * @param tvRemoveId
+	 * @return
+	 */
+	public String tvEditRemove(String tvRemoveId);
+
 }

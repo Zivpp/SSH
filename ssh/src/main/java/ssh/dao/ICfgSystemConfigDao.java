@@ -34,6 +34,12 @@ public interface ICfgSystemConfigDao {
 	public void deleteById(int id);
 
 	/**
+	 * delete by id
+	 * @param id
+	 */
+	public void deleteById(String id);
+	
+	/**
 	 * selecet by id(script way), note : 如用自動轉換, select 出的名稱要與變數名稱相同, 不然都會被轉為大寫
 	 * @param id
 	 * @return
@@ -67,5 +73,6 @@ public interface ICfgSystemConfigDao {
 	 * @return
 	 */
 	public List<String> cfgSysConSortByHeader(String header, String orderkey, List<String> sortIdList);
+
     
 }

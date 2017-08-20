@@ -15,6 +15,7 @@ import bean.AddCSCData;
 import bean.CfgSystemConfig;
 import bean.PaginatinStartEnd;
 import ssh.dao.ICfgSystemConfigDao;
+import ssh.util.BeanUtil;
 import ssh.util.CacheUtil;
 import ssh.util.StringUtil;
 import systemConfig.SysCfgCode;
@@ -361,6 +362,90 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		}
 		
 		return cfgSystemConfigDao.cfgSysConSortByHeader(header,orderKey,sortIdList);
+	}
+
+	@Override
+	public void tvEditSave(List<CfgSystemConfig> tvEditDataList) throws Exception {
+	
+		if(tvEditDataList != null && tvEditDataList.size() > 0){
+			
+			//如果存在 update, 不存在則 insert
+			for(CfgSystemConfig csc : tvEditDataList){
+				
+				//update
+				if(csc.getId() != null){
+					CfgSystemConfig exist = CacheUtil.getSysCfgById(String.valueOf(csc.getId()));
+					exist = (CfgSystemConfig)BeanUtil.beanCopy(exist, csc);
+					cfgSystemConfigDao.update(exist);
+				}else{
+				//insert
+	
+					if(StringUtil.isEmpty(csc.getCodeValue())){
+						csc.setCodeName(csc.getCode());
+					}	
+					if(csc.getParentId() == null){
+						csc.setParentId(0);
+					}
+					csc.setUpdateDate(new Date());
+					csc.setUpdateUser(SysCfgCode.defaultUser);
+					csc.setCreateDate(new Date());
+					csc.setCreateUser(SysCfgCode.defaultUser);
+					
+					List<CfgSystemConfig> tmpCsc =  CacheUtil.getSysCfgByCodeCate(csc.getCodeCate());
+					Integer newSeq = 0;
+					Integer newId = 0;
+					for(CfgSystemConfig c : tmpCsc){
+						if(newSeq <= c.getSeq()){
+							newSeq = c.getSeq() + 1;
+						}
+						if(newId <= c.getId()){
+							newId = c.getId() + 1 ;
+						}
+					}
+					csc.setSeq(newSeq);
+					csc.setId(newId);
+					csc.setCodeName(tmpCsc.get(0).getCodeName());
+					
+					cfgSystemConfigDao.insert(csc);
+				}
+			}
+			
+			cacheUtil.init();
+			
+		}
+		
+		
+		
+	}
+
+	@Override
+	public String tvEditRemove(String tvRemoveId) {
+
+		String errorMassage = "";
+		
+		if(!StringUtil.isEmpty(tvRemoveId)){
+			
+			CfgSystemConfig reCsc = CacheUtil.getSysCfgById(tvRemoveId);
+			
+			if(reCsc.getCodeCate().equals(SysCfgCode.CodeCate.TreeBranch)){
+				cfgSystemConfigDao.deleteById(tvRemoveId);
+			}else{
+				//check whether has children
+				List<CfgSystemConfig> cscList = CacheUtil.getSysCfgByParentId(tvRemoveId);
+				if(cscList != null && cscList.size() > 0){
+					errorMassage = "Unable to remove. Child(ren) node(s) existed in target node.";
+				}else{
+					cfgSystemConfigDao.deleteById(tvRemoveId);
+				}
+			}
+				
+		}else{
+			errorMassage = "Null : Remove ID";
+		}
+		
+		cacheUtil.init();
+		
+		return errorMassage;
 	}
 	
 }

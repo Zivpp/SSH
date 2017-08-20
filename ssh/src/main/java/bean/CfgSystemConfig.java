@@ -26,17 +26,17 @@ public class CfgSystemConfig {
 	private String createUser;
 	private Date updateDate;
 	private String updateUser;
-	
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false)
-	public int getId() {
-		return this.id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	@Column(name = "CODE_CATE", nullable = false)
 	public String getCodeCate() {
 		return this.codeCate;
@@ -56,11 +56,11 @@ public class CfgSystemConfig {
 	}
 
 	@Column(name = "PARENT_ID", nullable = false)
-	public int getParentId() {
+	public Integer getParentId() {
 		return this.parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 
@@ -139,11 +139,11 @@ public class CfgSystemConfig {
 	}
 
 	@Column(name = "SEQ", nullable = false)
-	public int getSeq() {
+	public Integer getSeq() {
 		return seq;
 	}
 
-	public void setSeq(int seq) {
+	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
 	

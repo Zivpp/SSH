@@ -13,6 +13,7 @@ import ssh.service.ICfgSystemConfigService;
 import ssh.service.IHallService;
 import ssh.util.BeanUtil;
 import ssh.util.CacheUtil;
+import ssh.util.StringUtil;
 
 @Component("systemConfigAction")
 public class SystemConfigAction extends BaseAction{
@@ -28,6 +29,8 @@ public class SystemConfigAction extends BaseAction{
 	private String header;
 	private Boolean sortBy;
 	private List<String> sortIdList;
+	private List<CfgSystemConfig> tvEditDataList;
+	private String tvRemoveId;
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigServiceImpl")
@@ -195,6 +198,52 @@ public class SystemConfigAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * save tree view edit data
+	 * @return
+	 * @throws Exception
+	 */
+	public String tvEditSave() throws Exception {
+
+		try{
+
+			cfgSystemConfigService.tvEditSave(tvEditDataList);
+			super.dataHandler();
+			
+		}catch(Exception e){
+			System.out.println(e);
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * remove tree view edit data
+	 * @return
+	 * @throws Exception
+	 */
+	public String tvEditRemove() throws Exception {
+
+		try{
+
+			String result = cfgSystemConfigService.tvEditRemove(tvRemoveId);
+			if(StringUtil.isEmpty(result)){
+				super.dataHandler(result);
+			}else{
+				HashMap<String,String> massage = new HashMap<String,String>();
+				massage.put("massage", result);
+				super.dataHandler(massage);
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
 	
 	
 	public CfgSystemConfig getAddData() {
@@ -267,6 +316,22 @@ public class SystemConfigAction extends BaseAction{
 
 	public void setSortBy(Boolean sortBy) {
 		this.sortBy = sortBy;
+	}
+
+	public List<CfgSystemConfig> getTvEditDataList() {
+		return tvEditDataList;
+	}
+
+	public void setTvEditDataList(List<CfgSystemConfig> tvEditDataList) {
+		this.tvEditDataList = tvEditDataList;
+	}
+
+	public String getTvRemoveId() {
+		return tvRemoveId;
+	}
+
+	public void setTvRemoveId(String tvRemoveId) {
+		this.tvRemoveId = tvRemoveId;
 	}
 
 }

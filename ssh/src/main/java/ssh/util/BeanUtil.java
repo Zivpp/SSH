@@ -2,13 +2,15 @@ package ssh.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class BeanUtil {
 
 	/**
 	 * Bean class 锣传 key : value, 摸 Table
-	 * ˙砞璸, 度 :计粂﹃把计
+	 * ˙砞璸, 矗ㄑ :计﹃
 	 * @param obj
 	 * @return
 	 * @throws Exception
@@ -47,4 +49,62 @@ public class BeanUtil {
 		return result;
 	}
 	
+	/**
+	 * copyBean ずΤ膁盢ㄤ copy  toBean
+	 * @param toBean
+	 * @param copyBean
+	 * @return
+	 */
+	public static Object beanCopy(Object toBean,Object copyBean) throws Exception{
+		
+		if(toBean != null && copyBean != null){
+			
+			//纗 toBean  set よ猭
+			List<String> toBeanSetMethods = new ArrayList<String>();
+			
+			//1. 盢 toBean ┮Τよ猭ъノ耞祔璶 copy 
+			Field[] tbfiles = toBean.getClass().getDeclaredFields();
+			for(Field f : tbfiles){
+				//when static parameters, no doing 
+				if(!java.lang.reflect.Modifier.isStatic(f.getModifiers())){
+					String setStr = "set" + StringUtil.upperCaseAtFirst(f.getName());
+					toBeanSetMethods.add(setStr);
+				}
+			}
+			
+			//2. 狦 copyBean  getよ猭Τ
+			//   耞 set よ猭Τ礚 toBeanSetMethodsい
+			//   ㄢ兵ン才copy to toBean
+			Field[] cbfiles = copyBean.getClass().getDeclaredFields();
+			for(Field f : cbfiles){
+				
+				String getStr = "get" + StringUtil.upperCaseAtFirst(f.getName());
+				String setStr = "set" + StringUtil.upperCaseAtFirst(f.getName());
+				
+				//when static parameters, not do anything
+				if(!java.lang.reflect.Modifier.isStatic(f.getModifiers())
+						&& toBeanSetMethods.contains(setStr)){
+					
+					Method getMethod = copyBean.getClass().getMethod(getStr);
+					Object copyResult = getMethod.invoke(copyBean);
+					
+					if(copyResult != null){
+						//眔 parameters 篈
+						String resultClassStr =  copyResult.getClass().toString();
+						Method setMethod = null;
+//						if(resultClassStr.equals("class java.lang.Integer")){  //Integer 籔ㄤウぃ妓
+//							 setMethod = toBean.getClass().getMethod(setStr,Integer.TYPE);
+//						}else{
+//							 setMethod = toBean.getClass().getMethod(setStr,copyResult.getClass());
+//						}
+						setMethod = toBean.getClass().getMethod(setStr,copyResult.getClass());
+						//㊣ set よ猭рメ秈
+						setMethod.invoke(toBean,copyResult);
+					}
+				}
+			}
+		}
+		
+		return toBean;
+	}
 }

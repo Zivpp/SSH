@@ -80,6 +80,21 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		}
 		
 	}
+	
+	@Override
+	public void deleteById(String id) {
+		
+		CfgSystemConfig target = CacheUtil.getSysCfgById(id);
+		
+		if(target != null){
+			Session session = getSessionFactory();
+			Transaction tx = session.beginTransaction();
+			session.delete(target);
+			tx.commit();
+			session.close(); 
+		}
+		
+	}
 
 	@Override
 	public List<CfgSystemConfig> searchById(int id) {

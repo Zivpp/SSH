@@ -17,9 +17,10 @@ import ssh.dao.ICfgSystemConfigDao;
 public class CacheUtil {
 	
 	public static List<CfgSystemConfig> allSysCfgData = new ArrayList<CfgSystemConfig>(); //all cfg_system_config data
-	public static ConcurrentHashMap<String,CfgSystemConfig> sysCfgById = new ConcurrentHashMap<String,CfgSystemConfig>(); //by Id
+	public static ConcurrentHashMap<String,CfgSystemConfig> sysCfgById = new ConcurrentHashMap<String,CfgSystemConfig>(); //by id
 	public static ConcurrentHashMap<String,CfgSystemConfig> sysCfgByCode = new ConcurrentHashMap<String,CfgSystemConfig>(); //by code
-	public static ConcurrentHashMap<String,List<CfgSystemConfig>> sysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>(); //by codeCate
+	public static ConcurrentHashMap<String,List<CfgSystemConfig>> sysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>(); //by code cate
+	public static ConcurrentHashMap<String,List<CfgSystemConfig>> sysCfgByParentId = new ConcurrentHashMap<String,List<CfgSystemConfig>>(); //by parent id
 	
 	@Autowired
 	@Qualifier("cfgSystemConfigDaoImpl")
@@ -38,9 +39,10 @@ public class CacheUtil {
 	private void initCfgSystemConfig() {
 		
 		List<CfgSystemConfig> tmpAllSysCfgData = cfgSystemConfigDao.getAllData();
-		ConcurrentHashMap<String,List<CfgSystemConfig>> tmpSysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>();
 		ConcurrentHashMap<String,CfgSystemConfig> tmpSysCfgById = new ConcurrentHashMap<String,CfgSystemConfig>();
 		ConcurrentHashMap<String,CfgSystemConfig> tmpSysCfgByCode = new ConcurrentHashMap<String,CfgSystemConfig>();
+		ConcurrentHashMap<String,List<CfgSystemConfig>> tmpSysCfgByCodeCate = new ConcurrentHashMap<String,List<CfgSystemConfig>>();
+		ConcurrentHashMap<String,List<CfgSystemConfig>> tmpSysCfgByParentId = new ConcurrentHashMap<String,List<CfgSystemConfig>>();
 		
 		if(tmpAllSysCfgData != null && tmpAllSysCfgData.size() > 0){
 			
@@ -54,10 +56,16 @@ public class CacheUtil {
 
 				//By Code Cate : 如果 codeCate list 存在就取出 -> 新增一筆 -> 再存入 ; 沒有就新創一組 List
 				String tmpCodeCate = csc.getCodeCate();
-				List<CfgSystemConfig> tmpList = (tmpSysCfgByCodeCate.get(tmpCodeCate) != null)?
+				List<CfgSystemConfig> tmpCodeCateList = (tmpSysCfgByCodeCate.get(tmpCodeCate) != null)?
 						tmpSysCfgByCodeCate.get(tmpCodeCate):new ArrayList<CfgSystemConfig>();
-				tmpList.add(csc);
-				tmpSysCfgByCodeCate.put(tmpCodeCate, tmpList);
+				tmpCodeCateList.add(csc);
+				tmpSysCfgByCodeCate.put(tmpCodeCate, tmpCodeCateList);
+				//By Parent Id
+				String tmpParentId = String.valueOf(csc.getParentId());
+				List<CfgSystemConfig> tmpParentIdList = (tmpSysCfgByParentId.get(tmpParentId) != null)?
+						tmpSysCfgByParentId.get(tmpParentId):new ArrayList<CfgSystemConfig>();
+				tmpParentIdList.add(csc);
+				tmpSysCfgByParentId.put(tmpParentId, tmpParentIdList);
 				
 			}
 		}	
@@ -66,6 +74,7 @@ public class CacheUtil {
 		sysCfgById = tmpSysCfgById;
 		sysCfgByCode = tmpSysCfgByCode;
 		sysCfgByCodeCate = tmpSysCfgByCodeCate;
+		sysCfgByParentId = tmpSysCfgByParentId;
 		
 	}
 
@@ -112,6 +121,20 @@ public class CacheUtil {
 	 */
 	public static CfgSystemConfig getSysCfgByCode(String code) {
 		return sysCfgByCode.get(code);
+	}
+
+	/**
+	 * 取得 CFG_SYSTEM_CONFIG list by Parent_Id
+	 * @param tvRemoveId
+	 * @return
+	 */
+	public static List<CfgSystemConfig> getSysCfgByParentId(String tvRemoveId) {
+		
+		if(sysCfgByParentId.get(tvRemoveId) != null && sysCfgByParentId.get(tvRemoveId).size() > 0){
+			return sysCfgByParentId.get(tvRemoveId);
+		}
+		
+		return null;
 	}
 
 	
