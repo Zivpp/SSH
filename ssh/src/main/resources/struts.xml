@@ -28,7 +28,7 @@
 		
 		
 		<global-results>
-    		<result name="error">/pages/Error.html</result>
+    		<result name="error">/pages/error.html</result>
 		</global-results>
 		<global-exception-mappings>
 		    <exception-mapping exception="java.lang.Exception" result="error"/>

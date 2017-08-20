@@ -62,4 +62,10 @@ public interface ICfgSystemConfigService{
 	 */
 	public String tvEditRemove(String tvRemoveId);
 
+	/**
+	 * get Branch Page Options 
+	 * @return
+	 */
+	public List<String> getBranchPageOptions();
+
 }

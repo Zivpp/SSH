@@ -96,19 +96,21 @@
 						<table class="editTable" style="width:100%"">
 							<tr ng-repeat="(key, value) in currentEditObj track by $index">
 								<!-- header -->
-								<td width="20%" ng-if="key != 'id' && key != 'codeCate'" class="editTd">
+								<td width="20%" ng-if="key != 'id' && key != 'codeCate' && key != 'isNew'"class="editTd">
 									{{key}}
 								</td>
 								<!-- body -->
-								<td width="80%" ng-if="key != 'id' && key != 'codeCate'" ng-show="key == 'code' || key == 'codeDesc'">
+								<td width="80%" ng-if="key != 'id' && key != 'codeCate' && key != 'isNew'" ng-show="key == 'code' || key == 'codeDesc'">
 									<input type="text" ng-model="currentEditObj[key]">
 								</td>
-								<td width="80%" ng-if="key != 'id' && key != 'codeCate'" ng-show="key == 'codeValue'">
+								<td width="80%" ng-if="key != 'id' && key != 'codeCate' && key != 'isNew'" ng-show="key == 'codeValue'">
 									<input type="text" class="urlInput" disabled ng-model="currentEditObj[key]">
-									<button class="btn btn-primary urlSubmit"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></button>
+									<button class="btn btn-primary urlSubmit" ng-click="selectPage(key)">
+										<i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+									</button>
 								</td>
-								<td width="80%" ng-if="key != 'id' || key != 'codeCate'" ng-show="key == 'parentId'">
-									  <select class="form-control" ng-model="currentEditObj[key]" ng-change="look()">
+								<td width="80%" ng-if="key != 'id' || key != 'codeCate' && key != 'isNew'" ng-show="key == 'parentId'">
+									  <select class="form-control" ng-model="currentEditObj[key]">
 									  		<option ng-repeat="o in eOptions track by o.id" value="{{o.id}}">
 									  			{{o.name}}
 									  		</option>
@@ -133,7 +135,7 @@
 	</div>
 </body>
 
-<!-- editResponseModel model -->
+<!-- Edit Response Model -->
 <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="editResponseModel" role="dialog">
@@ -148,6 +150,37 @@
       	<!-- body -->
         <div class="modal-body">
 	       	<h1 id="editResponseStr">{{editResponseStr}}</h1>
+	  	</div>
+       	<br/>
+       	<!-- footer -->
+        <div class="modal-footer">
+          	<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<!-- Page Review Model -->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="pageReviewModel" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+      	<!-- header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-file-o" aria-hidden="true"></i> BRRANCH BINDING PAGE</h4>
+        </div>
+      	<!-- body -->
+        <div class="modal-body">
+			<select class="form-control" ng-model="seletedPage" ng-change="setCurrentPageSeleted()">
+		  		<option ng-repeat="p in pageSeletOpeitons track by $index" value="{{p}}">
+		  			{{p}}
+		  		</option>
+		  	</select>
+			<iframe id="hallIframe" ng-src="{{iframeUrl}}" width="100%" height="100%" frameborder="0"></iframe>
 	  	</div>
        	<br/>
        	<!-- footer -->

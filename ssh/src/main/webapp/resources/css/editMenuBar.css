@@ -50,3 +50,7 @@ input {
 td .urlSubmit{
 	height: 100%;
 }
+
+.modal-body {
+	height:500px;
+}

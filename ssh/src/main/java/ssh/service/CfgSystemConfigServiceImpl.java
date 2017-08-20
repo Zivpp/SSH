@@ -372,9 +372,10 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			//如果存在 update, 不存在則 insert
 			for(CfgSystemConfig csc : tvEditDataList){
 				
+				CfgSystemConfig exist = CacheUtil.getSysCfgById(String.valueOf(csc.getId()));
+				
 				//update
-				if(csc.getId() != null){
-					CfgSystemConfig exist = CacheUtil.getSysCfgById(String.valueOf(csc.getId()));
+				if(exist != null){
 					exist = (CfgSystemConfig)BeanUtil.beanCopy(exist, csc);
 					cfgSystemConfigDao.update(exist);
 				}else{
@@ -404,9 +405,11 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 					}
 					csc.setSeq(newSeq);
 					csc.setId(newId);
-					csc.setCodeName(tmpCsc.get(0).getCodeName());
-					
+					csc.setCodeName("New Tree View Item");
+					csc.setCateName(tmpCsc.get(0).getCateName());
+					csc.setCodeValue(csc.getCode());
 					cfgSystemConfigDao.insert(csc);
+					
 				}
 			}
 			
@@ -446,6 +449,22 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 		cacheUtil.init();
 		
 		return errorMassage;
+	}
+
+	@Override
+	public List<String> getBranchPageOptions() {
+		
+		List<String> result = new ArrayList<String>();
+		
+		List<CfgSystemConfig> cscList = CacheUtil.getSysCfgByCodeCate(SysCfgCode.CodeCate.pages);
+		if(cscList != null && cscList.size() > 0){
+			for(CfgSystemConfig csc : cscList){
+				result.add(csc.getCodeValue());
+			}
+
+		}
+		
+		return result;
 	}
 	
 }

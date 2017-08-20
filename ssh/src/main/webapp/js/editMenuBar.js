@@ -22,6 +22,9 @@ app.controller("editMenuBarCtrl",['$scope','$http','$location','httpFactory','ge
 	$scope.editResponseStr;
 	$scope.newItem;
 	$scope.currentHierarchy;
+	$scope.pageSeletOpeitons;
+	$scope.seletedPage;
+	$scope.iframeUrl;
 	
 	//*Function
 	//S-initial()
@@ -44,6 +47,9 @@ app.controller("editMenuBarCtrl",['$scope','$http','$location','httpFactory','ge
 		$scope.eOptions = [];
 		$scope.newItem = [];
 		$scope.currentHierarchy = [{r:null,t:null,b:null}];
+		$scope.pageSeletOpeitons = [];
+		$scope.seletedPage= null;
+		$scope.iframeUrl = null;
 		
 		httpFactory.post(
 			"hallPageInitial.action", //url
@@ -404,18 +410,22 @@ app.controller("editMenuBarCtrl",['$scope','$http','$location','httpFactory','ge
 		//get id
 		var target = [];
 		var pId = null;
+		var codeCate = null;
 		switch(type) {
 		    case 'r' :
 		    	target = $scope.root;
 		    	pId = 0;
+		    	codeCate = "TreeRoot";
 		        break;
 		    case 't' :
 		    	target = $scope.trunk;
 		    	pId = $scope.currentHierarchy['r'];
+		    	codeCate = "TreeTrunk";
 		        break;
 		    case 'b' :
 		    	target = $scope.branch;
 		    	pId = $scope.currentHierarchy['t'];
+		    	codeCate = "TreeBranch"
 		        break;
 		}
 		
@@ -435,6 +445,7 @@ app.controller("editMenuBarCtrl",['$scope','$http','$location','httpFactory','ge
 		newObj.id = getNewId(target);
 		newObj.parentId = pId;
 		newObj.isNew = true;
+		newObj.codeCate = codeCate;
 		$scope.newItem.push(newObj);
 		target.push(newObj);
 		computeCount(null,type,$scope.currentHierarchy);
@@ -451,6 +462,32 @@ app.controller("editMenuBarCtrl",['$scope','$http','$location','httpFactory','ge
 		}
 		return result;
 	}//E-getNewId()
+	
+	//S-selectPage()
+	$scope.selectPage = function(key) {
+		
+		$scope.seletedPage = null;
+		
+		httpFactory.post(
+				"getBranchPageOptions.action", //url
+				{data : {}},
+				function(data){
+					$scope.pageSeletOpeitons = data;
+					openModel('pageReviewModel');
+				},function(data){ //error
+					console.log(data);
+				}
+			);
+		
+		
+	}//S-selectPage()
+	
+	
+	$scope.setCurrentPageSeleted = function() {
+		$scope.currentEditObj['codeValue'] = $scope.seletedPage ;
+		$scope.iframeUrl = generalFactory.clone($scope.seletedPage) + ".html";
+		console.log($scope.iframeUrl);
+	};
 	
 	//*Model
 	var openModel = function(id) {

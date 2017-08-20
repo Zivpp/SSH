@@ -30,6 +30,8 @@ public class SysCfgCode {
 		public static final String TreeBranch = "TreeBranch";
 		public static final String TreeTrunk = "TreeTrunk";
 		public static final String TreeRoot = "TreeRoot";
+		public static final String pages = "pages";
+		
 	}
 	
 	/**

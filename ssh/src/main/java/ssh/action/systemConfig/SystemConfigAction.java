@@ -244,6 +244,27 @@ public class SystemConfigAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * getBranchPageOptions
+	 * @return
+	 * @throws Exception
+	 */
+	public String getBranchPageOptions() throws Exception {
+
+		try{
+
+			List<String> pages = cfgSystemConfigService.getBranchPageOptions();
+			super.dataHandler(pages);
+			
+		}catch(Exception e){
+			System.out.println(e);
+			super.dataHandler(e);
+		}
+		
+		return SUCCESS;
+	}
+	
+	
 	
 	
 	public CfgSystemConfig getAddData() {
