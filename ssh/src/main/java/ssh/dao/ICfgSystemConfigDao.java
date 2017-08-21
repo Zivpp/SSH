@@ -74,5 +74,12 @@ public interface ICfgSystemConfigDao {
 	 */
 	public List<String> cfgSysConSortByHeader(String header, String orderkey, List<String> sortIdList);
 
+	/**
+	 * get new Id and Seq by Code Cate
+	 * @param codeCate
+	 * @return
+	 */
+	public CfgSystemConfig getNewIdSeqByCodeCate(String codeCate);
+
     
 }

@@ -372,6 +372,11 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 			//如果存在 update, 不存在則 insert
 			for(CfgSystemConfig csc : tvEditDataList){
 				
+				//root、trunk codeValue = code
+				if(!csc.getCodeCate().equals(SysCfgCode.CodeCate.TreeBranch)){
+					csc.setCodeValue(csc.getCode());
+				}
+				
 				CfgSystemConfig exist = CacheUtil.getSysCfgById(String.valueOf(csc.getId()));
 				
 				//update
@@ -380,34 +385,21 @@ public class CfgSystemConfigServiceImpl implements ICfgSystemConfigService{
 					cfgSystemConfigDao.update(exist);
 				}else{
 				//insert
-	
-					if(StringUtil.isEmpty(csc.getCodeValue())){
-						csc.setCodeName(csc.getCode());
-					}	
+					//root
 					if(csc.getParentId() == null){
 						csc.setParentId(0);
 					}
+					
+					CfgSystemConfig newIdSeq = cfgSystemConfigDao.getNewIdSeqByCodeCate(csc.getCodeCate());
+					csc.setSeq(newIdSeq.getSeq() + 1);
+					csc.setId(newIdSeq.getId() +1);
+					csc.setCodeName("New Tree View Item");
+					csc.setCateName(newIdSeq.getCateName());
 					csc.setUpdateDate(new Date());
 					csc.setUpdateUser(SysCfgCode.defaultUser);
 					csc.setCreateDate(new Date());
 					csc.setCreateUser(SysCfgCode.defaultUser);
 					
-					List<CfgSystemConfig> tmpCsc =  CacheUtil.getSysCfgByCodeCate(csc.getCodeCate());
-					Integer newSeq = 0;
-					Integer newId = 0;
-					for(CfgSystemConfig c : tmpCsc){
-						if(newSeq <= c.getSeq()){
-							newSeq = c.getSeq() + 1;
-						}
-						if(newId <= c.getId()){
-							newId = c.getId() + 1 ;
-						}
-					}
-					csc.setSeq(newSeq);
-					csc.setId(newId);
-					csc.setCodeName("New Tree View Item");
-					csc.setCateName(tmpCsc.get(0).getCateName());
-					csc.setCodeValue(csc.getCode());
 					cfgSystemConfigDao.insert(csc);
 					
 				}

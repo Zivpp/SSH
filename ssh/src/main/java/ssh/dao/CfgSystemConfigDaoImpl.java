@@ -175,13 +175,25 @@ public class CfgSystemConfigDaoImpl extends DaoBaseMariadb implements ICfgSystem
 		
 		Session session = getSessionFactory();
 		
-		Transaction tx = session.beginTransaction();
-		
 		String sql =  super.getSqlStatment(Sqlmapping.CFG_SYSTEM_CONFIG_DATA_SORT_BY_HEANDER) + " " + header + " " + orderKey;
 		
 		Query query = session.createSQLQuery(sql)
 				.setParameterList("sortIdList", sortIdList);
 		
 		return query.list();
+	}
+
+	@Override
+	public CfgSystemConfig getNewIdSeqByCodeCate(String codeCate) {
+		
+		Session session = getSessionFactory();
+		
+		String sql =  super.getSqlStatment(Sqlmapping.GET_NEQ_ID_SEQ_BY_CODECATE);
+		
+		Query query = session.createSQLQuery(sql)
+				.setParameter("codeCate", codeCate)
+				.setResultTransformer(Transformers.aliasToBean(CfgSystemConfig.class));
+		
+		return (CfgSystemConfig)query.list().get(0);
 	}
 }
