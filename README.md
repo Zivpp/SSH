@@ -17,10 +17,9 @@ Ziv Wu
 + Java : 1.8.0_131
 + Strust2、Spring、Hibernate 請查閱 pom.xml
 #### AngularJs 應用  Menu 自動更新 ####
-設計理念 : 透過頁面修改, 使 Menu 可快速編輯與擴充, 不必修改 Menu 頁面的 code, 示意圖如下 :
-+ Menu 中新增一個連結
-+ 在同組織中新增一個連結並且儲存
-+ Menu 新增出新連結, 不需更動 Menu Code
+設計目的 : 不必修改 Menu 頁面的 code, 使 Menu 可快速編輯與擴充
++ Menu 應用 AngularJs 產生, 透過參數修改自動改變產生
+
 ![Aaron 1](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/markdown/01.jpg)
 ![Aaron 2](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/markdown/02.jpg)
 ![Aaron 2](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/markdown/03.jpg)
