@@ -15,7 +15,7 @@ Ziv Wu
     + Java Compiler : Compiler compliance level 1.7
     + Project Facets : Java 1.7
 + Java : jdk1.8.0_131
-+ DB : MariaDB 10.2 [Scirpt](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/script/scirpt.txt)
++ DB : MariaDB 10.2 [Table_Scirpt](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/script/scirpt.txt)
 + Server : Tomcat 7.0.75
 + Strust2、Spring、Hibernate 請查閱 pom.xml
 #### AngularJs 應用  Menu 自動更新 ####
