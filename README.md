@@ -12,9 +12,11 @@ Ziv Wu
   + AngularJs 應用  : Menu 自動更新
 #### 環境相關  ####
 + IDE : Eclipse neon 4.6.2
+    + Java Compiler : Compiler compliance level 1.7
+    + Project Facets : Java 1.7
++ Java : jdk1.8.0_131
 + DB : MariaDB 10.2 [Scirpt](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/script/scirpt.txt)
 + Server : Tomcat 7.0.75
-+ Java : 1.8.0_131
 + Strust2、Spring、Hibernate 請查閱 pom.xml
 #### AngularJs 應用  Menu 自動更新 ####
 設計目的 : 不必修改 Menu 頁面的 html, 使 Menu 可快速編輯與擴充
