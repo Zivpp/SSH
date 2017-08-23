@@ -1,4 +1,4 @@
-package CRUD.cfgSystemConfig;
+package crud.cfgSystemConfig;
 
 import java.util.Date;
 
@@ -14,13 +14,8 @@ public class Insert {
 	
 		try{
 			
-//			Session session = HibernateUtil.getSessionFactory().openSession();
-//		    Transaction tx = session.beginTransaction();
-			
 			ApplicationContext context = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
-		        
-		    // 建立DAO物件
-			ICfgSystemConfigDao userDAO = (ICfgSystemConfigDao) context.getBean("cfgSystemConfigDaoImpl");
+			ICfgSystemConfigDao dao = (ICfgSystemConfigDao) context.getBean("cfgSystemConfigDaoImpl");
 			
 		    CfgSystemConfig csc = new CfgSystemConfig();
 		    csc.setId(101);
@@ -37,14 +32,7 @@ public class Insert {
 		    csc.setUpdateDate(new Date());
 		    csc.setUpdateUser("Ziv");
 		    
-
-		    userDAO.insert(csc);
-		    
-//		    session.save(csc);
-//		    
-//		    tx.commit();
-//		    session.close();
-//		    HibernateUtil.shutdown();
+		    dao.insert(csc);
 		    
 		}catch(Exception e){
 			System.out.println(e);

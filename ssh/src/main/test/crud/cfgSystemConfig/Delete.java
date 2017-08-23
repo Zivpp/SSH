@@ -1,4 +1,4 @@
-package CRUD.cfgSystemConfig;
+package crud.cfgSystemConfig;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;

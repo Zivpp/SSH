@@ -11,8 +11,8 @@
   
   <properties>
   	<struts2.version>2.3.32</struts2.version>
-  	<spring.version>3.2.2.RELEASE</spring.version>
-	<spring.ws.version>2.1.4.RELEASE</spring.ws.version>
+  	<spring.version>4.3.4.RELEASE</spring.version>
+  	<spring-web-version>4.3.10.RELEASE</spring-web-version>
   </properties>
   
   <dependencies>
@@ -39,12 +39,12 @@
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-core</artifactId>
-		<version>${spring.version}</version>
+		<version>4.3.10.RELEASE</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-web</artifactId>
-		<version>${spring.version}</version>
+		<version>${spring-web-version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
