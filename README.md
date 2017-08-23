@@ -7,8 +7,6 @@ Ziv Wu
   SSH 為 Struts2 + Spring + Hibernate 架設,
   <br/>使用 Eclipse 與 Tomcat 即可運行,
   <br/>希望此範例對架設 SSH 有需求或興趣者有所幫助。
-  + 環境相關
-  + AngularJs 應用  : Menu 自動更新
 #### 環境相關  ####
 + IDE : Eclipse neon 4.6.2
     + Java Compiler : Compiler compliance level 1.7
@@ -17,11 +15,6 @@ Ziv Wu
 + DB : MariaDB 10.2 [Table_Scirpt](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/script/scirpt.txt)
 + Server : Tomcat 7.0.75
 + Strust2、Spring、Hibernate 請查閱 pom.xml
-#### AngularJs 應用  Menu 自動更新 ####
-設計目的 : 不必修改 Menu 頁面的 html, 使 Menu 可快速編輯與擴充
-+ Menu 應用 AngularJs 產生, 透過參數修改自動改變
-+ [HTML](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/webapp/pages/hall.html) 段落於註解 SIDE BAR 區塊
-![Aaron 1](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/markdown/004.jpg)
-![Aaron 2](https://github.com/Zivpp/SSH/blob/master/ssh/src/main/resources/txt/markdown/002.jpg)
+
 
 
