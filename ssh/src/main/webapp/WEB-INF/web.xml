@@ -30,7 +30,6 @@
 	</listener>
 	
 	<error-page>
-    <!-- Missing resource -->
     	<error-code>404</error-code>
     	<location>/pages/error.html</location>
 	</error-page>
