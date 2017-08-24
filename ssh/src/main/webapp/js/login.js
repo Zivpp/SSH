@@ -7,11 +7,6 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 	 */
 	$scope.act = null; //account
 	$scope.paw = null; //password
-	
-	var testStringData = {
-			name : 'Ziv',
-			sex : 'Man'
-	}
 		
 	/**
 	 * function
@@ -41,29 +36,6 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 		}).error(function (data, status, headers, config) {
 			console.log('POST error', data);
 		});
-		
-		
-		//Jqurey ajax sample : 無法直接使用  object 轉換
-//		$.ajax({
-//		    method: "POST",
-//		    url: "loginAction.action",
-//		    data: { 
-//				d_String : $scope.act,
-//				d_Int : 1,
-//				d_Long : 2,
-//				d_Array : [1,2],
-//				d_List : [3,4],
-//				'testStringData.name':'sex',
-//				'testStringData.sex':'sex'
-//		    },
-//		    traditional: true,
-//		    success: function(data){
-//		    	var a = data;
-//		    },
-//		    error: function(data){
-//		    	var b = data;
-//		    }
-//		});
 			
 	}
 	
