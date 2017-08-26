@@ -107,4 +107,16 @@ public class BeanUtil {
 		
 		return toBean;
 	}
+
+	/**
+	 * swap A, B
+	 * @param List<Object>
+	 * @param A
+	 * @param B
+	 */
+	public static void swap(List<Integer> intlist, int A, int B) {
+		Integer tmp = intlist.get(A);
+		intlist.set(A, intlist.get(B));
+		intlist.set(B, tmp);
+	}
 }
