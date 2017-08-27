@@ -19,7 +19,6 @@ app.controller("loginCtrl", function($scope,$http,$location) {
 			d_Long : 2,
 			d_Array : [1,2],
 			d_List : [3,4],
-			testStringData : testStringData,
 			account : $scope.act,
 			password : $scope.paw
 	    }

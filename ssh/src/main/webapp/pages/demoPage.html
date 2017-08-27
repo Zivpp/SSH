@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+
+	<!-- 外部資源引入 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/ssh/resources/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="/ssh/resources/jquery/jquery-ui/jquery-ui-1.12.1.min.css">
+	<link rel="stylesheet" href="/ssh/resources/font-awesome/css/font-awesome.min.css">
+	<script type="text/javascript" src="/ssh/resources/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/ssh/resources/jquery/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+	<script type="text/javascript" src="/ssh/resources/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/ssh/resources/angularjs/angular-1.5.6.min.js"></script>
+
+	<!-- Customize JS -->
+	<script type="text/javascript" src="/ssh/js/demoPage.js"></script>
+	<script type="text/javascript" src="/ssh/js/factory/sshConnectionFactory.js"></script>
+	<script type="text/javascript" src="/ssh/js/factory/sshGeneralFactory.js"></script>
+
+	<!-- Customize CSS -->
+	<link rel="stylesheet" href="/ssh/resources/css/demoPage.css">
+
+</head>
+<body ng-app="demoPageApp" ng-controller="demoPageCtrl">
+	<p>
+  		<label for="amount">Image no：</label>
+  		<input type="text" id="amount" ng-model="imageNo" style="border:0; color:#f6931f; font-weight:bold;">
+	</p>
+	<div id="s"></div>
+ 	<div><img ng-src="{{'/ssh/resources/img/d' + imageNo + '.jpg'}}"></div>
+</body>
+</html>

@@ -1,7 +1,9 @@
 package lambda;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -24,11 +26,15 @@ public class LambdaTest {
 		Thread t = new Thread(() -> System.out.println("run me 2!"));
 		t.start();
 		
-		//Stream
-		IntStream.range(0, 10).forEach(i -> System.out.print(i));
+		//Stream.forEach
+		List<Integer> intL = new ArrayList<>();
+		IntStream.range(0, 10).forEach(intL::add);
+		intL.forEach(System.out::print);
 		System.out.println();
-		IntStream.range(0, 10).forEach(System.out::print);
-		System.out.println();
+		
+		//Max
+		OptionalInt  maxIndex = intL.stream().mapToInt(Integer::intValue).max();
+		System.out.println(intL.get(maxIndex.getAsInt()));
 		
 		//Collection
 //		ApplicationContext context = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
@@ -46,11 +52,19 @@ public class LambdaTest {
 		productList.add("A");
 		productList.add("B");
 		productList.add("C");
-		
 		String result = productList.stream()
-				.map(id -> id)
-				.collect(Collectors.joining(",","[","]"));
+				.map(i -> i)
+				.collect(Collectors.joining(",","[","]"));	
 		System.out.println(result);
+		
+		//flatMap
+		List<String> a01 = Arrays.asList("A","B","C");
+		List<String> a02 = Arrays.asList("D","E","F");
+		List<String> ar = Stream.of(a01,a02)
+				.flatMap(array -> array.stream())
+				.collect(Collectors.toList());
+		System.out.println(ar);
+		
 	}
 
 }
